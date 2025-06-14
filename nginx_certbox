@@ -1,0 +1,84 @@
+执行下面命令，Certbot 会自动修改你的 Nginx 配置文件，添加 HTTPS 支持：
+
+bash
+复制
+编辑
+sudo certbot --nginx
+它会引导你：
+选择你要启用 HTTPS 的域名；
+
+选择是否强制重定向 HTTP 到 HTTPS；
+
+自动修改 Nginx 配置、重新加载 Nginx。
+
+执行成功后，你可以看到：
+
+bash
+复制
+编辑
+Congratulations! Your certificate and chain have been saved at:
+...
+🔒 四、检查你的 HTTPS 配置是否生效
+bash
+复制
+编辑
+sudo nginx -t
+sudo systemctl reload nginx
+然后访问你的域名 https://example.com，应该就是加密的 HTTPS 页面了！
+
+🔁 五、自动续期
+Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：
+
+bash
+复制
+编辑
+sudo crontab -e
+添加以下内容（每天凌晨检查并自动续期）：
+
+css
+复制
+编辑
+0 3 * * * certbot renew --quiet
+或者直接测试续期命令：
+
+bash
+复制
+编辑
+sudo certbot renew --dry-run
+📁 六、HTTPS 站点配置样例（自动生成）
+nginx
+复制
+编辑
+server {
+    listen 80;
+    server_name example.com www.example.com;
+
+    # certbot 会自动加这个 redirect 到 HTTPS
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name example.com www.example.com;
+
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+}
+🧠 FAQ
+❓ 1. 我用的是阿里云/腾讯云 DNS，怎么验证？
+Certbot 默认是 HTTP 验证（即访问 http://yourdomain/.well-known/...）。只要 80 端口能访问，就行。
+
+❓ 2. 我不想 Certbot 自动改配置，怎么手动获取证书？
+bash
+复制
+编辑
+sudo certbot certonly --nginx
+然后你可以手动在 Nginx 中添加 ssl_certificate 和 ssl_certificate_key。
