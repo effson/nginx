@@ -39,7 +39,7 @@ proxy_next_upstream	设置请求失败后是否重试其他上游服务器（如
 proxy_next_upstream_tries	最多重试几次<br>
 proxy_next_upstream_timeout	最长重试时间<br>
 <br>
-🛠 路径与URI处理<br>
+# 路径与URI处理<br>
 指令	说明<br>
 proxy_pass	可以设置成 http://backend（保留 URI）或 http://backend/（去掉匹配部分）<br>
 proxy_request_buffering	是否在发送到后端之前缓冲整个请求<br>
@@ -73,7 +73,6 @@ proxy_cache_min_uses	至少请求几次后才缓存<br>
 add_header X-Cache-Status	添加缓存状态响应头（如 HIT、MISS）<br>
 <br>
 ## 示例配置<br>
-nginx<br>
 <br>
 ### 1. 定义缓存路径<br>
 proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=1g inactive=60m use_temp_path=off;<br>
@@ -103,7 +102,7 @@ UPDATING	当前缓存正在更新，使用旧内容返回<br>
 REVALIDATED	对已缓存的响应进行验证后仍可使用<br>
 <br>
 # 示例配置<br>
-nginx<br>
+
 <br>
 
 location /api/ {
