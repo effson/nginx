@@ -1,4 +1,4 @@
-执行下面命令，Certbot 会自动修改你的 Nginx 配置文件，添加 HTTPS 支持：<br>
+执行下面命令，Certbot 会自动修改你的 Nginx 配置文件，添加 HTTPS 支持：<\br>
 <br>
 # sudo certbot --nginx <br>
 它会引导你：<br>
