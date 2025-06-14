@@ -1,42 +1,27 @@
 执行下面命令，Certbot 会自动修改你的 Nginx 配置文件，添加 HTTPS 支持:<br>
-<br>
 # sudo certbot --nginx <br>
 它会引导你：<br>
 选择你要启用 HTTPS 的域名；<br>
-
 选择是否强制重定向 HTTP 到 HTTPS；<br>
-
 自动修改 Nginx 配置、重新加载 Nginx。<br>
 
 执行成功后，你可以看到：<br>
 Congratulations! Your certificate and chain have been saved at:<br>
 ...
-🔒 四、检查你的 HTTPS 配置是否生效<br>
-bash
-复制
-编辑
-sudo nginx -t
-sudo systemctl reload nginx
-然后访问你的域名 https://example.com，应该就是加密的 HTTPS 页面了！
+#  检查你的 HTTPS 配置是否生效<br>
 
-🔁 五、自动续期
-Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：
+## sudo nginx -t<br>
+## sudo systemctl reload nginx<br>
+然后访问你的域名 https://example.com，应该就是加密的 HTTPS 页面了！<br>
+<br>
+# 🔁 五、自动续期<br>
+Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：<br>
+## sudo crontab -e<br>
+添加以下内容（每天凌晨检查并自动续期）：<br>
 
-bash
-复制
-编辑
-sudo crontab -e
-添加以下内容（每天凌晨检查并自动续期）：
+0 3 * * * certbot renew --quiet<br>
+或者直接测试续期命令：<br>
 
-css
-复制
-编辑
-0 3 * * * certbot renew --quiet
-或者直接测试续期命令：
-
-bash
-复制
-编辑
 sudo certbot renew --dry-run
 📁 六、HTTPS 站点配置样例（自动生成）
 nginx
