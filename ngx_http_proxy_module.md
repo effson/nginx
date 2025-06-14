@@ -101,6 +101,84 @@ STALE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	后端失败时使用了�
 UPDATING	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前缓存正在更新，使用旧内容返回<br>
 REVALIDATED	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对已缓存的响应进行验证后仍可使用<br>
 <br>
+### 3.配置解释
+location /api/ {
+    proxy_pass http://backend;
+ proxy_pass http://backend;
+功能：把客户端对 /api/ 的请求反向代理给名为 backend 的上游服务器（可以是 IP、域名或 upstream 块定义）。
+
+注意：路径是否保留 /api/ 取决于 proxy_pass 后面有没有斜杠（你这里没有尾部 /，所以会保留 /api/）。
+
+nginx
+复制
+编辑
+    proxy_cache my_cache;
+ proxy_cache my_cache;
+功能：启用缓存功能，使用之前通过 proxy_cache_path 定义的缓存区域 my_cache。
+
+意义：后端响应的数据可以被缓存下来，下次相同请求会直接返回缓存，提高性能，减少后端压力。
+
+nginx
+复制
+编辑
+    proxy_cache_valid 200 302 10m;
+   proxy_cache_valid 200 302 10m;
+功能：指定 HTTP 状态码为 200 OK 和 302 Found 的响应缓存时间为 10 分钟。
+
+用途：控制缓存的生命周期（有效期），缓存过期后会重新请求后端。
+
+nginx
+复制
+编辑
+    proxy_cache_valid 404 1m;
+功能：对于 404 Not Found 的响应，也缓存，但时间仅为 1 分钟。
+
+用途：避免频繁请求不存在的资源对后端造成压力。
+
+    proxy_cache_use_stale error timeout updating;
+🔁 proxy_cache_use_stale
+功能：允许在以下场景使用“过期的缓存内容”作为响应：
+
+error：后端返回错误（如 500）
+
+timeout：连接或读取超时
+
+updating：当前有其他请求正在更新缓存时
+
+意义：提升系统容错性和高可用性，避免因后端不稳定导致请求失败。
+
+nginx
+复制
+编辑
+    proxy_cache_lock on;
+🔒 proxy_cache_lock on;
+功能：启用缓存锁，防止同一时间多个请求都去打后端，造成“缓存穿透”。
+
+用途：只有第一个请求会去更新缓存，其他请求等待缓存完成后使用最新内容。
+
+nginx
+复制
+编辑
+    proxy_cache_key "$scheme$proxy_host$request_uri";
+🗝️ proxy_cache_key
+功能：设置缓存的 key（唯一标识缓存条目的标识符）。
+
+默认值 是 $scheme$proxy_host$request_uri，即：
+
+http/https（$scheme）
+
+代理主机名（$proxy_host）
+
+完整请求路径和查询参数（$request_uri）
+
+意义：决定了缓存是如何命中的。如果你要对不同参数缓存不同内容，这个设置非常关键。
+
+nginx
+复制
+编辑
+    add_header X-Cache-Status $upstream_cache_status;
+🧾 add_header X-Cache-Status $upstream_cache_status;
+功能：在响应头中添加 X-Cache-Status 字段，用于显示缓存状态。
 # 示例配置<br>
 <br>
 <br>
