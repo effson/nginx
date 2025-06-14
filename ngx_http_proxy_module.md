@@ -2,7 +2,7 @@ ngx_http_proxy_module 是 Nginx 中用于实现反向代理功能的核心模块
 
 # 基础转发参数<br>
 指令	说明<br>
-proxy_pass	                指定要代理到的后端服务器地址（必需）<br>
+proxy_pass	&nbsp;&nbsp;&nbsp;&nbsp                指定要代理到的后端服务器地址（必需）<br>
 proxy_redirect	            修改后端返回的 Location 和 Refresh 响应头中的 URL<br>
 proxy_set_header	        修改传给后端服务器的请求头（如设置 Host）<br>
 proxy_http_version	        设置使用的 HTTP 协议版本（如 1.0 / 1.1）<br>
