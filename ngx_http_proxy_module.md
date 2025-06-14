@@ -2,17 +2,17 @@ ngx_http_proxy_module 是 Nginx 中用于实现反向代理功能的核心模块
 
 # 基础转发参数<br>
 指令	说明<br>
-proxy_pass	&nbsp;&nbsp;&nbsp;&nbsp   &nbsp;&nbsp;&nbsp;&nbsp             指定要代理到的后端服务器地址（必需）<br>
-proxy_redirect	   &nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp         修改后端返回的 Location 和 Refresh 响应头中的 URL<br>
-proxy_set_header	     &nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp   修改传给后端服务器的请求头（如设置 Host）<br>
-proxy_http_version	      &nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp  设置使用的 HTTP 协议版本（如 1.0 / 1.1）<br>
-proxy_method	        &nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp    可改变转发请求的方法（较少使用）<br>
+proxy_pass	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   指定要代理到的后端服务器地址（必需）<br>
+proxy_redirect	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         修改后端返回的 Location 和 Refresh 响应头中的 URL<br>
+proxy_set_header	      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改传给后端服务器的请求头（如设置 Host）<br>
+proxy_http_version	       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  设置使用的 HTTP 协议版本（如 1.0 / 1.1）<br>
+proxy_method	         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    可改变转发请求的方法（较少使用）<br>
 <br>
 # 缓存与连接控制<br>
 指令	                    说明<br>
-proxy_connect_timeout	    连接后端服务器的超时时间<br>
-proxy_send_timeout	        向后端发送请求的超时时间<br>
-proxy_read_timeout	        等待后端响应的超时时间<br>
+proxy_connect_timeout	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   连接后端服务器的超时时间<br>
+proxy_send_timeout	     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    向后端发送请求的超时时间<br>
+proxy_read_timeout	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     等待后端响应的超时时间<br>
 proxy_buffering	            是否启用缓冲后端响应（默认开启）<br>
 proxy_buffers	            定义缓冲区的数量和大小<br>
 proxy_buffer_size	        为响应头分配的单个缓冲区大小<br>
