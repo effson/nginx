@@ -72,7 +72,7 @@ proxy_cache_lock_timeout	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    �
 proxy_cache_min_uses	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        至少请求几次后才缓存<br>
 add_header X-Cache-Status	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    添加缓存状态响应头（如 HIT、MISS）<br>
 <br>
-## 示例配置<br>
+## proxy_cache示例配置<br>
 
 ### 1. 定义缓存路径<br>
 proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=1g inactive=60m use_temp_path=off;<br>
@@ -101,7 +101,7 @@ STALE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	后端失败时使用了�
 UPDATING	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前缓存正在更新，使用旧内容返回<br>
 REVALIDATED	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对已缓存的响应进行验证后仍可使用<br>
 <br>
-### 示例配置<br>
+# 示例配置<br>
 <br>
 <br>
 location /api/ {<br>
