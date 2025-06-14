@@ -52,6 +52,56 @@ proxy_ssl_trusted_certificate	信任的 CA 证书<br>
 proxy_ssl_verify	是否校验证书<br>
 proxy_ssl_verify_depth	设置验证深度<br>
 <br>
+<br>
+# proxy_cache 模块<br>
+功能：<br>
+缓存后端服务器的响应内容，提升性能，减少后端压力。<br>
+<br>
+## 常用配置指令一览<br>
+指令	说明<br>
+proxy_cache	指定使用哪个缓存区域<br>
+proxy_cache_path	定义缓存目录、大小、key结构等<br>
+proxy_cache_key	设置缓存 key（决定哪些请求会命中缓存）<br>
+proxy_cache_valid	指定不同响应码对应的缓存时间<br>
+proxy_cache_methods	指定哪些方法可以缓存（如 GET、HEAD）<br>
+proxy_cache_use_stale	在后端失败时是否使用过期缓存<br>
+proxy_cache_bypass	指定某些请求不使用缓存（条件变量）<br>
+proxy_no_cache	指定某些请求不缓存响应（条件变量）<br>
+proxy_cache_lock	启用锁机制避免缓存穿透（多个请求打后端）<br>
+proxy_cache_lock_timeout	锁等待时间<br>
+proxy_cache_min_uses	至少请求几次后才缓存<br>
+add_header X-Cache-Status	添加缓存状态响应头（如 HIT、MISS）<br>
+<br>
+## 示例配置<br>
+nginx<br>
+<br>
+### 1. 定义缓存路径<br>
+proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=1g inactive=60m use_temp_path=off;<br>
+<br>
+### 2. 在 server 或 location 中启用缓存<br>
+location /api/ {<br>
+    proxy_pass http://backend;<br>
+    <br>
+    proxy_cache my_cache;  # 指定缓存区域<br>
+    proxy_cache_valid 200 302 10m;   # 只缓存200/302响应，10分钟<br>
+    proxy_cache_valid 404 1m;<br>
+    proxy_cache_use_stale error timeout updating;<br>
+    proxy_cache_lock on;<br>
+    <br>
+    proxy_cache_key "$scheme$proxy_host$request_uri";<br>
+    <br>
+    add_header X-Cache-Status $upstream_cache_status;<br>
+}<br>
+🧪 $upstream_cache_status 可取值<br>
+值	说明<br>
+MISS	未命中缓存，请求了后端<br>
+HIT	成功命中缓存<br>
+BYPASS	被 proxy_cache_bypass 绕过了缓存<br>
+EXPIRED	缓存已过期，请求了后端并刷新<br>
+STALE	后端失败时使用了旧缓存<br>
+UPDATING	当前缓存正在更新，使用旧内容返回<br>
+REVALIDATED	对已缓存的响应进行验证后仍可使用<br>
+<br>
 # 示例配置<br>
 nginx<br>
 <br>
