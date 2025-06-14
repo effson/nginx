@@ -73,7 +73,7 @@ proxy_cache_min_uses	至少请求几次后才缓存<br>
 add_header X-Cache-Status	添加缓存状态响应头（如 HIT、MISS）<br>
 <br>
 ## 示例配置<br>
-<br>
+
 ### 1. 定义缓存路径<br>
 proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=1g inactive=60m use_temp_path=off;<br>
 <br>
@@ -91,7 +91,7 @@ location /api/ {<br>
     <br>
     add_header X-Cache-Status $upstream_cache_status;<br>
 }<br>
-🧪 $upstream_cache_status 可取值<br>
+### $upstream_cache_status 可取值<br>
 值	说明<br>
 MISS	未命中缓存，请求了后端<br>
 HIT	成功命中缓存<br>
@@ -101,16 +101,15 @@ STALE	后端失败时使用了旧缓存<br>
 UPDATING	当前缓存正在更新，使用旧内容返回<br>
 REVALIDATED	对已缓存的响应进行验证后仍可使用<br>
 <br>
-# 示例配置<br>
-
+### 示例配置<br>
 <br>
-
-location /api/ {
-    proxy_pass http://127.0.0.1:8080/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_connect_timeout 3s;
-    proxy_read_timeout 10s;
-    proxy_buffering off;
-}
+<br>
+location /api/ {<br>
+    proxy_pass http://127.0.0.1:8080/;<br>
+    proxy_set_header Host $host;<br>
+    proxy_set_header X-Real-IP $remote_addr;<br>
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;<br>
+    proxy_connect_timeout 3s;<br>
+    proxy_read_timeout 10s;<br>
+    proxy_buffering off;<br>
+}<br>
