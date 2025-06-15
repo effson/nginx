@@ -62,9 +62,9 @@ location /api/ {
 # 6 🚨 注意事项<br>
 ```
 项	                    注意
-/auth 必须为 internal	防止外部直接访问
+/auth 必须为 internal	    防止外部直接访问
 /auth 不能返回重定向	    会被 Nginx当作失败处理
-不支持 body 转发	        子请求不会带 body，适合只检查 header/token
+不支持 body 转发	            子请求不会带 body，适合只检查 header/token
 配合缓存使用时要小心	    auth_request 会绕过缓存逻辑
 
 ```
