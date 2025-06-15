@@ -6,7 +6,7 @@ Nginx 的 limit_req 是一个用于 限制客户端请求速率（QPS） 的模�
 limit_req 是由 ngx_http_limit_req_module 模块提供的。<br>
 默认编译安装的 Nginx 是带有该模块的<br>
 # 1 配置指令总览<br>
-limit_req_zone	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定义限速的 共享内存区域，通常按 IP 分组<br>
+limit_req_zone	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定义限速的 共享内存区域，通常按 IP 分组<br>
 limit_req	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在某个 location 中应用限速规则<br>
 limit_req_log_level	&nbsp;&nbsp;&nbsp;&nbsp;控制被限流时的日志级别<br>
 limit_req_status	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;被限流时返回的 HTTP 状态码（默认 503）<br>
