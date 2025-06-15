@@ -24,9 +24,9 @@ http {
 
        location /api/ {
             limit_req zone=one burst=5 nodelay;
-           proxy_pass http://backend;
+            proxy_pass http://backend;
         }
-  }
+    }
 }
 ```
 # 3 参数解释<br>
