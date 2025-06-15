@@ -35,5 +35,6 @@ http {<br>
 #### 1.3.3 limit_conn addr 1<br>
 在某个 location 或 server 中，使用 limit_conn 应用前面定义的区域<br>
 限制每个 key（这里是 IP）最多 1 个活动连接<br>
-## 总结表<br>
-### limit_conn_status 429;           限制时返回 429 状态码（可选）<br>
+# 总结表<br>
+## limit_conn_status 429;  <br>         
+### 限制时返回 429 状态码（可选）<br>
