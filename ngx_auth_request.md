@@ -16,25 +16,26 @@ auth_request 是 Nginx 的一个子请求认证模块，由 ```ngx_http_auth_req
 
 #### 与后端认证服务配合使用（如 OpenResty、Auth0、Keycloak）<br>
 
-# 📦 模块说明<br>
+# 3 📦 模块说明<br>
 该模块默认在 Nginx 源码中自带，但要确保编译时包含```--with-http_auth_request_module``` <br>
 <br>
 🔧 配置示例：将认证交给 /auth 接口判断<br>
-<br>
-server {<br>
-    listen 80;<br>
-<br>
-    location /api/ {<br>
-        auth_request /auth;<br>
-        proxy_pass http://backend;<br>
-    }<br>
-<br>
+```
+server {
+    listen 80;
+
+    location /api/ {
+        auth_request /auth;
+        proxy_pass http://backend;
+    }
+
     # 认证接口，只返回 2xx 表示通过，其它表示失败<br>
-    location = /auth {<br>
-        internal;<br>
-        proxy_pass http://auth-server/validate_token;<br>
-    }<br>
-}<br>
+    location = /auth {
+        internal;
+        proxy_pass http://auth-server/validate_token;
+    }
+}
+```
 🔍 工作流程<br>
 用户访问 /api/foo<br>
 <br>
