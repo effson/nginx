@@ -18,7 +18,7 @@
 Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：<br>
 ## ```sudo crontab -e```<br>
 添加以下内容（每天凌晨检查并自动续期）：<br>
-
+<br>
 ```0 3 * * * certbot renew --quiet```<br>
 或者直接测试续期命令：<br>
 <br>
@@ -26,27 +26,27 @@ Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置�
 📁 六、HTTPS 站点配置样例（自动生成）<br>
 <br>
 ```
-server {<br>
-    listen 80;<br>
-    server_name example.com www.example.com;<br>
-<br>
-    # certbot 会自动加这个 redirect 到 HTTPS<br>
-    return 301 https://$host$request_uri;<br>
-}<br>
-<br>
-server {<br>
-    listen 443 ssl;<br>
-    server_name example.com www.example.com;<br>
+server {
+    listen 80;
+    server_name example.com www.example.com;
 
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;<br>
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;<br>
+    # certbot 会自动加这个 redirect 到 HTTPS
+    return 301 https://$host$request_uri;
+}
 
-    ssl_protocols TLSv1.2 TLSv1.3;<br>
-    ssl_ciphers HIGH:!aNULL:!MD5;<br>
+server {
+    listen 443 ssl;
+    server_name example.com www.example.com;
 
-    location / {<br>
-        root /usr/share/nginx/html;<br>
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+
+    location / {
+        root /usr/share/nginx/html;
         index index.html;<br>
-    }<br>
-}<br>
+    }
+}
 ```
