@@ -21,50 +21,51 @@ location /old {<br>
 rewrite ^/foo$ /bar;<br>
 这会让请求 /foo 变为 /bar，重新匹配 location。<br>
 <br>
-## 1.3 结合 break/last/redirect/permanent<br>
-### break：停止 rewrite 阶段，继续在当前 location 内执行后续处理。<br>
-### last：重新走一次 location 匹配。<br>
-### redirect：返回 302。<br>
-### permanent：返回 301。<br>
+## 1.3 结合 ```break/last/redirect/permanent```<br>
+### ```break```：停止 rewrite 阶段，继续在当前 location 内执行后续处理。<br>
+### ```last```：重新走一次 location 匹配。<br>
+### ```redirect```：返回 302。<br>
+### ```permanent```：返回 301。<br>
 <br>
 
 # 2.rewrite 指令生效位置<br>
 <br>
 
-## server 块中<br>
+## ```server``` 块中<br>
 
-## location 块中<br>
+## ```location``` 块中<br>
 
-## if 块中<br>
+## ```if``` 块中<br>
 
 ## 不能出现在 http 块中。<br>
 <br>
 
 # 3.示例说明<br>
+```
+server {
+    listen 80;
+    server_name example.com;
 
-server {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    listen 80;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    server_name example.com;<br>
+    location / {
+        rewrite ^/foo/(.*)$ /bar/$1 break;
+        proxy_pass http://backend;
+    }
+
+    location /bar {
+       return 200 'Hello from /bar!';
+    }
+}
+```
+访问 ```http://example.com/foo/test``` 时：<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    location / {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        rewrite ^/foo/(.*)$ /bar/$1 break;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy_pass http://backend;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    location /bar {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       return 200 'Hello from /bar!';<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
-}<br>
-访问 http://example.com/foo/test 时：<br>
-<br>
-URI 被 rewrite 改成 /bar/test<br>
+URI 被 rewrite 改成``` /bar/test```<br>
 <br>
 rewrite 使用 break，不重新匹配 location<br>
 <br>
 最终仍在 / 匹配中，转发给后端<br>
 <br>
 # 4.rewrite模块和阶段的关系<br>
-Nginx 的 ngx_http_rewrite_module 模块是在 rewrite 阶段工作的，它注册了 NGX_HTTP_REWRITE_PHASE 的 handler。<br>
+Nginx 的 ngx_http_rewrite_module 模块是在 rewrite 阶段工作的，它注册了``` NGX_HTTP_REWRITE_PHASE ```的 handler。<br>
 这个阶段执行顺序早于 access 阶段，也早于 content 阶段，因此非常适合做前置处理。<br>
 <br>
 
