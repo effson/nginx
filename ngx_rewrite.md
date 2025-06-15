@@ -6,15 +6,16 @@
 进行内部重定向<br>
 <br>
 控制访问流程（比如结合 return、break、rewrite 指令）<br>
-# 1rewrite 阶段做什么<br>
-# 1.1. 修改 URI<br>
+# 1.rewrite 阶段做什么<br>
+## 1.1 修改 URI<br>
 <br>
 location /old {<br>
-    rewrite ^/old/(.*)$ /new/$1 break;<br>
-}
+&nbsp;&nbsp;&nbsp;&nbsp;    rewrite ^/old/(.*)$ /new/$1 break;<br>
+}<br>
 这个规则将 /old/foo 改写为 /new/foo。<br>
 <br>
-2. 内部跳转（internal redirect）<br>
+
+## 1.2 内部跳转（internal redirect）<br>
 使用 rewrite 后可以跳转到新的 URI，重新走一次 location 匹配。<br>
 <br>
 rewrite ^/foo$ /bar;<br>
@@ -43,17 +44,17 @@ if 块中<br>
 四、示例说明<br>
 
 server {<br>
-    listen 80;<br>
-    server_name example.com;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    listen 80;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    server_name example.com;<br>
 <br>
-    location / {<br>
-        rewrite ^/foo/(.*)$ /bar/$1 break;<br>
-        proxy_pass http://backend;<br>
-    }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    location / {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        rewrite ^/foo/(.*)$ /bar/$1 break;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        proxy_pass http://backend;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
 <br>
-    location /bar {<br>
-        return 200 'Hello from /bar!';<br>
-    }<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    location /bar {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       return 200 'Hello from /bar!';<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
 }<br>
 访问 http://example.com/foo/test 时：<br>
 <br>
