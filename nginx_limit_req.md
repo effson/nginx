@@ -25,10 +25,10 @@ http {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
 &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
 }<br>
-<br>
-<br>
-<br>
-<br>
+# 3 参数解释<br>
+## limit_req_zone<br>
+### limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
+#### $binary_remote_addr：表示按客户端 IP 限制<br>
 <br>
 <br>
 <br>
