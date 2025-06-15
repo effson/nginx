@@ -9,9 +9,9 @@ limit_conn 用于限制某个“key”（如 IP）对应的活动连接数，例
 #### 限制单个客户端 IP 的连接数（防止慢连接攻击）<br>
 #### 限制某类用户、域名、接口的并发连接数<br>
 ## 1.2 基本语法<br>
-### ```limit_conn_zone key zone=name:size;``` <br>
-#### key：限制的单位，如 ```$binary_remote_addr```（客户端 IP）<br>
-#### ```zone=name:size```：共享内存区的名字和大小，例如 ```zone=addr:10m``` <br>
+ ```limit_conn_zone key zone=name:size;``` <br>
+ key：限制的单位，如 ```$binary_remote_addr```（客户端 IP）<br>
+ ```zone=name:size```：共享内存区的名字和大小，例如 ```zone=addr:10m``` <br>
 #### ⚠️ 注意：这个指令 只能放在 http 块中<br>
 ## 1.3 示例：限制每个 IP 同时最多 1 个连接<br>
 ```
