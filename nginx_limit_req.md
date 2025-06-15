@@ -26,19 +26,19 @@ http {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;    }<br>
 }<br>
 # 3 参数解释<br>
-## limit_req_zone<br>
+## 3.1 limit_req_zone<br>
 ### limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
 #### $binary_remote_addr：表示按客户端 IP 限制<br>
 #### zone=one:10m：创建一个名为 one、大小为 10MB 的共享内存区<br>
 #### rate=1r/s：表示平均每秒只允许一个请求（Rate Limit）<br>
-## limit_req<br>
+## 3.2 limit_req<br>
 ### limit_req zone=one burst=5 nodelay;<br>
 #### zone=one：应用哪个 zone（对应前面的定义）<br>
 #### burst=5：允许突发最多 5 个请求（类似令牌桶）<br>
 #### nodelay：<br>
 有：只要在 burst 之内，就立即处理（适合低延迟接口）<br>
 无：超出的请求将会排队延迟处理（更公平）<br>
-## 其他可选指令<br>
+## 3.3 其他可选指令<br>
 ### limit_req_log_level warn;<br>
 ### limit_req_status 429;<br>
 #### log_level：限制生效时的日志等级（默认为 error）<br>
