@@ -23,14 +23,8 @@ rewrite ^/foo$ /bar;<br>
 <br>
 ## 1.3 结合 break/last/redirect/permanent<br>
 ### break：停止 rewrite 阶段，继续在当前 location 内执行后续处理。<br>
-<br>
-
 ### last：重新走一次 location 匹配。<br>
-<br>
-
 ### redirect：返回 302。<br>
-<br>
-
 ### permanent：返回 301。<br>
 <br>
 
@@ -46,7 +40,7 @@ rewrite ^/foo$ /bar;<br>
 ## 不能出现在 http 块中。<br>
 <br>
 
-### 3.示例说明<br>
+# 3.示例说明<br>
 
 server {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    listen 80;<br>
@@ -69,14 +63,8 @@ rewrite 使用 break，不重新匹配 location<br>
 <br>
 最终仍在 / 匹配中，转发给后端<br>
 <br>
-五、rewrite模块和阶段的关系<br>
+# 4.rewrite模块和阶段的关系<br>
 Nginx 的 ngx_http_rewrite_module 模块是在 rewrite 阶段工作的，它注册了 NGX_HTTP_REWRITE_PHASE 的 handler。<br>
-<br>
 这个阶段执行顺序早于 access 阶段，也早于 content 阶段，因此非常适合做前置处理。<br>
 <br>
-六、rewrite 阶段常见用途<br>
-URL 伪静态（SEO）<br>
-<br>
-跳转旧接口路径到新路径<br>
-<br>
-基于条件的请求重写（如 UA 检测、IP 匹配等）<br>
+
