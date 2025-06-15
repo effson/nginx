@@ -22,22 +22,22 @@ rewrite ^/foo$ /bar;<br>
 这会让请求 /foo 变为 /bar，重新匹配 location。<br>
 <br>
 ## 1.3 结合 ```break/last/redirect/permanent```<br>
-### ```break```：停止 rewrite 阶段，继续在当前 location 内执行后续处理。<br>
-### ```last```：重新走一次 location 匹配。<br>
-### ```redirect```：返回 302。<br>
-### ```permanent```：返回 301。<br>
+#### ```break```：停止 rewrite 阶段，继续在当前 location 内执行后续处理。<br>
+#### ```last```：重新走一次 location 匹配。<br>
+#### ```redirect```：返回 302。<br>
+#### ```permanent```：返回 301。<br>
 <br>
 
 # 2.rewrite 指令生效位置<br>
 <br>
 
-## ```server``` 块中<br>
+#### ```server``` 块中<br>
 
-## ```location``` 块中<br>
+#### ```location``` 块中<br>
 
-## ```if``` 块中<br>
+#### ```if``` 块中<br>
 
-## 不能出现在 http 块中。<br>
+#### 不能出现在 http 块中。<br>
 <br>
 
 # 3.示例说明<br>
