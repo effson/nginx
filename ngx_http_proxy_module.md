@@ -176,14 +176,14 @@ http/https（$scheme）<br>
 
 功能：在响应头中添加 X-Cache-Status 字段，用于显示缓存状态。<br>
 # 示例配置<br>
-<br>
-<br>
-location /api/ {<br>
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    proxy_pass http://127.0.0.1:8080/;<br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   proxy_set_header Host $host;<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  proxy_set_header X-Real-IP $remote_addr;<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_connect_timeout 3s;<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proxy_read_timeout 10s;<br>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  proxy_buffering off;<br>
-}<br>
+```
+location /api/ {
+     proxy_pass http://127.0.0.1:8080/;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real-IP $remote_addr;
+     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+     proxy_connect_timeout 3s;
+     proxy_read_timeout 10s;
+     proxy_buffering off;
+}
+```
