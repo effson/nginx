@@ -52,14 +52,14 @@ Nginx 自动发起子请求 /auth<br>
 <br>
 ✅ 搭配 header 传递身份信息<br>
 你可以让 /auth 设置 header，然后传递给后端：<br>
-<br>
-<br>
-location /api/ {<br>
-    auth_request /auth;<br>
-    auth_request_set $auth_user $upstream_http_x_user;<br>
-    proxy_set_header X-User $auth_user;<br>
-    proxy_pass http://backend;<br>
-}<br>
+```
+location /api/ {
+    auth_request /auth;
+    auth_request_set $auth_user $upstream_http_x_user;
+    proxy_set_header X-User $auth_user;
+    proxy_pass http://backend;
+}
+```
 这样后端能拿到 X-User 头，知道是谁。<br>
 <br>
 🚨 注意事项<br>
