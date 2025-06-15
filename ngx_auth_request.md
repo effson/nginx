@@ -37,19 +37,16 @@ server {
 }
 ```
 # 4 🔍 工作流程<br>
-用户访问 ```/api/foo``` <br>
-<br>
-Nginx 自动发起子请求 /auth<br>
-
-/auth 接口向认证服务检查用户合法性（检查 Cookie、Header、Token 等）<br>
-<br>
-根据 /auth 返回的状态码决定是否继续主请求：<br>
-<br>
-/auth 返回码	效果<br>
-2xx（如 200）	✅ 请求通过，继续访问 /api<br>
-401/403	❌ 主请求返回错误<br>
-其它	默认返回 403 Forbidden<br>
-<br>
+#### 用户访问 ```/api/foo``` <br>
+#### Nginx 自动发起子请求 /auth<br>
+#### /auth 接口向认证服务检查用户合法性（检查 Cookie、Header、Token 等）<br>
+#### 根据 /auth 返回的状态码决定是否继续主请求：<br>
+#### /auth 返回码	效果<br>
+```
+2xx（如 200）	✅ 请求通过，继续访问 /api
+401/403	❌ 主请求返回错误
+其它	默认返回 403 Forbidden
+```
 ✅ 搭配 header 传递身份信息<br>
 你可以让 /auth 设置 header，然后传递给后端：<br>
 ```
