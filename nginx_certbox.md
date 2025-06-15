@@ -6,7 +6,7 @@
 自动修改 Nginx 配置、重新加载 Nginx。<br>
 
 执行成功后，你可以看到：<br>
-Congratulations! Your certificate and chain have been saved at:<br>
+```Congratulations! Your certificate and chain have been saved at:```<br>
 ...
 #  检查你的 HTTPS 配置是否生效<br>
 
@@ -16,7 +16,7 @@ Congratulations! Your certificate and chain have been saved at:<br>
 <br>
 # 🔁 五、自动续期<br>
 Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：<br>
-## sudo crontab -e<br>
+## ```sudo crontab -e```<br>
 添加以下内容（每天凌晨检查并自动续期）：<br>
 
 0 3 * * * certbot renew --quiet<br>
