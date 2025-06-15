@@ -19,12 +19,13 @@ Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置�
 ## ```sudo crontab -e```<br>
 添加以下内容（每天凌晨检查并自动续期）：<br>
 
-0 3 * * * certbot renew --quiet<br>
+```0 3 * * * certbot renew --quiet```<br>
 或者直接测试续期命令：<br>
 <br>
-sudo certbot renew --dry-run<br>
+```sudo certbot renew --dry-run```<br>
 📁 六、HTTPS 站点配置样例（自动生成）<br>
 <br>
+```
 server {<br>
     listen 80;<br>
     server_name example.com www.example.com;<br>
@@ -48,4 +49,4 @@ server {<br>
         index index.html;<br>
     }<br>
 }<br>
-
+```
