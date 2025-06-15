@@ -44,11 +44,11 @@ server {
 #### /auth 返回码	效果<br>
 ```
 2xx（如 200）	✅ 请求通过，继续访问 /api
-401/403	❌ 主请求返回错误
-其它	默认返回 403 Forbidden
+401/403	     ❌ 主请求返回错误
+其它	  默认返回 403 Forbidden
 ```
 ✅ 搭配 header 传递身份信息<br>
-你可以让 /auth 设置 header，然后传递给后端：<br>
+可以让 /auth 设置 header，然后传递给后端：<br>
 ```
 location /api/ {
     auth_request /auth;
