@@ -5,19 +5,22 @@ access 阶段主要用于判断当前请求是否允许访问，常用于 IP 黑
 
 # 1 常见用法示例<br><br>
 ## 1.1 拒绝某个 IP 访问<br>
+```
 location /admin {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    deny 192.168.1.1;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    allow all;<br>
-}<br>
+    deny 192.168.1.1;
+    allow all;
+}
+```
 #### 所有 IP 都允许，除了 192.168.1.1 被拒绝<br>
 #### deny/allow 就是 access 阶段的 handler 指令<br>
 
 ## 1.2 开启基本认证<br>
-location /private {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    auth_basic "Restricted";<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    auth_basic_user_file /root/nginxdir/.htpasswd;<br>
-}<br>
-
+```
+location /private {
+    auth_basic "Restricted";
+    auth_basic_user_file /root/nginxdir/.htpasswd;
+}
+```
 #### 访问 /private 资源时，需要提供用户名和密码，这也是发生在 access 阶段<br>
-#### .htpasswd文件可以用 htpasswd -c /root/nginxdir/.htpasswd user_name生成
+#### .htpasswd文件可以用 ```htpasswd -c /root/nginxdir/.htpasswd user_name``` 生成
 #### 需要先安装httpd-tools
