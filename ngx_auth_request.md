@@ -1,13 +1,13 @@
 # 0 概述<br>
 auth_request 是 Nginx 的一个子请求认证模块，由 ```ngx_http_auth_request_module``` 提供<br>
 
-# 功能
+# 1 功能
 ### ✅ 把认证过程“外包”给另一个内部请求（子请求），并根据子请求的结果（状态码）决定主请求是否被允许。<br>
 
 ### 🧠 一句话总结<br>
 ### Nginx 的 auth_request 模块 不进行认证本身，而是调用另一个 location 进行认证判断。<br>
 
-# ✅ 使用场景<br>
+# 2 ✅ 使用场景<br>
 #### 单点登录（SSO）<br>
 
 #### API 网关认证（JWT、Session 等）<br>
