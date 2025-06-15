@@ -31,7 +31,7 @@ http {
 ```
 # 3 参数解释<br>
 ## 3.1 limit_req_zone<br>
-### limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
+### ```limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;```<br>
 #### $binary_remote_addr：表示按客户端 IP 限制<br>
 #### zone=one:10m：创建一个名为 one、大小为 10MB 的共享内存区<br>
 #### rate=1r/s：表示平均每秒只允许一个请求（Rate Limit）<br>
