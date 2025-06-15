@@ -12,7 +12,7 @@
 
 ## sudo nginx -t<br>
 ## sudo systemctl reload nginx<br>
-然后访问你的域名 https://example.com，应该就是加密的 HTTPS 页面了！<br>
+然后访问域名 https://example.com，应该就是加密的 HTTPS 页面了！<br>
 <br>
 # 🔁 五、自动续期<br>
 Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置自动续期：<br>
