@@ -28,11 +28,12 @@ http {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
 }<br>
 <br>
-#### $binary_remote_addr<br>
+#### 1.3.1 $binary_remote_addr<br>
 是二进制格式的 IP 地址，比 $remote_addr 更紧凑、内存占用更少，推荐使用<br>
-#### zone=addr:10m<br>
+#### 1.3.2 zone=addr:10m<br>
 创建一个名为 addr 的共享内存区，大小为 10MB，可大约容纳 16 万条连接状态记录<br>
-#### limit_conn addr 1<br>
+#### 1.3.3 limit_conn addr 1<br>
 在某个 location 或 server 中，使用 limit_conn 应用前面定义的区域<br>
 限制每个 key（这里是 IP）最多 1 个活动连接<br>
-
+## 总结表<br>
+### limit_conn_status 429;           限制时返回 429 状态码（可选）<br>
