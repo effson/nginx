@@ -59,7 +59,7 @@ location /api/ {
 ```
 这样后端能拿到 X-User 头，知道是谁。<br>
 <br>
-🚨 注意事项<br>
+# 6 🚨 注意事项<br>
 项	注意<br>
 /auth 必须为 internal	防止外部直接访问<br>
 /auth 不能返回重定向	会被 Nginx当作失败处理<br>
@@ -72,8 +72,10 @@ location /api/ {
 curl -v -H "Authorization: Bearer xyz" http://127.0.0.1/api/foo<br>
 看是否触发了 /auth 子请求并判断成功。<br>
 <br>
-✅ 总结表
-指令	说明
-auth_request /auth;	指定认证子请求的 URI
-auth_request_set	从子请求提取 header、变量
-internal	防止 /auth 被直接访问
+# 7 ✅ 总结表
+```
+指令	                说明
+auth_request /auth;	    指定认证子请求的 URI
+auth_request_set	    从子请求提取 header、变量
+internal	            防止 /auth 被直接访问
+```
