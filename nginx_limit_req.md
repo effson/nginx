@@ -13,20 +13,22 @@ limit_req_log_level	      控制被限流时的日志级别<br>
 limit_req_status	      被限流时返回的 HTTP 状态码（默认 503）<br>
 ```
 # 2 示例：限制单个 IP 每秒最多请求 1 次<br>
-http {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;    # 定义名为 'one' 的限流区域，按 $binary_remote_addr（IP地址）分组，最大存储1万条记录<br>
-&nbsp;&nbsp;&nbsp;&nbsp;    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
+```
+http {
+    # 定义名为 'one' 的限流区域，按 $binary_remote_addr（IP地址）分组，最大存储1万条记录
+    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
 
-&nbsp;&nbsp;&nbsp;&nbsp;    server {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        listen 80;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        server_name localhost;<br>
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       location /api/ {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            limit_req zone=one burst=5 nodelay;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;           proxy_pass http://backend;<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        }<br>
-&nbsp;&nbsp;&nbsp;&nbsp;    }<br>
-}<br>
+    server {
+        listen 80;
+        server_name localhost;
+
+       location /api/ {
+            limit_req zone=one burst=5 nodelay;
+           proxy_pass http://backend;
+        }
+  }
+}
+```
 # 3 参数解释<br>
 ## 3.1 limit_req_zone<br>
 ### limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
