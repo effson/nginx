@@ -15,7 +15,8 @@ location /admin {<br>
 ## 1.2 开启基本认证<br>
 location /private {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    auth_basic "Restricted";<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    auth_basic_user_file /etc/nginx/.htpasswd;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    auth_basic_user_file /root/nginxdir/.htpasswd;<br>
 }<br>
 
 #### 访问 /private 资源时，需要提供用户名和密码，这也是发生在 access 阶段<br>
+#### .htpasswd文件可以用 htpasswd -c /root/nginxdir/.htpasswd user_name生成
