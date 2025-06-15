@@ -21,42 +21,31 @@ Certbot 默认生成的 Let's Encrypt 证书有效期为 90 天，推荐配置�
 
 0 3 * * * certbot renew --quiet<br>
 或者直接测试续期命令：<br>
+<br>
+sudo certbot renew --dry-run<br>
+📁 六、HTTPS 站点配置样例（自动生成）<br>
+<br>
+server {<br>
+    listen 80;<br>
+    server_name example.com www.example.com;<br>
+<br>
+    # certbot 会自动加这个 redirect 到 HTTPS<br>
+    return 301 https://$host$request_uri;<br>
+}<br>
+<br>
+server {<br>
+    listen 443 ssl;<br>
+    server_name example.com www.example.com;<br>
 
-sudo certbot renew --dry-run
-📁 六、HTTPS 站点配置样例（自动生成）
-nginx
-复制
-编辑
-server {
-    listen 80;
-    server_name example.com www.example.com;
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;<br>
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;<br>
 
-    # certbot 会自动加这个 redirect 到 HTTPS
-    return 301 https://$host$request_uri;
-}
+    ssl_protocols TLSv1.2 TLSv1.3;<br>
+    ssl_ciphers HIGH:!aNULL:!MD5;<br>
 
-server {
-    listen 443 ssl;
-    server_name example.com www.example.com;
+    location / {<br>
+        root /usr/share/nginx/html;<br>
+        index index.html;<br>
+    }<br>
+}<br>
 
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-
-    ssl_protocols TLSv1.2 TLSv1.3;
-    ssl_ciphers HIGH:!aNULL:!MD5;
-
-    location / {
-        root /usr/share/nginx/html;
-        index index.html;
-    }
-}
-🧠 FAQ
-❓ 1. 我用的是阿里云/腾讯云 DNS，怎么验证？
-Certbot 默认是 HTTP 验证（即访问 http://yourdomain/.well-known/...）。只要 80 端口能访问，就行。
-
-❓ 2. 我不想 Certbot 自动改配置，怎么手动获取证书？
-bash
-复制
-编辑
-sudo certbot certonly --nginx
-然后你可以手动在 Nginx 中添加 ssl_certificate 和 ssl_certificate_key。
