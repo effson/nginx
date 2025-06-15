@@ -16,7 +16,7 @@ http {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;    limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;<br>
 
 &nbsp;&nbsp;&nbsp;&nbsp;    server {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        listen 80;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          &nbsp;&nbsp;        listen 80;<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        server_name localhost;<br>
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       location /api/ {<br>
