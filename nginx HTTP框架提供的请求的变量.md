@@ -25,15 +25,12 @@ $scheme: 请求的协议（http 或 https）。
 # 3
 ```
 $remote_addr: 客户端的 IP 地址。
-
 $request_body_file:
 $request_body:
 $server_name: 服务器的名称。
 $server_port: 服务器的端口号。
-其他有用的变量
 $request_time: 处理请求所花费的时间。
 $time_local: 当前的本地时间。
-$http_cookie: 请求中的 Cookie。
 这些变量可以在 Nginx 配置文件中使用，尤其是在日志格式、条件判断和重定向中。通过灵活使用这些变量，可以实现更复杂的请求处理逻辑
 ```
 
