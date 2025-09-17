@@ -147,3 +147,25 @@ k / K	千字节 (kilobytes)	4k 或 4K = 4096 字节
 m / M	兆字节 (megabytes)	8m 或 8M = 8×1024×1024 字节
 g / G	吉字节 (gigabytes)	1g 或 1G = 1×1024×1024×1024 字节
 ```
+## 2.3 配置块
+```
+http {
+    ...
+    upstream {
+        ...
+    }
+
+    server {
+        listen ..;
+        ...
+        locaction xx {
+            ...
+        }
+    }
+
+    server {
+        ...
+    }
+
+}
+```
