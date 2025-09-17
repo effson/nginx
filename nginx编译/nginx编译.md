@@ -248,5 +248,9 @@ objs/是 Nginx 的构建输出目录,包含的内容大致分为配置结果文�
 
 # 3. make install
 
+<img width="527" height="467" alt="image" src="https://github.com/user-attachments/assets/d3f2ed92-2a21-4934-94f5-d82163aa85db" />
 
+进入安装目录，可执行文件在sbin目录下：
+
+<img width="383" height="94" alt="image" src="https://github.com/user-attachments/assets/4e378f96-3b3f-48fe-8b47-99bc14a33de8" />
 
