@@ -220,3 +220,8 @@ Configuration summary
 ```
 
 <img width="536" height="577" alt="image" src="https://github.com/user-attachments/assets/5ccb27c7-17e2-4c0c-a706-48046235ef22" />
+
+
+# 3. objs
+
+<img width="470" height="289" alt="image" src="https://github.com/user-attachments/assets/056e34ca-fa40-43f9-8c82-17be3df32933" />
