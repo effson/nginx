@@ -21,6 +21,29 @@ kill -WINCH $(cat /home/jeff/nginx/logs/nginx.pid.oldbin)
 ## 2.1 脚本
 
 ```sh
+#!/bin/bash
 
+# Nginx 安装路径
+NGINX_HOME=/home/jeff/nginx/
+LOG_PATH=$NGINX_HOME/logs/histry
+CUR_LOG_PATH=$NGINX_HOME/logs/
+
+# 按日期命名
+YESTERDAY=$(date -d "yesterday" +"%Y-%m-%d")
+
+ACCESS_LOG=$CUR_LOG_PATH/access.log
+ERROR_LOG=$CUR_LOG_PATH/error.log
+mv $ACCESS_LOG $LOG_PATH/access_$YESTERDAY.log
+mv $ERROR_LOG  $LOG_PATH/error_$YESTERDAY.log
+
+# 发送 USR1 信号，让 Nginx 重新打开日志文件
+kill -USR1 $(cat $NGINX_HOME/logs/nginx.pid)
 ```
+## 2.2 定时任务
+```bash
+crontab -l
+
+0 0 * * * /home/jeff/nginx/sbin/cut_nginx_log.sh
+```
+
 
