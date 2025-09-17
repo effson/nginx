@@ -193,3 +193,30 @@ root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --help
 --add-module=/root/share/nginx/ngx_code_test/ngx_http_jeff_filter_module/                    \
 --add-module=/root/share/nginx/ngx_http_count_handler_module/ 
 ```
+
+# 2. 编译
+
+```bash
+root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --prefix=/home/jeff/nginx
+
+Configuration summary
+  + using system PCRE library
+  + OpenSSL library is not used
+  + using system zlib library
+
+  nginx path prefix: "/home/jeff/nginx"
+  nginx binary file: "/home/jeff/nginx/sbin/nginx"
+  nginx modules path: "/home/jeff/nginx/modules"
+  nginx configuration prefix: "/home/jeff/nginx/conf"
+  nginx configuration file: "/home/jeff/nginx/conf/nginx.conf"
+  nginx pid file: "/home/jeff/nginx/logs/nginx.pid"
+  nginx error log file: "/home/jeff/nginx/logs/error.log"
+  nginx http access log file: "/home/jeff/nginx/logs/access.log"
+  nginx http client request body temporary files: "client_body_temp"
+  nginx http proxy temporary files: "proxy_temp"
+  nginx http fastcgi temporary files: "fastcgi_temp"
+  nginx http uwsgi temporary files: "uwsgi_temp"
+  nginx http scgi temporary files: "scgi_temp"
+```
+
+<img width="536" height="577" alt="image" src="https://github.com/user-attachments/assets/5ccb27c7-17e2-4c0c-a706-48046235ef22" />
