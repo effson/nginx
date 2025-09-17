@@ -186,5 +186,9 @@ root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --help
 
 一个典型的编译nginx命令，包含自己编写的模块：
 ```bash
- ./configure --prefix=/usr/local/nginx --with-http_realip_module --with-http_addition_module --with-http_ssl_module --with-http_gzip_static_module --with-http_secure_link_module --with-http_stub_status_module --with-stream --with-pcre=/root/share/nginx/pcre-8.45 --with-zlib=/root/share/nginx/zlib-1.3 --with-openssl=/root/share/nginx/openssl-3.4.1 --add-module=/root/share/nginx/ngx_code_test/ngx_http_jeff_filter_module/ --add-module=/root/share/nginx/ngx_http_count_handler_module/
+ ./configure --prefix=/usr/local/nginx --with-http_realip_module --with-http_addition_module \
+  --with-http_ssl_module --with-http_gzip_static_module --with-http_secure_link_module        \
+--with-http_stub_status_module --with-stream --with-pcre=/root/share/nginx/pcre-8.45         \
+--with-zlib=/root/share/nginx/zlib-1.3 --with-openssl=/root/share/nginx/openssl-3.4.1        \
+--add-module=/root/share/nginx/ngx_code_test/ngx_http_jeff_filter_module/ --add-module=/root/share/nginx/ngx_http_count_handler_module/ 
 ```
