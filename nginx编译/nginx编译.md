@@ -225,3 +225,6 @@ Configuration summary
 # 3. objs
 
 <img width="470" height="289" alt="image" src="https://github.com/user-attachments/assets/056e34ca-fa40-43f9-8c82-17be3df32933" />
+
+<br>
+objs/是 Nginx 的构建输出目录,包含的内容大致分为配置结果文件和编译中间产物
