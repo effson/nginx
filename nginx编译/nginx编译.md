@@ -1,4 +1,4 @@
-# 1. ./configure --help
+# 1 ./configure --help
 
 ```bash
 root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --help
@@ -194,7 +194,7 @@ root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --help
 --add-module=/root/share/nginx/ngx_http_count_handler_module/ 
 ```
 
-# 2. 编译
+## 1.2 ./configure
 
 ```bash
 root@worker02:/home/jeff/nginx/nginx-1.28.0# ./configure --prefix=/home/jeff/nginx
@@ -222,9 +222,31 @@ Configuration summary
 <img width="536" height="577" alt="image" src="https://github.com/user-attachments/assets/5ccb27c7-17e2-4c0c-a706-48046235ef22" />
 
 
-# 3. objs
+## 1.3. objs
 
 <img width="470" height="289" alt="image" src="https://github.com/user-attachments/assets/056e34ca-fa40-43f9-8c82-17be3df32933" />
 
 <br>
 objs/是 Nginx 的构建输出目录,包含的内容大致分为配置结果文件和编译中间产物
+
+
+<img width="446" height="143" alt="image" src="https://github.com/user-attachments/assets/9f72125d-780a-438e-a41a-003314fc8008" />
+
+
+<br>
+
+# 2. make编译
+
+<img width="505" height="245" alt="image" src="https://github.com/user-attachments/assets/faf16473-409e-429d-998d-1668bd32f014" />
+
+<br>
+
+<img width="471" height="185" alt="image" src="https://github.com/user-attachments/assets/e8b1146d-9913-49a7-8936-84ece7c8ebec" />
+
+<br>
+
+
+# 3. make install
+
+
+
