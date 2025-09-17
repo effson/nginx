@@ -169,3 +169,11 @@ http {
 
 }
 ```
+
+# 3. 命令行
+
+```
+nginx -s stop
+nginx -s quit
+nginx -s reload
+```
