@@ -126,3 +126,24 @@ http {
 }
 
 ```
+
+## 2.1 时间单位
+```
+ms	毫秒 (milliseconds)	100ms
+s	秒 (seconds)	30s
+m	分钟 (minutes)	10m
+h	小时 (hours)	12h
+d	天 (days)	7d
+w	周 (weeks)	1w
+M	月 (months, 30天)	2M
+y	年 (years, 365天)	1y
+```
+
+## 2.2 空间单位
+
+```
+默认是 字节 (bytes)
+k / K	千字节 (kilobytes)	4k 或 4K = 4096 字节
+m / M	兆字节 (megabytes)	8m 或 8M = 8×1024×1024 字节
+g / G	吉字节 (gigabytes)	1g 或 1G = 1×1024×1024×1024 字节
+```
