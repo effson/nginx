@@ -1,4 +1,4 @@
-# 资源准备
+# 1. 资源准备
 index.html
 
 ```html
@@ -62,7 +62,7 @@ images/logo.png
 
 <img width="408" height="385" alt="屏幕截图 2025-09-17 230851" src="https://github.com/user-attachments/assets/c1608d43-65e9-42e0-bb94-b3fb1a6ef2ef" />
 
-# 配置文件
+# 2. 配置文件
 ```conf
 ...
     server {
@@ -86,7 +86,7 @@ images/logo.png
 
 <img width="388" height="131" alt="image" src="https://github.com/user-attachments/assets/734859db-5bcb-4013-8896-9b476f927e4e" />
 
-# 实现效果
+# 3. 实现效果
 
 访问 http://192.168.23.173:8080/index.html
 
@@ -95,3 +95,30 @@ images/logo.png
 访问 http://192.168.23.173:8080/about.html
 
 <img width="355" height="191" alt="image" src="https://github.com/user-attachments/assets/908fdd79-d850-4172-a3e3-e7b86da61305" />
+
+
+# 4. 改造为https
+
+```conf
+...
+    server {
+        listen       8080;                  # 监听 80 端口
+        server_name  myweb;           # 可以改成你的域名/IP
+
+        # 网站根目录
+        root /home/jeff/nginx/myweb;
+
+        # 默认首页文件
+        index index.html;
+
+        # location / 匹配所有请求
+        location / {
+            try_files $uri $uri/ =404;    # 请求的文件不存在则返回 404
+        }
+    }
+...
+```
+## 4.1 下载certbot
+```bash
+certbot python2-certbot-nginx
+```
