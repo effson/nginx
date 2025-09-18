@@ -129,5 +129,5 @@ certbot 2.9.0
 ```
 ## 4.2 改造nginx配置
 ```bash
-certbot --nginx --nginx-server-root=/home/jeff/nginx/conf/ -d www.example.com
+certbot --nginx --nginx-server-root=/home/jeff/nginx/conf/ -d www.myweb.com
 ```
