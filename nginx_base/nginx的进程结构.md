@@ -1,5 +1,6 @@
 
 # 1. 进程间关系
+
 ```arduino
 +-------------------+
 |   Master Process  |  ← 1 个，负责管理
@@ -19,5 +20,5 @@ Master
   ├── Worker 2
   ├── ...
   ├── Cache Manager
-  └── Cache Loader
+  └── Cache Loader   # 为反向代理时后端发来的请求做缓存使用
 ```
