@@ -1,4 +1,4 @@
-# 编译选项
+# 1. 编译选项
 ```bash
 /home//openresty-1.27.1.1# ./configure --help
   --help                             this message
@@ -246,4 +246,8 @@ Options directly inherited from nginx
 
   --dry-run                          dry running the configure, for testing only
   --platform=PLATFORM                forcibly specify a platform name, for testing only
+```
+# 2. 编译
+```bash
+/home//openresty-1.27.1.1# ./configure
 ```
