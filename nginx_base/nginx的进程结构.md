@@ -29,3 +29,24 @@ Master
 ```bash
 ps -ef | grep nginx
 ```
+
+
+# 3. Nginx进程关系带来的惊群问题
+
+## 3.1 描述
+- 多个 worker 进程通过 epoll 监听相同的监听套接字（listen fd），等待新连接到来
+- 如果操作系统内核实现不当，一个新连接到来时，所有 worker 都会被唤醒，但最后只有一个 worker 能成功 accept()，其他 worker 执行 accept() 会返回 EAGAIN（资源不可用）
+- 大量进程被无谓唤醒，CPU 资源浪费
+- 激烈的竞争导致 性能下降（锁竞争、上下文切换增多）
+
+## 3.2 解决方法
+### 3.2.1 accept_mutex（accept 锁）
+```
+events {
+    worker_connections 10240;
+    use epoll;
+    accept_mutex on;    # 默认就是 on
+}
+```
+
+### 3.2.2 accept_mutex（accept 锁）
