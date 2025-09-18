@@ -120,5 +120,7 @@ images/logo.png
 ```
 ## 4.1 下载certbot
 ```bash
-certbot python2-certbot-nginx
+apt get certbot python2-certbot-nginx
+
+certbot --nginx --nginx-server-root=/home/jeff/nginx/conf/ -d www.example.com
 ```
