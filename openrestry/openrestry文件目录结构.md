@@ -7,3 +7,4 @@ wget https://openresty.org/download/openresty-1.27.1.1.tar.gz
 
 <img width="455" height="140" alt="image" src="https://github.com/user-attachments/assets/ec3fbf8f-4373-4617-8d13-46b449c72c02" />
 
+<img width="2151" height="141" alt="image" src="https://github.com/user-attachments/assets/d6f1a43b-2949-43b5-b445-238a48acb04d" />
