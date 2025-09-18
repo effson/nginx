@@ -32,8 +32,6 @@ ps -ef | grep nginx
 
 <img width="617" height="199" alt="image" src="https://github.com/user-attachments/assets/ae54279d-6dcf-45b6-9f3d-f655ec54e505" />
 
-
-
 # 3. Nginx进程关系带来的惊群问题
 
 ## 3.1 描述
