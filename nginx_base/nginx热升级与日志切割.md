@@ -13,6 +13,7 @@ kill -QUIT $(cat /home/jeff/nginx/logs/nginx.pid.oldbin)
 ```
 <br>
 WINCH：只停掉 Worker，Master 保留（便于回滚）
+
 ```bash
 kill -WINCH $(cat /home/jeff/nginx/logs/nginx.pid.oldbin)
 ```
