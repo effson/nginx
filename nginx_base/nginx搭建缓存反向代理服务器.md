@@ -10,10 +10,20 @@
 
     location / {
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr; # Nginx 做了反向代理，后端看到的默认源 IP 是 Nginx 的 IP，不是用户的真实 IP
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
         proxy_pass [http://local](http://origin_backend);
     }
   }
 ```
+打开文件：
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+添加
+```
+192.168.23.173   www.upstream.com
+```
+
+# 2. upstream模块
