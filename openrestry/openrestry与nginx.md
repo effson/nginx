@@ -3,7 +3,7 @@
 # 2. conf实例
 
 ```conf
-server {
+    server {
         listen       8080;                  # 监听 80 端口
         server_name  myweb;           # 可以改成你的域名/IP
 
@@ -20,7 +20,7 @@ server {
 
         location /lua {
             default_type text/html;
-            content_by_lua  ``
+            content_by_lua  'ngx.say("User-Agent: ", ngx.req.get_headers()["User-Agent"])';
         }
     }
 ```
