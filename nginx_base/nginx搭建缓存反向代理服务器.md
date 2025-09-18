@@ -9,9 +9,12 @@
     server_name  www.upstream.com;
 
     location / {
-        proxy_set_header Host $host;
+        proxy_set_header Host $host;             # 把客户端请求时使用的 Host 头 传递给后端
         proxy_set_header X-Real-IP $remote_addr; # Nginx 做了反向代理，后端看到的默认源 IP 是 Nginx 的 IP，不是用户的真实 IP
+                                                 # 加了这行，后端程序（比如日志、鉴权模块）就能知道真正的客户端 IP
+      
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        # 在请求头 X-Forwarded-For 里追加一条 IP 地址，用逗号隔开，在多级代理链路中，后端可以追踪到整个链路上所有经过的客户端 IP
 
         proxy_pass [http://local](http://origin_backend);
     }
