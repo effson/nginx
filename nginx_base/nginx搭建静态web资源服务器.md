@@ -92,6 +92,6 @@ images/logo.png
 
 <img width="383" height="359" alt="image" src="https://github.com/user-attachments/assets/99aefe43-80f8-4865-89d0-5d692b3b4cd7" />
 
-访问 http://192.168.23.173:8080/ablout.html
+访问 http://192.168.23.173:8080/about.html
 
 <img width="355" height="191" alt="image" src="https://github.com/user-attachments/assets/908fdd79-d850-4172-a3e3-e7b86da61305" />
