@@ -131,3 +131,9 @@ certbot 2.9.0
 ```bash
 certbot --nginx --nginx-server-root=/home/jeff/nginx/conf/ -d www.myweb.com
 ```
+
+# 5. wireshark 抓包
+
+<img width="976" height="202" alt="image" src="https://github.com/user-attachments/assets/0c0754e8-6be8-4e34-ae92-8b22dea42c90" />
+
+最后一次握手才会建立新的连接，也就是调用accept()
