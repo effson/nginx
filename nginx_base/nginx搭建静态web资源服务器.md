@@ -122,5 +122,6 @@ images/logo.png
 ```bash
 apt get certbot python2-certbot-nginx
 
+## 4.2 改造nginx配置
 certbot --nginx --nginx-server-root=/home/jeff/nginx/conf/ -d www.example.com
 ```
