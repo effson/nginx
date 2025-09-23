@@ -71,9 +71,23 @@ struct ngx_command_s {
 };
 
 ```
+每个模块可以通过一个 ngx_command_t commands[] 数组来描述自己支持的配置指令
 
+#### ngx_str_t name
+指令名称。例如 "listen"、"location"、"proxy_pass"。
+解析配置文件时，读到对应指令名就会查找模块的 commands 表
 
+#### ngx_uint_t type
+指令出现的位置（上下文），以及参数个数限制
 
+```c
+NGX_HTTP_MAIN_CONF   // http{} 内的 main 级别
+NGX_HTTP_SRV_CONF    // server{} 块
+NGX_HTTP_LOC_CONF    // location{} 块
+NGX_CONF_TAKE1       // 接受 1 个参数
+NGX_CONF_TAKE2       // 接受 2 个参数
+NGX_CONF_FLAG        // on/off
+```
 
 
 ```c
