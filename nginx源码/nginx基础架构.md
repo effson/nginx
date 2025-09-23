@@ -53,6 +53,14 @@ ngx_module_t结构体作为所有模块的通用接口，它只定义了<mark>**
 #define NGX_STREAM_MODULE         0x4d525453  /* "STRM" */
 ```
 
+### 1.1.2 void *ctx
+
+ctx 是 “模块上下文”，不同类型的模块会用不同的结构体去解释它。相当于一个 桥梁把 Nginx 框架核心和具体模块实现联系起来
+
+
+
+
+
 
 ```c
 typedef struct {
