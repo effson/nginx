@@ -100,6 +100,8 @@ char *set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 #### conf 和 offset
 conf 表示在哪一级配置（main/srv/loc），offset 表示该配置在配置结构体中的偏移量，框架会根据这两个值，把参数写到对应模块的配置结构体里
 
+## 1.2 ngx_core_module_t
+
 
 ```c
 typedef struct {
