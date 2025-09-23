@@ -234,3 +234,10 @@ static ngx_command_t  ngx_event_core_commands[] = {
       ngx_null_command
 };
 ```
+## Nginx模块总结
+配置模块和核心模块这两种模块类型是由Nginx的框架代码所定义的，这里的配置模块是所有模块的基础，它实现了最基本的配置项解析功能（就是解析nginx.conf文件）<br>
+
+<mark>事件模块、HTTP模块、mail模块都有相应的核心core模块作为核心业务与管理功能</mark>
+- 事件模块是由它的“代言人”——ngx_events_module核心模块定义，所有事件模块的加载操作不是由Nginx框架完成的，而是由ngx_event_core_module模块负责的。
+- HTTP模块是由它的“代言人”——ngx_http_module核心模块定义的，核心模块会负责加载所有的HTTP模块，决定业务的核心逻辑以及对于具体的请求该选用哪一个HTTP模块处理
+- 至于mail模块，因与HTTP模块基本相似，不再赘述。
