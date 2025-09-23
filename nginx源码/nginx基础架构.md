@@ -50,6 +50,7 @@ ngx_module_t结构体作为所有模块的通用接口，它只定义了<mark>**
 #define NGX_HTTP_MODULE           0x50545448  /* "HTTP" */
 #define NGX_EVENT_MODULE          0x544E5645  /* "EVNT" */
 #define NGX_MAIL_MODULE           0x4C49414D  /* "MAIL" */
+#define NGX_STREAM_MODULE         0x4d525453  /* "STRM" */
 ```
 
 
