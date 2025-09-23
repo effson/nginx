@@ -88,6 +88,17 @@ NGX_CONF_TAKE1       // 接受 1 个参数
 NGX_CONF_TAKE2       // 接受 2 个参数
 NGX_CONF_FLAG        // on/off
 ```
+#### set回调函数
+Nginx 解析到该指令时调用，用来写入配置
+
+```c
+char *set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+```
+
+返回 NGX_CONF_OK 表示解析成功，返回错误字符串表示失败
+
+#### conf 和 offset
+conf 表示在哪一级配置（main/srv/loc），offset 表示该配置在配置结构体中的偏移量，框架会根据这两个值，把参数写到对应模块的配置结构体里
 
 
 ```c
