@@ -41,6 +41,17 @@ struct ngx_module_s {
 ngx_module_t结构体作为所有模块的通用接口，它只定义了<mark>**init_master、init_module、init_process、init_thread、exit_thread、exit_process、exit_master**</mark>这7个回调方法。<br>
 可以看出系统的核心结构体为<mark>**ngx_cycle_t**</mark>
 
+### 1.1.1 ngx_uint_t type
+标识了该模块的 类型（Type）
+
+```c
+#define NGX_CORE_MODULE           0x45524F43  /* "CORE" */
+#define NGX_CONF_MODULE           0x464E4F43  /* "CONF" */
+#define NGX_HTTP_MODULE           0x50545448  /* "HTTP" */
+#define NGX_EVENT_MODULE          0x544E5645  /* "EVNT" */
+#define NGX_MAIL_MODULE           0x4C49414D  /* "MAIL" */
+```
+
 
 ```c
 typedef struct {
