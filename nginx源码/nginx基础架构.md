@@ -163,6 +163,16 @@ static ngx_command_t  ngx_events_commands[] = {
 };
 ```
 
+####  3. ngx_core_module_t ngx_events_module_ctx
+
+```c
+static ngx_core_module_t  ngx_events_module_ctx = {
+    ngx_string("events"),
+    NULL,
+    ngx_event_init_conf
+};
+```
+
 <mark>**event核心 core 模块**</mark>
 
 #### 1. ngx_module_t ngx_event_core_module
@@ -234,6 +244,19 @@ static ngx_command_t  ngx_event_core_commands[] = {
       ngx_null_command
 };
 ```
+
+####  3. ngx_event_module_t  ngx_event_core_module_ctx
+
+```c
+static ngx_event_module_t  ngx_event_core_module_ctx = {
+    &event_core_name,
+    ngx_event_core_create_conf,            /* create configuration */
+    ngx_event_core_init_conf,              /* init configuration */
+
+    { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
+};
+```
+
 ## Nginx模块总结
 配置模块和核心模块这两种模块类型是由Nginx的框架代码所定义的，这里的配置模块是所有模块的基础，它实现了最基本的配置项解析功能（就是解析nginx.conf文件）<br>
 
