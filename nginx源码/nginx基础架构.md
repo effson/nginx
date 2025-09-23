@@ -126,18 +126,19 @@ typedef struct {
 在解析完配置文件后，对配置进行进一步的初始化或检查。比如：如果用户没写某些参数，就填充默认值；检查配置项是否合法
 
 ### 以事件event模块为例
-####  ngx_module_t  ngx_event_core_module
+
+<mark>**event模块**</mark>
+
+####  1. ngx_module_t  ngx_events_module
 ```c
-ngx_module_t  ngx_event_core_module = {
+ngx_module_t  ngx_events_module = {
     NGX_MODULE_V1,
-
-    &ngx_event_core_module_ctx,            /* module context ctx*/
-    ngx_event_core_commands,               /* module directives ngx_command_t*/
-    NGX_EVENT_MODULE,                      /* module type */
-
+    &ngx_events_module_ctx,                /* module context */
+    ngx_events_commands,                   /* module directives */
+    NGX_CORE_MODULE,                       /* module type */
     NULL,                                  /* init master */
-    ngx_event_module_init,                 /* init module */
-    ngx_event_process_init,                /* init process */
+    NULL,                                  /* init module */
+    NULL,                                  /* init process */
     NULL,                                  /* init thread */
     NULL,                                  /* exit thread */
     NULL,                                  /* exit process */
@@ -146,7 +147,7 @@ ngx_module_t  ngx_event_core_module = {
 };
 ```
 
-#### ngx_command_t  ngx_events_commands[]
+####  2. ngx_command_t ngx_events_commands[]
 
 ```c
 static ngx_command_t  ngx_events_commands[] = {
@@ -161,13 +162,75 @@ static ngx_command_t  ngx_events_commands[] = {
       ngx_null_command
 };
 ```
-ngx_events_block 是 events { ... } 配置块的解析入口，主要做了分配配置 → 解析配置 → 初始化/校验配置
 
-#### ngx_core_module_t  ngx_events_module_ctx
+<mark>**event核心 core 模块**</mark>
+
+#### 1. ngx_module_t ngx_event_core_module
+
 ```c
-static ngx_core_module_t  ngx_events_module_ctx = {
-    ngx_string("events"),
-    NULL,
-    ngx_event_init_conf
+ngx_module_t  ngx_event_core_module = {
+    NGX_MODULE_V1,
+    &ngx_event_core_module_ctx,            /* module context */
+    ngx_event_core_commands,               /* module directives */
+    NGX_EVENT_MODULE,                      /* module type */
+    NULL,                                  /* init master */
+    ngx_event_module_init,                 /* init module */
+    ngx_event_process_init,                /* init process */
+    NULL,                                  /* init thread */
+    NULL,                                  /* exit thread */
+    NULL,                                  /* exit process */
+    NULL,                                  /* exit master */
+    NGX_MODULE_V1_PADDING
+};
+```
+
+####  2. ngx_command_t  ngx_event_core_commands[]
+
+```c
+static ngx_command_t  ngx_event_core_commands[] = {
+
+    { ngx_string("worker_connections"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_connections,
+      0,
+      0,
+      NULL },
+
+    { ngx_string("use"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_use,
+      0,
+      0,
+      NULL },
+
+    { ngx_string("multi_accept"),
+      NGX_EVENT_CONF|NGX_CONF_FLAG,
+      ngx_conf_set_flag_slot,
+      0,
+      offsetof(ngx_event_conf_t, multi_accept),
+      NULL },
+
+    { ngx_string("accept_mutex"),
+      NGX_EVENT_CONF|NGX_CONF_FLAG,
+      ngx_conf_set_flag_slot,
+      0,
+      offsetof(ngx_event_conf_t, accept_mutex),
+      NULL },
+
+    { ngx_string("accept_mutex_delay"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_conf_set_msec_slot,
+      0,
+      offsetof(ngx_event_conf_t, accept_mutex_delay),
+      NULL },
+
+    { ngx_string("debug_connection"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_debug_connection,
+      0,
+      0,
+      NULL },
+
+      ngx_null_command
 };
 ```
