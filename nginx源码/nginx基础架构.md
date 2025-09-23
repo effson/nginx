@@ -55,8 +55,22 @@ ngx_module_t结构体作为所有模块的通用接口，它只定义了<mark>**
 
 ### 1.1.2 void *ctx
 
-ctx 是 “模块上下文”，不同类型的模块会用不同的结构体去解释它。相当于一个 桥梁把 Nginx 框架核心和具体模块实现联系起来
+<mark>ctx 是 “模块上下文”，不同类型的模块会用不同的结构体去解释它。相当于一个 桥梁把 Nginx 框架核心和具体模块实现联系起来</mark>
 
+### 1.1.3 ngx_command_t *commands
+<mark>ngx_command_t *commands 是 Nginx 模块与配置文件（nginx.conf）交互的关键，ngx_command_t类型的commands数组指定了模块处理配置项的方法</mark>
+
+```c
+struct ngx_command_s {
+    ngx_str_t             name;
+    ngx_uint_t            type;
+    char               *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+    ngx_uint_t            conf;
+    ngx_uint_t            offset;
+    void                 *post;
+};
+
+```
 
 
 
