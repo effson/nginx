@@ -38,6 +38,9 @@ struct ngx_module_s {
 };
 ```
 
+ngx_module_t结构体作为所有模块的通用接口，它只定义了<mark>init_master、init_module、init_process、init_thread、exit_thread、exit_process、exit_master</mark>这7个回调方法
+
+
 ```c
 typedef struct {
     ngx_str_t             name;
