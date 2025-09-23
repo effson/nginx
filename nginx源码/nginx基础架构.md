@@ -101,12 +101,73 @@ char *set(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 conf 表示在哪一级配置（main/srv/loc），offset 表示该配置在配置结构体中的偏移量，框架会根据这两个值，把参数写到对应模块的配置结构体里
 
 ## 1.2 ngx_core_module_t
-<mark>Nginx还定义了一种基础类型的模块：核心模块，它的模块类型叫做NGX_CORE_MODULE</mark>
+<mark>Nginx定义了一种基础类型的模块：核心模块，它的模块类型叫做NGX_CORE_MODULE</mark> <br>
+定义核心模块,可以简化Nginx的设计，使得非模块化的框架代码只关注于如何调用6个核心模块（大部分Nginx模块都是非核心模块）,它们虽然功能不同，但都需要：
+- 提供一个函数来 创建配置结构体（存放配置项）
+- 提供一个函数来 初始化配置（默认值/合法性检查）
 
+### struct ngx_core_module_t
 ```c
 typedef struct {
     ngx_str_t             name;
     void               *(*create_conf)(ngx_cycle_t *cycle);
     char               *(*init_conf)(ngx_cycle_t *cycle, void *conf);
 } ngx_core_module_t;
+```
+
+#### ngx_str_t name
+模块名称，比如<mark> "core", "events", "http", "mail"</mark>。用来标识和查找配置块
+
+#### create_conf
+
+用来分配、初始化该模块的配置结构体。例如在解析 events {} 配置块时，会调用 events 模块的 create_conf 来准备存储配置的内存
+
+#### init_conf
+在解析完配置文件后，对配置进行进一步的初始化或检查。比如：如果用户没写某些参数，就填充默认值；检查配置项是否合法
+
+### 以事件event模块为例
+####  ngx_module_t  ngx_event_core_module
+```c
+ngx_module_t  ngx_event_core_module = {
+    NGX_MODULE_V1,
+
+    &ngx_event_core_module_ctx,            /* module context ctx*/
+    ngx_event_core_commands,               /* module directives ngx_command_t*/
+    NGX_EVENT_MODULE,                      /* module type */
+
+    NULL,                                  /* init master */
+    ngx_event_module_init,                 /* init module */
+    ngx_event_process_init,                /* init process */
+    NULL,                                  /* init thread */
+    NULL,                                  /* exit thread */
+    NULL,                                  /* exit process */
+    NULL,                                  /* exit master */
+    NGX_MODULE_V1_PADDING
+};
+```
+
+#### ngx_command_t  ngx_events_commands[]
+
+```c
+static ngx_command_t  ngx_events_commands[] = {
+
+    { ngx_string("events"),
+      NGX_MAIN_CONF|NGX_CONF_BLOCK|NGX_CONF_NOARGS,
+      ngx_events_block,
+      0,
+      0,
+      NULL },
+
+      ngx_null_command
+};
+```
+ngx_events_block 是 events { ... } 配置块的解析入口，主要做了分配配置 → 解析配置 → 初始化/校验配置
+
+#### ngx_core_module_t  ngx_events_module_ctx
+```c
+static ngx_core_module_t  ngx_events_module_ctx = {
+    ngx_string("events"),
+    NULL,
+    ngx_event_init_conf
+};
 ```
