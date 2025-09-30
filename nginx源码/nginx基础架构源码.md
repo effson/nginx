@@ -12,6 +12,14 @@ main()
 
 ```
 
+
+```
+ngx_conf_param(&conf); // ngx_conf_t conf
+解析命令行参数 -g 传进来的配置字符串，并把它当成配置文件的一部分执行:nginx -g 'worker_processes 4; daemon off;'
+```
+
+
+
 ```c
 struct ngx_cycle_s {
     void                  ****conf_ctx;
