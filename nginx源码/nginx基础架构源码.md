@@ -9,13 +9,17 @@ main()
  |                           |                                                  for循环调用所有核心模块定义的create_conf函数*/
  |                           |--> ngx_conf_param(&conf); // ngx_conf_t conf
  |                           |--> ngx_conf_parse(&conf, &cycle->conf_file); // ngx_conf_t conf
- |                           |              |--> (*cf->handler)(cf, NULL, cf->handler_conf);
- |                           |              |--> ngx_conf_handler(cf, rc);
- |                           |                          |--> cmd->set(cf, cmd, conf); /*以 listen 80;（作用域：server{}）为例：
-                                                                 cmd->conf = NGX_HTTP_SRV_CONF_OFFSET（偏移到 ngx_http_conf_ctx_t 的 srv_conf 成员）
-                                                                                           */
+ |                           |              |--> if (cf->handler) : (*cf->handler)(cf, NULL, cf->handler_conf); 
+ |                           |              |--> else : ngx_conf_handler(cf, rc);
+ |                           |                                 |--> cmd->set(cf, cmd, conf);
+                                                                  /*
+                                                                     以 listen 80;（作用域：server{}）为例：
+                                                                     cmd->conf = NGX_HTTP_SRV_CONF_OFFSET（偏移到 ngx_http_conf_ctx_t 的 srv_conf 成员）
+                                                                     cf->ctx 是 ngx_http_conf_ctx_t*，里面有： void **main_conf;
+                                                                                                              void **srv_conf;
+                                                                                                              void **loc_conf;*/
  |                           |--> cycle->modules[i]->ctx->init_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
-
+ |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
 
 ```
 
