@@ -57,6 +57,10 @@ main()
  |                           |                 |                   |-->  pid = fork();
  |                           |                 |                   |-->  子进程执行 ngx_worker_process_cycle
  |                           |                 |                   |                  |-->  ngx_worker_process_init(cycle, worker);
+ |                           |                 |                   |                  |               |--> for (i = 0; cycle->modules[i]; i++) :
+ |                           |                 |                   |                  |                     |--> if (cycle->modules[i]->init_process):
+ |                           |                 |                   |                  |                           |--> cycle->modules[i]->init_process(cycle)
+ |                           |                 |                   |                  |                
  |                           |                 |                   |                  |-->  ngx_process_events_and_timers(cycle);
  |                           |--> ngx_start_cache_manager_processes(cycle, 0); // 文件缓存模块
 ```
