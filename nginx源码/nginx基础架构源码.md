@@ -5,7 +5,8 @@ main()
  |-------------------> ngx_init_cycle(ngx_cycle_t *cycle)
  |                           |
  |                           |--> pool = ngx_create_pool() // 初始化内存池
- |                           |--> cycle->modules[i]->ctx->create_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
+ |                           |--> cycle->modules[i]->ctx->create_conf(cycle); /* cycle->modules[i]->type == NGX_CORE_MODULE
+ |                           |                                                  for循环调用所有核心模块定义的create_conf函数*/
  |                           |--> ngx_conf_param(&conf); // ngx_conf_t conf
  |                           |--> ngx_conf_parse(&conf, &cycle->conf_file); // ngx_conf_t conf
  |                           |              |--> (*cf->handler)(cf, NULL, cf->handler_conf);
