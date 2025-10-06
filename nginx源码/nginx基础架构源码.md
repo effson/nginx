@@ -40,6 +40,8 @@ main()
 
 ```
 
+# 2.重要结构体
+
 <img width="926" height="870" alt="image" src="https://github.com/user-attachments/assets/83b89588-b7ac-4f9d-8e41-2b9248a86e34" />
 
 
@@ -48,7 +50,16 @@ ngx_conf_param(&conf); // ngx_conf_t conf
 解析命令行参数 -g 传进来的配置字符串，并把它当成配置文件的一部分执行:nginx -g 'worker_processes 4; daemon off;'
 ```
 
-
+```c
+struct ngx_command_s {
+    ngx_str_t             name;
+    ngx_uint_t            type;
+    char               *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+    ngx_uint_t            conf;
+    ngx_uint_t            offset;
+    void                 *post;
+};
+```
 
 ```c
 struct ngx_cycle_s {
