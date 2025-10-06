@@ -33,6 +33,7 @@ main()
  |                           |                                      }
  |                           |                                      对于listen这个命令，set函数为:
  |                           |                                      ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)，
+ |                           |                                      把配置文本翻译成“监听项”结构挂到当前server{}的配置里，供后续阶段统一创建监听 socket
  |                           |                                     */
  |                           |--> cycle->modules[i]->ctx->init_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
  |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
