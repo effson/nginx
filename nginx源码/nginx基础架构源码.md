@@ -2,7 +2,7 @@
 ```css
 main()
  |
- |-------------------> ngx_init_cycle(ngx_cycle_t *cycle)
+ |-------------------> ngx_init_cycle(ngx_cycle_t *cycle)配置解析和模块初始化
  |                           |
  |                           |--> pool = ngx_create_pool() // 初始化内存池
  |                           |--> cycle->modules[i]->ctx->create_conf(cycle); /* cycle->modules[i]->type == NGX_CORE_MODULE
@@ -39,6 +39,8 @@ main()
  |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
 
 ```
+
+<img width="926" height="870" alt="image" src="https://github.com/user-attachments/assets/83b89588-b7ac-4f9d-8e41-2b9248a86e34" />
 
 
 ```
