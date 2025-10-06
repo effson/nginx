@@ -2,7 +2,7 @@
 ```css
 main()
  |
- |-------------------> ngx_init_cycle(ngx_cycle_t *cycle)配置解析和模块初始化
+ |--------------> ngx_init_cycle(ngx_cycle_t *cycle)配置解析和模块初始化
  |                           |
  |                           |--> pool = ngx_create_pool() // 初始化内存池
  |                           |--> cycle->modules[i]->ctx->create_conf(cycle); /* cycle->modules[i]->type == NGX_CORE_MODULE
@@ -33,11 +33,15 @@ main()
  |                           |                                      }
  |                           |                                      对于listen这个命令，set函数为:
  |                           |                                      ngx_http_core_listen(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)，
- |                           |                                      把配置文本翻译成“监听项”结构挂到当前server{}的配置里，供后续阶段统一创建监听 socket
+ |                           |                                      把配置文本翻译成“监听项”结构挂到当前server{}的配置里,也就是cycle中listening
+ |                           |                                      结构体，供后续阶段统一创建监听 socket
  |                           |                                     */
  |                           |--> cycle->modules[i]->ctx->init_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
  |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
-
+ |                           |--> ngx_open_listening_sockets(cycle); // 监听、绑定 cycle中listening动态数组指定的相应端口
+ |                           |--> ngx_configure_listening_sockets; // 根据nginx.conf中的配置项设置已经监听的句柄
+ |--------------> ngx_single_process_cycle(cycle); // if (ngx_process == NGX_PROCESS_SINGLE)
+ |--------------> ngx_master_process_cycle(cycle); // if (ngx_process == NGX_PROCESS_SINGLE)
 ```
 
 # 2.重要结构体
