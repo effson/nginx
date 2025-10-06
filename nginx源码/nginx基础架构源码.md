@@ -11,7 +11,8 @@ main()
  |                           |--> ngx_conf_parse(&conf, &cycle->conf_file); // ngx_conf_t conf
  |                           |              |--> if (cf->handler) : (*cf->handler)(cf, NULL, cf->handler_conf); 
  |                           |              |--> else : ngx_conf_handler(cf, rc);
- |                           |                                 |--> cmd->set(cf, cmd, conf);
+ |                           |                                  |--> for (i = 0; cf->cycle->modules[i]; i++)
+ |                           |                                   |--> cmd->set(cf, cmd, conf);
                                                                   /*
                                                                      以 listen 80;（作用域：server{}）为例：
                                                                      cmd->conf = NGX_HTTP_SRV_CONF_OFFSET（偏移到 ngx_http_conf_ctx_t 的 srv_conf 成员）
