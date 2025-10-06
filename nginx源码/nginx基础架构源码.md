@@ -56,7 +56,7 @@ struct ngx_command_s {
     ngx_uint_t            type;
     char               *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
     ngx_uint_t            conf;      // “偏移量常量”，用于在配置解析阶段（ngx_conf_handler()）定位当前上下文层级的配置数组。
-    ngx_uint_t            offset;    // 决定“写入结构体的哪个字段”
+    ngx_uint_t            offset;    // 决定“写入结构体的哪个字段” ，可用offsetof(your_module_conf_t, setoption_name),
     void                 *post;
 };
 ```
