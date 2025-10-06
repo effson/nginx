@@ -5,9 +5,11 @@ main()
  |--------------> ngx_init_cycle(ngx_cycle_t *cycle)配置解析和模块初始化
  |                           |
  |                           |--> pool = ngx_create_pool() // 初始化内存池
+ |                           |
  |                           |--> cycle->modules[i]->ctx->create_conf(cycle); /* cycle->modules[i]->type == NGX_CORE_MODULE
  |                           |                                                  for循环调用所有核心模块定义的create_conf函数*/
  |                           |--> ngx_conf_param(&conf); // ngx_conf_t conf
+ |                           |
  |                           |--> ngx_conf_parse(&conf, &cycle->conf_file); // ngx_conf_t conf
  |                           |          |--> if (cf->handler) : (*cf->handler)(cf, NULL, cf->handler_conf); 
  |                           |          |--> else : ngx_conf_handler(cf, rc);
@@ -38,10 +40,25 @@ main()
  |                           |                                     */
  |                           |--> cycle->modules[i]->ctx->init_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
  |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
+ |                           |
  |                           |--> ngx_open_listening_sockets(cycle); // 监听、绑定 cycle中listening动态数组指定的相应端口
+ |                           |
  |                           |--> ngx_configure_listening_sockets; // 根据nginx.conf中的配置项设置已经监听的句柄
+ |                           
+ |                           
  |--------------> ngx_single_process_cycle(cycle); // if (ngx_process == NGX_PROCESS_SINGLE)
- |--------------> ngx_master_process_cycle(cycle); // if (ngx_process == NGX_PROCESS_SINGLE)
+ |                           
+ |--------------> ngx_master_process_cycle(cycle); // else        master/worker 进程模型
+ |                           |--> ngx_start_worker_processes(cycle, ccf->worker_processes, NGX_PROCESS_RESPAWN);
+ |                           |                 |    // 根据ccf->worker_processes，也就是conf文件中的进程数开进程
+ |                           |                 |--> for (i = 0; i < n; i++) :
+ |                           |                 |         ngx_spawn_process(cycle, ngx_worker_process_cycle,
+ |                           |                 |                    (void *) (intptr_t) i, "worker process", type);
+ |                           |                 |                   |-->  pid = fork();
+ |                           |                 |                   |-->  子进程执行 ngx_worker_process_cycle
+ |                           |                 |                   |                  |-->  ngx_worker_process_init(cycle, worker);
+ |                           |                 |                   |                  |-->  ngx_process_events_and_timers(cycle);
+ |                           |--> ngx_start_cache_manager_processes(cycle, 0); // 文件缓存模块
 ```
 
 # 2.重要结构体
