@@ -17,10 +17,22 @@ main()
  |                           |                            |         cmd->set(cf, cmd, conf);调用该command结构体中的set函数进行设置操作
  |                           |                            |         /*
  |                           |                            |          以 listen 80;（作用域：server{}）为例：
-                                                                     cmd->conf = NGX_HTTP_SRV_CONF_OFFSET（根据偏移找到ngx_http_conf_ctx_t的srv_conf成员）
-                                                                     cf->ctx也就是ngx_http_conf_ctx_t*，里面有 void **main_conf;
-                                                                                                              void **srv_conf;
-                                                                                                              void **loc_conf;*/
+ |                           |                            |         cmd->conf = NGX_HTTP_SRV_CONF_OFFSET（根据偏移找到ngx_http_conf_ctx_t的srv_conf成员）
+ |                           |                            |         cf->ctx也就是ngx_http_conf_ctx_t*，里面有 void **main_conf;
+ |                           |                            |                                                  void **srv_conf;
+ |                           |                            |                                                  void **loc_conf;
+ |                           |                            |         static ngx_command_t  ngx_http_core_commands[] = {
+ |                           |                            |             ...                                                                                                              
+ |                           |                            |             { ngx_string("listen"),
+ |                           |                            |               NGX_HTTP_SRV_CONF|NGX_CONF_1MORE,
+ |                           |                            |               ngx_http_core_listen,
+ |                           |                            |               NGX_HTTP_SRV_CONF_OFFSET,
+ |                           |                            |               0,
+ |                           |                            |               NULL },
+ |                           |                            |             ...
+ |                           |                            |          }
+ |                           |                            |          对于listen这个命令，set函数为ngx_http_core_listen，
+ |                           |                            |         */
  |                           |--> cycle->modules[i]->ctx->init_conf(cycle); // cycle->modules[i]->type == NGX_CORE_MODULE
  |                           |                                                  for循环调用所有核心模块定义的init_conf函数*/
 
