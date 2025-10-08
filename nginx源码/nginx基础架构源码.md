@@ -202,7 +202,7 @@ static ngx_core_module_t  ngx_events_module_ctx = {
 ```
 <mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，**nginx启动时会调用ngx_event_init_conf函数**</mark>
 
-## 3.2 事件模块
+## 3.2 核心事件模块
 ### 3.2.1
 ```c
 ngx_module_t  ngx_events_module = {
@@ -220,4 +220,4 @@ ngx_module_t  ngx_events_module = {
     NGX_MODULE_V1_PADDING
 };
 ```
-<mark>**解析events{...}块时，主要调用ngx_events_commands中的ngx_events_block函数**</mark>
+<mark>**nginx启动，解析events{...}块时，主要调用ngx_events_commands中的ngx_events_block函数**</mark>
