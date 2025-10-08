@@ -382,7 +382,7 @@ ngx_module_t  ngx_event_core_module = {
 };
 ```
 ### 3.2.3 ngx_event_core_module_ctx
-
+```c
 static ngx_event_module_t  ngx_event_core_module_ctx = {
     &event_core_name,
     ngx_event_core_create_conf,            /* create configuration */
@@ -390,3 +390,4 @@ static ngx_event_module_t  ngx_event_core_module_ctx = {
 
     { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
 };
+```
