@@ -138,7 +138,8 @@ struct ngx_cycle_s {
 ```
 
 # 3.event事件模块
-## 3.1 ngx_event_module_t
+## 3.1
+### 3.1.1 ngx_event_module_t
 ```c
 typedef struct {
     ngx_str_t              *name;
@@ -172,7 +173,7 @@ typedef struct {
 
 ```
 
-## 3.2 ngx_command_t
+### 3.1.2 ngx_command_t
 <mark>ngx_events_module模块只对一个块配置项感兴趣，也就是nginx.conf中的events{...}</mark>
 
 ```c
@@ -190,7 +191,7 @@ static ngx_command_t  ngx_events_commands[] = {
 ```
 <mark>遇到events{...}会调用ngx_events_block函数处理</mark>
 
-## 3.3 ngx_core_module_t
+### 3.1.3 ngx_core_module_t
 ```c
 static ngx_core_module_t  ngx_events_module_ctx = {
     ngx_string("events"),
