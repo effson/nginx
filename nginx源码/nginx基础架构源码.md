@@ -140,7 +140,7 @@ struct ngx_cycle_s {
 
 # 3.event事件模块
 
-## 3.1 组成部分
+## 3.1 核心模块
 ### 3.1.1 ngx_event_module_t
 ```c
 typedef struct {
@@ -175,7 +175,7 @@ typedef struct {
 
 ```
 
-### 3.1.2 ngx_command_t
+### 3.1.2 ngx_command_t : ngx_events_commands
 <mark>ngx_events_module模块只对一个块配置项感兴趣，也就是nginx.conf中的events{...}</mark>
 
 ```c
@@ -194,6 +194,15 @@ static ngx_command_t  ngx_events_commands[] = {
 <mark>遇到events{...}会调用ngx_events_block函数处理</mark>
 
 ### 3.1.3 ngx_core_module_t
+
+```c
+typedef struct {
+    ngx_str_t             name;
+    void               *(*create_conf)(ngx_cycle_t *cycle);
+    char               *(*init_conf)(ngx_cycle_t *cycle, void *conf);
+} ngx_core_module_t;
+```
+
 ```c
 static ngx_core_module_t  ngx_events_module_ctx = {
     ngx_string("events"),
@@ -201,10 +210,9 @@ static ngx_core_module_t  ngx_events_module_ctx = {
     ngx_event_init_conf
 };
 ```
-<mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，**nginx启动时会调用ngx_event_init_conf函数**</mark>
+<mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，**nginx启动时遇到events命令时会调用ngx_event_init_conf函数**</mark>
 
-## 3.2 核心事件模块
-### 3.2.1 NGX_CORE_MODULE:ngx_events_module
+### 3.1.4 NGX_CORE_MODULE : ngx_events_module
 ```c
 ngx_module_t  ngx_events_module = {
     NGX_MODULE_V1,
@@ -223,7 +231,7 @@ ngx_module_t  ngx_events_module = {
 ```
 <mark>**nginx启动解析events{...}块时，主要调用ngx_events_commands中的ngx_events_block函数**</mark>
 
-### 3.2.2 ngx_events_block
+### 3.1.5 ngx_events_block
 ```c
 static char *
 ngx_events_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
@@ -299,19 +307,21 @@ ngx_events_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
     return NGX_CONF_OK;
 }
 ```
-<mark>**ngx_events_block() 就是 解析到 events { ... } 块指令时的 set 回调函数，调用NGX_EVENT_MODULE类型的moudule的create_conf、init_conf函数和配置解析函数ngx_conf_parse，最重要的部分如下**</mark>:
+<mark>**ngx_events_block() 就是 解析 events { ... } 块指令时的 set 回调函数，调用NGX_EVENT_MODULE类型的moudule的create_conf、init_conf函数和配置解析函数ngx_conf_parse，最重要的部分如下**</mark>:
 ```c
 cf->module_type = NGX_EVENT_MODULE;     /* 表明只关注属于event模块的命令解析与配置*/
 cf->cmd_type = NGX_EVENT_CONF;          // 只允许事件层指令
 rv = ngx_conf_parse(cf, NULL);      /* 解析与配置events { ... } 块出现的命令，也就是调用每个command的set函数 */
 ```
-<mark>**事件层指令主要有**</mark>:
+## 3.2 NGX_EVENT_MODULE : 事件核心模块
+上面提到了，ngx_events_block函数只解析类型为NGX_EVENT_MODULE的命令，并调用定义的set函数进行配置的解析和设置
+### 3.2.1 事件层指令
 ```c
 static ngx_command_t  ngx_event_core_commands[] = {
 
     { ngx_string("worker_connections"),
       NGX_EVENT_CONF|NGX_CONF_TAKE1,
-      ngx_event_connections,
+      ngx_event_connections,  /* set函数 */
       0,
       0,
       NULL },
@@ -354,3 +364,29 @@ static ngx_command_t  ngx_event_core_commands[] = {
       ngx_null_command
 };
 ```
+### 3.2.2 NGX_EVENT_MODULE : ngx_event_core_module
+```c
+ngx_module_t  ngx_event_core_module = {
+    NGX_MODULE_V1,
+    &ngx_event_core_module_ctx,            /* module context */
+    ngx_event_core_commands,               /* module directives */
+    NGX_EVENT_MODULE,                      /* module type */
+    NULL,                                  /* init master */
+    ngx_event_module_init,                 /* init module */
+    ngx_event_process_init,                /* init process */
+    NULL,                                  /* init thread */
+    NULL,                                  /* exit thread */
+    NULL,                                  /* exit process */
+    NULL,                                  /* exit master */
+    NGX_MODULE_V1_PADDING
+};
+```
+### 3.2.3 ngx_event_core_module_ctx
+
+static ngx_event_module_t  ngx_event_core_module_ctx = {
+    &event_core_name,
+    ngx_event_core_create_conf,            /* create configuration */
+    ngx_event_core_init_conf,              /* init configuration */
+
+    { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL }
+};
