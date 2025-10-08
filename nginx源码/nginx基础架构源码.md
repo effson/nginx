@@ -14,6 +14,7 @@ main()
  |                           |          |--> if (cf->handler) : (*cf->handler)(cf, NULL, cf->handler_conf); 
  |                           |          |--> else : ngx_conf_handler(cf, rc);
  |                           |                            |--> for (i = 0; cf->cycle->modules[i]; i++) :
+ |                           |                                   for ( /* void */ ; cmd->name.len; cmd++)
  |                           |                                     cmd = cf->cycle->modules[i]->commands;
  |                           |                                     根据cmd->type,使用cf->ctx和偏移找到conf
  |                           |                                     cmd->set(cf, cmd, conf);调用该command结构体中的set函数进行设置操作
