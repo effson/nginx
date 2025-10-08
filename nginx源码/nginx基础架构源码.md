@@ -138,7 +138,7 @@ struct ngx_cycle_s {
 ```
 
 # 3.event事件模块
-## 3.1
+## 3.1 组成部分
 ### 3.1.1 ngx_event_module_t
 ```c
 typedef struct {
@@ -200,3 +200,21 @@ static ngx_core_module_t  ngx_events_module_ctx = {
 };
 ```
 <mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，nginx启动时会调用ngx_event_init_conf函数</mark>
+## 3.2 事件模块
+### 3.2.1
+```c
+ngx_module_t  ngx_events_module = {
+    NGX_MODULE_V1,
+    &ngx_events_module_ctx,                /* module context */
+    ngx_events_commands,                   /* module directives */
+    NGX_CORE_MODULE,                       /* module type */
+    NULL,                                  /* init master */
+    NULL,                                  /* init module */
+    NULL,                                  /* init process */
+    NULL,                                  /* init thread */
+    NULL,                                  /* exit thread */
+    NULL,                                  /* exit process */
+    NULL,                                  /* exit master */
+    NGX_MODULE_V1_PADDING
+};
+```
