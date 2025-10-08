@@ -190,17 +190,12 @@ static ngx_command_t  ngx_events_commands[] = {
 ```
 <mark>遇到events{...}会调用ngx_events_block函数处理</mark>
 
-## 3.3 ngx_command_t
+## 3.3 ngx_core_module_t
 ```c
-static ngx_command_t  ngx_events_commands[] = {
-
-    { ngx_string("events"),
-      NGX_MAIN_CONF|NGX_CONF_BLOCK|NGX_CONF_NOARGS,
-      ngx_events_block,
-      0,
-      0,
-      NULL },
-
-      ngx_null_command
+static ngx_core_module_t  ngx_events_module_ctx = {
+    ngx_string("events"),
+    NULL,
+    ngx_event_init_conf
 };
 ```
+<mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，nginx启动时会调用ngx_event_init_conf函数</mark>
