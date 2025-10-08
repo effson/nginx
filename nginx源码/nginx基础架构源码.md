@@ -218,3 +218,4 @@ ngx_module_t  ngx_events_module = {
     NGX_MODULE_V1_PADDING
 };
 ```
+<mark>**解析events{...}块时，主要调用ngx_events_commands中的ngx_events_block函数**</mark>
