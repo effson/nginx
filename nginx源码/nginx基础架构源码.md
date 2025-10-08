@@ -138,6 +138,7 @@ struct ngx_cycle_s {
 ```
 
 # 3.event事件模块
+
 ## 3.1 组成部分
 ### 3.1.1 ngx_event_module_t
 ```c
@@ -199,7 +200,8 @@ static ngx_core_module_t  ngx_events_module_ctx = {
     ngx_event_init_conf
 };
 ```
-<mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，nginx启动时会调用ngx_event_init_conf函数</mark>
+<mark>事件核心模块，没实现create_conf函数，为NULL, 根据上面的流程，**nginx启动时会调用ngx_event_init_conf函数**</mark>
+
 ## 3.2 事件模块
 ### 3.2.1
 ```c
