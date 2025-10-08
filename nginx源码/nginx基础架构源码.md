@@ -221,3 +221,81 @@ ngx_module_t  ngx_events_module = {
 };
 ```
 <mark>**nginx启动解析events{...}块时，主要调用ngx_events_commands中的ngx_events_block函数**</mark>
+
+### 3.2.2 ngx_events_block
+```c
+static char *
+ngx_events_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+{
+    char                 *rv;
+    void               ***ctx;
+    ngx_uint_t            i;
+    ngx_conf_t            pcf;
+    ngx_event_module_t   *m;
+
+    if (*(void **) conf) {
+        return "is duplicate";
+    }
+
+    /* count the number of the event modules and set up their indices */
+    ngx_event_max_module = ngx_count_modules(cf->cycle, NGX_EVENT_MODULE);
+
+    ctx = ngx_pcalloc(cf->pool, sizeof(void *));
+    if (ctx == NULL) {
+        return NGX_CONF_ERROR;
+    }
+
+    *ctx = ngx_pcalloc(cf->pool, ngx_event_max_module * sizeof(void *));
+    if (*ctx == NULL) {
+        return NGX_CONF_ERROR;
+    }
+
+    *(void **) conf = ctx;
+
+    for (i = 0; cf->cycle->modules[i]; i++) {
+        if (cf->cycle->modules[i]->type != NGX_EVENT_MODULE) {
+            continue;
+        }
+
+        m = cf->cycle->modules[i]->ctx;
+
+        if (m->create_conf) {
+            (*ctx)[cf->cycle->modules[i]->ctx_index] =
+                                                     m->create_conf(cf->cycle);
+            if ((*ctx)[cf->cycle->modules[i]->ctx_index] == NULL) {
+                return NGX_CONF_ERROR;
+            }
+        }
+    }
+
+    pcf = *cf;
+    cf->ctx = ctx;
+    cf->module_type = NGX_EVENT_MODULE;
+    cf->cmd_type = NGX_EVENT_CONF;
+
+    rv = ngx_conf_parse(cf, NULL);
+
+    *cf = pcf;
+    if (rv != NGX_CONF_OK) {
+        return rv;
+    }
+
+    for (i = 0; cf->cycle->modules[i]; i++) {
+        if (cf->cycle->modules[i]->type != NGX_EVENT_MODULE) {
+            continue;
+        }
+
+        m = cf->cycle->modules[i]->ctx;
+
+        if (m->init_conf) {
+            rv = m->init_conf(cf->cycle,
+                              (*ctx)[cf->cycle->modules[i]->ctx_index]);
+            if (rv != NGX_CONF_OK) {
+                return rv;
+            }
+        }
+    }
+    return NGX_CONF_OK;
+}
+```
+<mark>**调用NGX_EVENT_MODULE类型的moudule的init_conf函数**</mark>
