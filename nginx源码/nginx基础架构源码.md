@@ -299,9 +299,58 @@ ngx_events_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
     return NGX_CONF_OK;
 }
 ```
-<mark>**ngx_events_block() 就是 解析到 events { ... } 块指令时的 set 回调函数，调用NGX_EVENT_MODULE类型的moudule的create_conf、init_conf函数和配置解析函数ngx_conf_parse，最重要的部分如下：**</mark>
+<mark>**ngx_events_block() 就是 解析到 events { ... } 块指令时的 set 回调函数，调用NGX_EVENT_MODULE类型的moudule的create_conf、init_conf函数和配置解析函数ngx_conf_parse，最重要的部分如下**</mark>:
 ```c
 cf->module_type = NGX_EVENT_MODULE;     /* 表明只关注属于event模块的命令解析与配置*/
 cf->cmd_type = NGX_EVENT_CONF;          // 只允许事件层指令
 rv = ngx_conf_parse(cf, NULL);      /* 解析与配置events { ... } 块出现的命令，也就是调用每个command的set函数 */
+```
+<mark>**事件层指令主要有**</mark>:
+```c
+static ngx_command_t  ngx_event_core_commands[] = {
+
+    { ngx_string("worker_connections"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_connections,
+      0,
+      0,
+      NULL },
+
+    { ngx_string("use"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_use,
+      0,
+      0,
+      NULL },
+
+    { ngx_string("multi_accept"),
+      NGX_EVENT_CONF|NGX_CONF_FLAG,
+      ngx_conf_set_flag_slot,
+      0,
+      offsetof(ngx_event_conf_t, multi_accept),
+      NULL },
+
+    { ngx_string("accept_mutex"),
+      NGX_EVENT_CONF|NGX_CONF_FLAG,
+      ngx_conf_set_flag_slot,
+      0,
+      offsetof(ngx_event_conf_t, accept_mutex),
+      NULL },
+
+    { ngx_string("accept_mutex_delay"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_conf_set_msec_slot,
+      0,
+      offsetof(ngx_event_conf_t, accept_mutex_delay),
+      NULL },
+
+    { ngx_string("debug_connection"),
+      NGX_EVENT_CONF|NGX_CONF_TAKE1,
+      ngx_event_debug_connection,
+      0,
+      0,
+      NULL },
+
+      ngx_null_command
+};
 ```
