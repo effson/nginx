@@ -299,4 +299,9 @@ ngx_events_block(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
     return NGX_CONF_OK;
 }
 ```
-<mark>**调用NGX_EVENT_MODULE类型的moudule的init_conf函数**</mark>
+<mark>**ngx_events_block() 就是 解析到 events { ... } 块指令时的 set 回调函数，调用NGX_EVENT_MODULE类型的moudule的create_conf、init_conf函数和配置解析函数ngx_conf_parse，最重要的部分如下：**</mark>
+```c
+cf->module_type = NGX_EVENT_MODULE;     /* 表明只关注属于event模块的命令解析与配置*/
+cf->cmd_type = NGX_EVENT_CONF;          // 只允许事件层指令
+rv = ngx_conf_parse(cf, NULL);      /* 解析与配置events { ... } 块出现的命令，也就是调用每个command的set函数 */
+```
