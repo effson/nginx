@@ -139,3 +139,68 @@ struct ngx_cycle_s {
 
 # 3.event事件模块
 ## 3.1 ngx_event_module_t
+```c
+typedef struct {
+    ngx_str_t              *name;
+
+    void                 *(*create_conf)(ngx_cycle_t *cycle);
+    char                 *(*init_conf)(ngx_cycle_t *cycle, void *conf);
+
+    ngx_event_actions_t     actions;
+} ngx_event_module_t;
+```
+
+```c
+typedef struct {
+    ngx_int_t  (*add)(ngx_event_t *ev, ngx_int_t event, ngx_uint_t flags);
+    ngx_int_t  (*del)(ngx_event_t *ev, ngx_int_t event, ngx_uint_t flags);
+
+    ngx_int_t  (*enable)(ngx_event_t *ev, ngx_int_t event, ngx_uint_t flags);
+    ngx_int_t  (*disable)(ngx_event_t *ev, ngx_int_t event, ngx_uint_t flags);
+
+    ngx_int_t  (*add_conn)(ngx_connection_t *c);
+    ngx_int_t  (*del_conn)(ngx_connection_t *c, ngx_uint_t flags);
+
+    ngx_int_t  (*notify)(ngx_event_handler_pt handler);
+
+    ngx_int_t  (*process_events)(ngx_cycle_t *cycle, ngx_msec_t timer,
+                                 ngx_uint_t flags);
+
+    ngx_int_t  (*init)(ngx_cycle_t *cycle, ngx_msec_t timer);
+    void       (*done)(ngx_cycle_t *cycle);
+} ngx_event_actions_t;
+
+```
+
+## 3.2 ngx_command_t
+<mark>ngx_events_module模块只对一个块配置项感兴趣，也就是nginx.conf中的events{...}</mark>
+
+```c
+static ngx_command_t  ngx_events_commands[] = {
+
+    { ngx_string("events"),
+      NGX_MAIN_CONF|NGX_CONF_BLOCK|NGX_CONF_NOARGS,
+      ngx_events_block,
+      0,
+      0,
+      NULL },
+
+      ngx_null_command
+};
+```
+<mark>遇到events{...}会调用ngx_events_block函数处理</mark>
+
+## 3.3 ngx_command_t
+```c
+static ngx_command_t  ngx_events_commands[] = {
+
+    { ngx_string("events"),
+      NGX_MAIN_CONF|NGX_CONF_BLOCK|NGX_CONF_NOARGS,
+      ngx_events_block,
+      0,
+      0,
+      NULL },
+
+      ngx_null_command
+};
+```
