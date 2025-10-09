@@ -5,4 +5,13 @@
 
 ## 1.2 ngx_event_module_t
 <mark>**事件模块的ctx(也就是ngx_module_t结构体的ctx部分),每个模块都有属于自己的*ctx**</mark>
-void                 *ctx;
+```c
+typedef struct {
+    ngx_str_t              *name;
+
+    void                 *(*create_conf)(ngx_cycle_t *cycle);
+    char                 *(*init_conf)(ngx_cycle_t *cycle, void *conf);
+
+    ngx_event_actions_t     actions;
+} ngx_event_module_t;
+```
