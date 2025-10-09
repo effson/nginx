@@ -1,10 +1,10 @@
 # 1. 事件模块的基本代码框架
 
 ## 1.1 ngx_module_t
-基本的模块接口设计范式，见nginx基础架构源码那部分
+ngx_module_t表示Nginx模块的基本接口，见nginx基础架构源码那部分
 
 ## 1.2 ngx_event_module_t
-<mark>**事件模块的ctx(也就是ngx_module_t结构体的ctx部分),每个模块都有属于自己的*ctx**</mark>
+<mark>**事件模块的ctx(也就是ngx_module_t结构体的ctx部分),事件模块的通用接口是ngx_event_module_t结构体，每个模块都有属于自己的*ctx**</mark>
 ```c
 typedef struct {
     ngx_str_t              *name;
