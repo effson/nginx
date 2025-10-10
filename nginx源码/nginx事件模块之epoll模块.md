@@ -421,3 +421,5 @@ ngx_event_process_init(ngx_cycle_t *cycle)
     return NGX_OK;
 }
 ```
+### 函数流程分析
+- 1.遍历模块，找到 NGX_EVENT_MODULE 且 ctx_index == ecf->use 的那个事件模块，调用<mark>**module->actions.init(cycle, ngx_timer_resolution)**</mark>
