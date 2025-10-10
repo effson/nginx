@@ -439,11 +439,65 @@ ngx_event_process_init(ngx_cycle_t *cycle)
         break;
     }
 ```
-- 2.预分配连接池与事件池，并建立空闲链<mark>**module->actions.init(cycle, ngx_timer_resolution)**</mark>
+- 2.预分配连接池与事件池，并建立空闲链
 ```c
     cycle->connections = ngx_alloc(sizeof(ngx_connection_t) * cycle->connection_n, cycle->log);
     // ...
     c = cycle->connections;
     cycle->read_events = ngx_alloc(sizeof(ngx_event_t) * cycle->connection_n, cycle->log);
     // ...
+```
+- 3.为每个监听口建立“监听连接”对象和读事件回调
+```c
+    for (i = 0; i < cycle->listening.nelts; i++) {
+#if (NGX_WIN32)
+        // ...
+#else
+        if (c->type == SOCK_STREAM) {
+            rev->handler = ngx_event_accept;
+#if (NGX_QUIC)
+        } else if (ls[i].quic) {
+            rev->handler = ngx_quic_recvmsg;
+#endif
+        } else {
+            rev->handler = ngx_event_recvmsg;
+        }
+        // ...
+    }
+```
+- 4. Unix 下: <mark> **reuseport/ EPOLLEXCLUSIVE / 未开 accept_mutex：初始化阶段就 epoll_ctl(ADD)** </mark>
+```c
+    for (i = 0; i < cycle->listening.nelts; i++) {
+        // ...
+
+#if (NGX_HAVE_REUSEPORT)
+        if (ls[i].reuseport) {
+            if (ngx_add_event(rev, NGX_READ_EVENT, 0) == NGX_ERROR) {
+                return NGX_ERROR;
+            }
+            continue;
+        }
+#endif
+        if (ngx_use_accept_mutex) {
+            continue;
+        }
+#if (NGX_HAVE_EPOLLEXCLUSIVE)
+        if ((ngx_event_flags & NGX_USE_EPOLL_EVENT)
+            && ccf->worker_processes > 1)
+        {
+            ngx_use_exclusive_accept = 1;
+            if (ngx_add_event(rev, NGX_READ_EVENT, NGX_EXCLUSIVE_EVENT)
+                == NGX_ERROR)
+            {
+                return NGX_ERROR;
+            }
+
+            continue;
+        }
+#endif
+        if (ngx_add_event(rev, NGX_READ_EVENT, 0) == NGX_ERROR) {
+            return NGX_ERROR;
+        }
+#endif
+    }
 ```
