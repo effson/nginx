@@ -424,7 +424,7 @@ ngx_event_process_init(ngx_cycle_t *cycle)
 ### 函数流程分析
 - 1.遍历模块，找到 NGX_EVENT_MODULE 且 ctx_index == ecf->use 的那个事件模块，调用<mark>**module->actions.init(cycle, ngx_timer_resolution)**</mark>
 ```c
-for (m = 0; cycle->modules[m]; m++) {
+    for (m = 0; cycle->modules[m]; m++) {
         if (cycle->modules[m]->type != NGX_EVENT_MODULE) {
             continue;
         }
@@ -438,4 +438,12 @@ for (m = 0; cycle->modules[m]; m++) {
         }
         break;
     }
+```
+- 2.预分配连接池与事件池，并建立空闲链<mark>**module->actions.init(cycle, ngx_timer_resolution)**</mark>
+```c
+    cycle->connections = ngx_alloc(sizeof(ngx_connection_t) * cycle->connection_n, cycle->log);
+    // ...
+    c = cycle->connections;
+    cycle->read_events = ngx_alloc(sizeof(ngx_event_t) * cycle->connection_n, cycle->log);
+    // ...
 ```
