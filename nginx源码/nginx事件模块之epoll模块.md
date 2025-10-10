@@ -138,3 +138,26 @@ ngx_handle_read_event(ngx_event_t *rev, ngx_uint_t flags)
     return NGX_OK;
 }
 ```
+
+# 3. epoll模块是对事件的处理流程
+
+## 3.1 ngx_module_t  ngx_event_core_module
+```c
+ngx_module_t  ngx_event_core_module = {
+    NGX_MODULE_V1,
+    &ngx_event_core_module_ctx,            /* module context */
+    ngx_event_core_commands,               /* module directives */
+    NGX_EVENT_MODULE,                      /* module type */
+    NULL,                                  /* init master */
+    ngx_event_module_init,                 /* init module */
+    ngx_event_process_init,                /* init process */
+    NULL,                                  /* init thread */
+    NULL,                                  /* exit thread */
+    NULL,                                  /* exit process */
+    NULL,                                  /* exit master */
+    NGX_MODULE_V1_PADDING
+};
+```
+init process函数为ngx_event_process_init，根据nginx的启动流程(见nginx基础架构源码.md)，</mark>**在启动子进程是会调用每个模块的init process函数**</mark>
+
+## 3.2 
