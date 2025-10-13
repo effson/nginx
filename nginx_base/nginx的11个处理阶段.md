@@ -1,0 +1,26 @@
+# nginx的11个处理阶段
+```c
+typedef enum {
+    NGX_HTTP_POST_READ_PHASE = 0, // 在接收到完整的HTTP头部后处理的HTTP阶段
+	 /*在还没有查询到URI匹配的location前，这时rewrite重写URL也作为一个独立的	
+	HTTP阶段	
+	*/
+
+    NGX_HTTP_SERVER_REWRITE_PHASE,
+
+    NGX_HTTP_FIND_CONFIG_PHASE,
+    NGX_HTTP_REWRITE_PHASE,
+    NGX_HTTP_POST_REWRITE_PHASE,
+
+    NGX_HTTP_PREACCESS_PHASE,
+
+    NGX_HTTP_ACCESS_PHASE,
+    NGX_HTTP_POST_ACCESS_PHASE,
+
+    NGX_HTTP_PRECONTENT_PHASE,
+
+    NGX_HTTP_CONTENT_PHASE,
+
+    NGX_HTTP_LOG_PHASE
+} ngx_http_phases;
+```
