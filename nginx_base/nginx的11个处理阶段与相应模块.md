@@ -101,3 +101,18 @@ return code [text];
 return code URL;
 return URL;
 ```
+- code：HTTP 状态码（如 200, 301, 302, 403, 404, 500...）
+- text：返回内容（可选）
+- URL：重定向目标（相对或绝对）
+
+```nginx
+location /old {
+    return 301 https://example.com/new;
+}
+```
+code:
+- 301 永久重定向
+- 302 临时重定向
+- 303 临时重定向, 允许改变方法，禁止被缓存
+- 307 临时重定向, 不允许改变方法，禁止被缓存
+- 308 永久重定向, 不允许改变方法
