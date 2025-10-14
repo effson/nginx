@@ -38,3 +38,5 @@ Nginx 实际接收到的连接来自 上游代理服务器（CDN、ELB、SLB、C
 
 - HTTP 头部 X-Forwarded-For 用于传递IP
 - HTTP 头部 X-Real-IP 用于传递用户IP
+
+### 2.1.3 realip 模块命令与使用
