@@ -52,7 +52,7 @@ http {
     set_real_ip_from 192.168.0.0/16;  # 信任 192.168.x.x 段代理
 }
 ```
-<mark>**例子**</mark>
+<mark>**例子**</mark> <br>
 **反向代理架构：**
 ```
 Client(203.0.113.5) → Proxy(192.168.1.2) → Nginx
