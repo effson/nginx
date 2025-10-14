@@ -44,3 +44,11 @@ Nginx 实际接收到的连接来自 上游代理服务器（CDN、ELB、SLB、C
 ```conf
 set_real_ip_from address | CIDR | unix:;
 ```
+用来控制:哪些代理的 IP 才允许修改 remote_addr（即真实客户端 IP）
+```conf
+http {
+    set_real_ip_from 127.0.0.1;       # 信任本机（如 nginx 反向代理）
+    set_real_ip_from 10.0.0.0/8;      # 信任 10.x.x.x 段代理
+    set_real_ip_from 192.168.0.0/16;  # 信任 192.168.x.x 段代理
+}
+```
