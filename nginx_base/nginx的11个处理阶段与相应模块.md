@@ -40,7 +40,7 @@ Nginx 实际接收到的连接来自 上游代理服务器（CDN、ELB、SLB、C
 - HTTP 头部 X-Real-IP 用于传递用户IP
 
 ### 2.1.3 realip 模块命令与使用
-#### set_real_ip_from
+#### 2.1.3.1 set_real_ip_from
 ```conf
 set_real_ip_from address | CIDR | unix:;
 ```
@@ -52,3 +52,22 @@ http {
     set_real_ip_from 192.168.0.0/16;  # 信任 192.168.x.x 段代理
 }
 ```
+<mark>**例子**</mark>
+**反向代理架构：**
+```
+Client(203.0.113.5) → Proxy(192.168.1.2) → Nginx
+```
+**Proxy 添加头：**
+```
+X-Forwarded-For: 203.0.113.5
+```
+**Nginx 配置：**
+```
+set_real_ip_from 192.168.1.0/24;
+real_ip_header X-Forwarded-For;
+```
+**结果：**
+```
+remote_addr = 203.0.113.5   （来自可信代理）
+```
+#### 2.1.3.2 real_ip_header
