@@ -77,5 +77,14 @@ real_ip_header field X-Real-IP | X-Forwarded-For | proxy_protocal;
 <mark>**应该从哪个 HTTP 头部字段里取出真正的客户端 IP**</mark>
 #### 2.1.3.2 real_ip_recursive
 ```conf
-real_ip_header field X-Real-IP | X-Forwarded-For | proxy_protocal;
+real_ip_recursive on | off;
 ```
+一个请求经过多个反向代理时，通常会形成类似这样的请求头：
+```
+X-Forwarded-For: 203.0.113.10, 192.168.1.1, 10.0.0.2
+
+[最左边] = 原始客户端 IP
+[最右边] = 最后一个代理（即连接 Nginx 的那个）
+```
+real_ip_recursive off（默认）, Nginx 只取头部中的第一个 IP（即最左边）,多层代理时可能取错 <br>
+real_ip_recursive on, 从右往左递归跳过信任代理,适合复杂代理链,稍有性能开销，需正确信任配置
