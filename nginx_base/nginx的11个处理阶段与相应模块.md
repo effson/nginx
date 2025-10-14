@@ -88,3 +88,16 @@ X-Forwarded-For: 203.0.113.10, 192.168.1.1, 10.0.0.2
 ```
 real_ip_recursive off（默认）, Nginx 只取头部中的第一个 IP（即最左边）,多层代理时可能取错 <br>
 real_ip_recursive on, 从右往左递归跳过信任代理,适合复杂代理链,稍有性能开销，需正确信任配置
+
+
+## 2.2 REWRITE ：Rewrite 模块
+
+### 2.2.1 功能
+<mark>**实现 rewrite、if、set、return**</mark>等指令。用于修改 URI、变量、条件跳转等
+
+#### return
+```nginx
+return code [text];
+return code URL;
+return URL;
+```
