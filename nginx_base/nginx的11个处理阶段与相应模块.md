@@ -116,3 +116,12 @@ code:
 - 303 临时重定向, 允许改变方法，禁止被缓存
 - 307 临时重定向, 不允许改变方法，禁止被缓存
 - 308 永久重定向, 不允许改变方法
+#### error_page与return
+```nginx
+error_page code ... [=code] uri;
+
+error_page 404 /404.html;
+error_page 500 502 503 504 /50x.html;
+error_page 404 =200 /empty.gif;
+error_page 403 http://example.com/forbidden.html;
+```
