@@ -44,7 +44,7 @@ Nginx 实际接收到的连接来自 上游代理服务器（CDN、ELB、SLB、C
 ```conf
 set_real_ip_from address | CIDR | unix:;
 ```
-用来控制:哪些代理的 IP 才允许修改 remote_addr（即真实客户端 IP）
+用来控制:哪些代理的 IP 才允许修改<mark>**$remote_addr**</mark>（即真实客户端 IP）
 ```conf
 http {
     set_real_ip_from 127.0.0.1;       # 信任本机（如 nginx 反向代理）
@@ -71,3 +71,11 @@ real_ip_header X-Forwarded-For;
 remote_addr = 203.0.113.5   （来自可信代理）
 ```
 #### 2.1.3.2 real_ip_header
+```conf
+real_ip_header field X-Real-IP | X-Forwarded-For | proxy_protocal;
+```
+<mark>**应该从哪个 HTTP 头部字段里取出真正的客户端 IP**</mark>
+#### 2.1.3.2 real_ip_recursive
+```conf
+real_ip_header field X-Real-IP | X-Forwarded-For | proxy_protocal;
+```
