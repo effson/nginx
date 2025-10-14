@@ -41,11 +41,11 @@ Nginx 实际接收到的连接来自 上游代理服务器（CDN、ELB、SLB、C
 
 ### 2.1.3 realip 模块命令与使用
 #### 2.1.3.1 set_real_ip_from
-```conf
+```nginx
 set_real_ip_from address | CIDR | unix:;
 ```
 用来控制:哪些代理的 IP 才允许修改<mark>**$remote_addr**</mark>（即真实客户端 IP）
-```conf
+```nginx
 http {
     set_real_ip_from 127.0.0.1;       # 信任本机（如 nginx 反向代理）
     set_real_ip_from 10.0.0.0/8;      # 信任 10.x.x.x 段代理
@@ -58,25 +58,25 @@ http {
 Client(203.0.113.5) → Proxy(192.168.1.2) → Nginx
 ```
 **Proxy 添加头：**
-```
+```nginx
 X-Forwarded-For: 203.0.113.5
 ```
 **Nginx 配置：**
-```
+```nginx
 set_real_ip_from 192.168.1.0/24;
 real_ip_header X-Forwarded-For;
 ```
 **结果：**
-```
+```nginx
 remote_addr = 203.0.113.5   （来自可信代理）
 ```
 #### 2.1.3.2 real_ip_header
-```conf
+```nginx
 real_ip_header field X-Real-IP | X-Forwarded-For | proxy_protocal;
 ```
 <mark>**应该从哪个 HTTP 头部字段里取出真正的客户端 IP**</mark>
 #### 2.1.3.2 real_ip_recursive
-```conf
+```nginx
 real_ip_recursive on | off;
 ```
 一个请求经过多个反向代理时，通常会形成类似这样的请求头：
