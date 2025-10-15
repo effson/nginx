@@ -151,3 +151,6 @@ rewrite regex replacement [flag];
 - regex：匹配当前请求 URI 的正则表达式（不含 query string 部分）
 - replacement：匹配成功后要替换成的新 URI，可以包含变量
 - flag：控制 rewrite 的行为
+
+flag:
+- last: 停止当前 location 的 rewrite，重新查找匹配的 location
