@@ -264,3 +264,12 @@ location [=|~|~*|^~] pattern {
    └─ 匹配结束
 ```
 ## 2.4 PREACCESS阶段
+### 2.4.1 ngx_http_limit_conn_module
+用于限制客户端并发连接数，<mark>**在access 阶段之前**</mark>，用于防止连接过多的并发请求
+#### 2.4.1.1 limit_conn_zone
+定义共享内存区域，用来保存连接状态（必须先定义）
+```nginx
+
+```
+
+
