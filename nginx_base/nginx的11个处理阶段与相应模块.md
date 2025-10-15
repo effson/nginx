@@ -413,3 +413,17 @@ satisfy all | any;
 ```
 - all ：所有访问控制条件都必须通过（默认）
 - any ：只要任意一个条件通过就放行
+
+## 2.6 PRECONTENT阶段
+### 2.6.1 try_files 模块
+按顺序检测一组“候选文件/目录”是否存在；一旦命中，就内部重定向到相应 URI（或直接返回状态码）。常用于“静态优先、失败再走后端”的路由策略。
+```nginx
+try_files file1 file2 ... final;
+```
+- fileN：按顺序测试是否存在（相对当前 root/alias 的物理路径；可以用变量，如 $uri、$uri/
+- final：以 = 开头的状态码：找不到任何候选时，直接返回该码（如 =404、=403）
+```nginx
+location / {
+    try_files $uri $uri/ =404;
+}
+```
