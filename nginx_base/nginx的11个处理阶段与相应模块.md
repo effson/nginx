@@ -224,3 +224,14 @@ if ($uri !~* \.(gif|jpg|png)$) { ... }  # 不匹配这些后缀
 -e  文件或目录存在 !-e 文件或目录不存在
 -x  可执行文件存在 !-x 不存在可执行文件
 ```
+
+## 2.3 FIND_CONFIG阶段
+### location
+```nginx
+server {
+    location = /exact          { ... }   # 精确匹配优先
+    location /prefix/          { ... }   # 普通前缀匹配
+    location ~ \.php$          { ... }   # 正则匹配
+    location /                 { ... }   # 通配（默认）
+}
+```
