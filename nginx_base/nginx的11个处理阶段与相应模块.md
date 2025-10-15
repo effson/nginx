@@ -359,4 +359,20 @@ deny  address | CIDR | unix: | all;
 
 ### 2.5.2 ACCESS：ngx_http_auth_basic_module模块
 基于用户名/密码认证
-#### 2.5.2.1 
+#### 2.5.2.1 auth_basic
+auth_basic：定义认证提示文字；
+```nginx
+auth_basic string; # string为显示给用户的信息
+```
+#### 2.5.2.2 auth_basic_user_file
+定义用户名/密码文件（Apache htpasswd 格式）
+```nginx
+auth_basic_user_file file;
+```
+生成htpasswd文件:
+```bash
+apt install apache2-utils -y
+htpasswd -c /home/jeff/nginx/.htpasswd jeff
+```
+### 2.5.2 ACCESS：ngx_http_auth_request_module模块
+与 auth_basic 不同，不直接校验用户名密码，通过子请求机制（subrequest），把认证逻辑交给上游服务来完成
