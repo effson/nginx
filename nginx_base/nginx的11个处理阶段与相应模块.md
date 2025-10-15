@@ -125,3 +125,20 @@ error_page 500 502 503 504 /50x.html;
 error_page 404 =200 /empty.gif;
 error_page 403 http://example.com/forbidden.html;
 ```
+
+```nginx
+error_page 404 /403.html
+
+location /test {
+	return 404;
+}
+```
+返回 /403.html
+```nginx
+error_page 404 /403.html
+
+location /test {
+	return 404 "find nothing!";
+}
+```
+返回find nothing!
