@@ -231,7 +231,7 @@ if ($uri !~* \.(gif|jpg|png)$) { ... }  # 不匹配这些后缀
 server {
     location = /exact          { ... }   # 精确匹配优先
     location /prefix/          { ... }   # 普通前缀匹配
-    location ~ \.php$          { ... }   # 正则匹配
+    location ~ \.php$          { ... }   # 正则匹配  ~大小写敏感
     location /                 { ... }   # 通配（默认）
 }
 ```
