@@ -172,5 +172,6 @@ location /second {
 location /third {
 	return 200 'third!\n';
 }
-rewrite regex replacement [flag];
 ```
+/first下有1.txt， /second下有2.txt， /third下有3.txt，如果访问/first/3.txt，URI 会改成 /third/3.txt，返回3.txt中的内容<br>
+去掉break，则会返回second!
