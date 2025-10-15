@@ -384,8 +384,25 @@ auth_request uri | off;
 - uri ：指定用于认证的内部子请求路径（内部 location）
 
 #### 2.5.2.2 auth_request_set
+用于从子请求的响应中提取变量（header 或 body 值），以便在主请求中使用（例如传给后端）。
+```nginx
+auth_request_set $variable value;
+```
 
 ```nginx
-auth_request uri | off;
+# 定义认证子请求
+location = /auth {
+    proxy_pass http://auth_backend/verify;       # 请求认证服务
+    proxy_pass_request_body off;                 # 不转发请求体
+    proxy_set_header Content-Length "";          # 清空 Content-Length
+    proxy_set_header X-Original-URI $request_uri; # 传递原始URI
+}
+
+# 主服务 location
+location /api/ {
+    auth_request /auth;                          # 认证检查
+    auth_request_set $auth_user $upstream_http_x_user;
+    proxy_set_header X-User $auth_user;          # 向后端传递用户信息
+    proxy_pass http://backend_app;
+}
 ```
-- uri ：指定用于认证的内部子请求路径（内部 location）
