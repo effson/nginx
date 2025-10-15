@@ -226,7 +226,7 @@ if ($uri !~* \.(gif|jpg|png)$) { ... }  # 不匹配这些后缀
 ```
 
 ## 2.3 FIND_CONFIG阶段
-### location
+### 2.3.1 location
 ```nginx
 server {
     location = /exact          { ... }   # 精确匹配优先
@@ -235,3 +235,4 @@ server {
     location /                 { ... }   # 通配（默认）
 }
 ```
+#### 2.3.1.1 location的匹配规则
