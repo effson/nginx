@@ -263,3 +263,4 @@ location [=|~|~*|^~] pattern {
    │
    └─ 匹配结束
 ```
+## 2.4 PREACCESS阶段
