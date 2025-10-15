@@ -343,3 +343,10 @@ limit_req_status code; # 默认值 503
 ```
 
 limit_req 先执行，limit_conn 后执行
+
+## 2.5 ACCESS阶段
+### 2.5.1 ACCESS：ngx_http_access_module模块
+#### 2.5.1.1 allow
+```nginx
+allow address | CIDR | unix: | all;
+```
