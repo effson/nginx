@@ -269,7 +269,46 @@ location [=|~|~*|^~] pattern {
 #### 2.4.1.1 limit_conn_zone
 定义共享内存区域，用来保存连接状态（必须先定义）
 ```nginx
-
+limit_conn_zone key zone=name:size; # http
+# key: 决定 “Nginx 按什么维度统计并发连接数”
 ```
 
+#### 2.4.1.2 limit_conn
+指定每个 key 的最大连接数
+```nginx
+limit_conn zone_name number; # http server location
+```
 
+#### 2.4.1.3 limit_conn_log_level
+控制超出限制时的日志级别
+```nginx
+limit_conn_log_level info | notice | warn | error;  # 默认值：error
+```
+
+#### 2.4.1.4 limit_conn_status
+控制超限时返回的 HTTP 状态码（默认 503）
+
+```nginx
+http {
+    # 定义共享内存区域
+    limit_conn_zone $binary_remote_addr zone=addr_limit:10m;
+
+    server {
+        listen 80;
+        server_name example.com;
+
+        # 每个 IP 同时最多允许 2 个连接
+        limit_conn addr_limit 2;
+
+        # 记录日志级别
+        limit_conn_log_level warn;
+
+        # 超限时返回 429 而不是 503
+        limit_conn_status 429;
+
+        location / {
+            root /var/www/html;
+        }
+    }
+}
+```
