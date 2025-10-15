@@ -194,3 +194,33 @@ location /redirect4 {
 }
 
 ```
+#### 2.2.1.3 if
+变量是否为空或“0”
+```nginx
+if ($http_user_agent = "") { ... }      # 空字符串
+if ($arg_id = 0) { ... }                # 等于 0
+```
+
+变量是否存在（非空、非 0）
+```nginx
+if ($http_cookie) { ... }               # 存在 cookie
+```
+
+字符串比较
+```nginx
+if ($request_method = POST) { ... }     # 等于 POST
+if ($host != example.com) { ... }       # 不等于
+```
+
+正则匹配
+```nginx
+if ($uri ~* \.jpg$) { ... }             # 匹配 jpg 结尾（~* 表示不区分大小写）
+if ($uri !~* \.(gif|jpg|png)$) { ... }  # 不匹配这些后缀
+```
+
+```
+-f  文件存在 !-f 文件不存在
+-d  目录存在 !-d 目录不存在
+-e  文件或目录存在 !-e 文件或目录不存在
+-x  可执行文件存在 !-x 不存在可执行文件
+```
