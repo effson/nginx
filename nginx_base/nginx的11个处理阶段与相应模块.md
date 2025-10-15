@@ -154,3 +154,23 @@ rewrite regex replacement [flag];
 
 flag:
 - last: 停止当前 location 的 rewrite，重新查找匹配的 location
+- break: 停止 rewrite 指令继续执行，但仍在当前 location 内
+- redirect: 发出临时重定向（302）
+- permanent: 发出永久重定向（301）
+
+```nginx
+location /first {
+    rewrite /first(.*)$ /second$1 last;
+	return 200 'first!\n';
+}
+
+location /second {
+    rewrite /second(.*)$ /third$1 break;
+	return 200 'second!\n';
+}
+
+location /third {
+	return 200 'third!\n';
+}
+rewrite regex replacement [flag];
+```
