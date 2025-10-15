@@ -95,7 +95,7 @@ real_ip_recursive on, 从右往左递归跳过信任代理,适合复杂代理链
 ### 2.2.1 功能
 <mark>**实现 rewrite、if、set、return**</mark>等指令。用于修改 URI、变量、条件跳转等
 
-#### return
+#### 2.2.1.1 return
 ```nginx
 return code [text];
 return code URL;
@@ -142,3 +142,12 @@ location /test {
 }
 ```
 返回find nothing!
+
+
+#### 2.2.1.2 rewrite
+```nginx
+rewrite regex replacement [flag];
+```
+- regex：匹配当前请求 URI 的正则表达式（不含 query string 部分）
+- replacement：匹配成功后要替换成的新 URI，可以包含变量
+- flag：控制 rewrite 的行为
