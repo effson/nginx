@@ -341,3 +341,5 @@ limit_req_log_level info | notice | warn | error; # 默认值：error
 ```nginx
 limit_req_status code; # 默认值 503
 ```
+
+limit_req 先执行，limit_conn 后执行
