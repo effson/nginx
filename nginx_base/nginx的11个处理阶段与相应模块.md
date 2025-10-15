@@ -346,7 +346,17 @@ limit_req 先执行，limit_conn 后执行
 
 ## 2.5 ACCESS阶段
 ### 2.5.1 ACCESS：ngx_http_access_module模块
+基于 IP 地址控制访问
 #### 2.5.1.1 allow
 ```nginx
 allow address | CIDR | unix: | all;
 ```
+
+#### 2.5.1.1 deny
+```nginx
+deny  address | CIDR | unix: | all;
+```
+
+### 2.5.2 ACCESS：ngx_http_auth_basic_module模块
+基于用户名/密码认证
+#### 2.5.2.1 
