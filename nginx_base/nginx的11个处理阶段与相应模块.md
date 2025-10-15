@@ -312,3 +312,32 @@ http {
     }
 }
 ```
+### 2.4.2 ngx_http_limit_req_module
+
+#### 2.4.2.1 limit_req_zone
+定义限速共享内存区域及统计 key
+
+```nginx
+limit_req_zone key zone=name:size rate=rate; # http
+```
+- key: 统计限速的分组依据（如 $binary_remote_addr、$server_name）
+- zone=name: size 定义共享内存区域名称和大小
+- rate=rate: 允许的平均速率（格式：r/s 或 r/m）
+
+#### 2.4.2.2 limit_req
+```nginx
+limit_req zone=name [burst=number] [nodelay];
+```
+- burst=number: 允许的请求突发数（缓冲）
+- nodelay : 不延迟请求；超出 rate + burst 的请求立即拒绝,立即返回错误（默认 503）
+
+#### 2.4.2.3 limit_req_log_level
+设置日志级别
+```nginx
+limit_req_log_level info | notice | warn | error; # 默认值：error
+```
+#### 2.4.2.4 limit_req_status
+设置超限返回状态码
+```nginx
+limit_req_status code; # 默认值 503
+```
