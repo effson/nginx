@@ -376,3 +376,16 @@ htpasswd -c /home/jeff/nginx/.htpasswd jeff
 ```
 ### 2.5.2 ACCESS：ngx_http_auth_request_module模块
 与 auth_basic 不同，不直接校验用户名密码，通过子请求机制（subrequest），把认证逻辑交给上游服务来完成
+#### 2.5.2.1 auth_request
+
+```nginx
+auth_request uri | off;
+```
+- uri ：指定用于认证的内部子请求路径（内部 location）
+
+#### 2.5.2.2 auth_request_set
+
+```nginx
+auth_request uri | off;
+```
+- uri ：指定用于认证的内部子请求路径（内部 location）
