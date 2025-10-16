@@ -531,7 +531,7 @@ server {
 ```
 
 
-### 2.7.2 CONTENT：index、autoindex
+### 2.7.2 CONTENT：index
 当客户端访问一个以 / 结尾的目录 URI（例如 /docs/）时，自动查找哪些文件作为“默认页面”，按配置的文件名顺序依次查找该目录下是否存在对应文件。
 一旦找到，就返回那个文件的内容。
 #### 2.7.2.1 index
@@ -541,10 +541,29 @@ index file1 [file2 ...];
 ```nginx
 index off; # 禁用目录首页（不查找 index）,直接返回 403 Forbidden（或由 autoindex 接管）
 ```
-#### 2.7.2.2 autoindex
+### 2.7.3 CONTENT：autoindex
 当客户端访问一个目录（以 / 结尾），且该目录中没有 index 文件，该模块可以自动生成一个HTML 文件列表页面。
+#### 2.7.3.1 autoindex
+
 ```nginx
 autoindex on | off;
 ```
 
+#### 2.7.3.2 autoindex_exact_size
+```nginx
+autoindex_exact_size on | off;
+```
+控制生成的目录页面中，文件大小的显示格式：
+- on：精确字节数（单位：字节） 124563 bytes
+- off：人类可读的单位（KB / MB / GB） 121.6 KB
 
+#### 2.7.3.3 autoindex_localtime
+```nginx
+autoindex_localtime on | off;
+```
+是否显示本地时间
+#### 2.7.3.4 autoindex_format
+控制目录列表的输出格式类型
+```nginx
+autoindex_format html | json | xml | csv;
+```
