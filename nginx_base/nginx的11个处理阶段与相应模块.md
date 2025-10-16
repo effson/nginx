@@ -475,3 +475,4 @@ location /static/ {
 alias → 替换 location
 
 #### 2.7.1.3 ngx_http_static_module 提供的三个变量
+<mark> $request_filename、$document_root、$realpath_root </mark>
