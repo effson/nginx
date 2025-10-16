@@ -452,3 +452,26 @@ location = /mirror {
     proxy_pass http://mirror_backend;  # 镜像目标服务
 }
 ```
+## 2.7 CONTENT阶段
+
+### 2.7.1 CONTENT：ngx_http_static_module
+
+#### 2.7.1.1 root
+```nginx
+location /images/ {
+    root /data/www;
+}
+```
+访问 /images/pic.jpg 实际读取文件：/data/www/images/pic.jpg, root → 拼接 location
+
+#### 2.7.1.2 alias
+
+```nginx
+location /static/ {
+    alias /data/static/;
+}
+# 请求 /static/js/app.js -> /data/static/js/app.js
+```
+alias → 替换 location
+
+#### 2.7.1.3 ngx_http_static_module 提供的三个变量
