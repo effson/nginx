@@ -541,3 +541,10 @@ index file1 [file2 ...];
 ```nginx
 index off; # 禁用目录首页（不查找 index）,直接返回 403 Forbidden（或由 autoindex 接管）
 ```
+#### 2.7.2.2 autoindex
+当客户端访问一个目录（以 / 结尾），且该目录中没有 index 文件，该模块可以自动生成一个HTML 文件列表页面。
+```nginx
+autoindex on | off;
+```
+
+
