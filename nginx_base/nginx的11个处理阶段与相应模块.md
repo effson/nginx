@@ -476,3 +476,12 @@ alias → 替换 location
 
 #### 2.7.1.3 ngx_http_static_module 提供的三个变量
 <mark> $request_filename、$document_root、$realpath_root </mark>
+```nginx
+location /RealPath/ {
+    alias html/realpath/;
+	return 200 '$request_filename:$document_root:$realpath_root\n';
+	# curl http://192.168.23.173/RealPath/1.txt
+	# $request_filename —— 实际访问的物理文件路径 : html/realpath/1.txt
+	# $document_root —— 当前请求的根目录 : html/realpath/
+	# $realpath_root —— 实际物理路径（解析符号链接 ,假设realpath -> first）:html/first
+}
