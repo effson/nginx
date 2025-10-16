@@ -531,4 +531,13 @@ server {
 ```
 
 
-
+### 2.7.2 CONTENT：index、autoindex
+当客户端访问一个以 / 结尾的目录 URI（例如 /docs/）时，自动查找哪些文件作为“默认页面”，按配置的文件名顺序依次查找该目录下是否存在对应文件。
+一旦找到，就返回那个文件的内容。
+#### 2.7.2.1 index
+```nginx
+index file1 [file2 ...];
+```
+```nginx
+index off; # 禁用目录首页（不查找 index）,直接返回 403 Forbidden（或由 autoindex 接管）
+```
