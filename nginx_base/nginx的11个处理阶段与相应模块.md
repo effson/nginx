@@ -485,3 +485,50 @@ location /RealPath/ {
 	# $document_root —— 当前请求的根目录 : html/realpath/
 	# $realpath_root —— 实际物理路径（解析符号链接 ,假设realpath -> first）:html/first
 }
+```
+#### 2.7.1.3 static_module 对url不加/访问目录时的处理
+目录URL 末尾没有 / 时，会执行重定向301 Moved Permanently
+
+- server_name_in_redirect ：是否在重定向中使用 server_name（配置文件中的）而不是客户端请求的 Host
+- port_in_redirect ：是否在重定向 URL 中包含端口号
+- absolute_redirect ： 是否使用完整的绝对 URL（含协议+主机名），否则仅返回相对路径
+
+```nginx
+server_name_in_redirect on | off;
+port_in_redirect on | off;
+absolute_redirect on | off;
+```
+
+```nginx
+server {
+    listen 80;
+    server_name www.jeffweb.com;
+
+    root /usr/share/nginx/html;
+    server_name_in_redirect on;
+}
+
+# 访问：http://192.168.1.10/docs   ← 客户端用 IP 访问
+# 自动重定向时：Location: http://www.jeffweb.com/docs/
+# server_name_in_redirect on 会强制使用 server_name 的值。
+# 即使客户端用 IP 或其他别名访问，也会被改成配置里的主域名
+```
+```nginx
+server {
+    listen 8080;
+    server_name example.com;
+    port_in_redirect on;
+}
+
+# 访问：http://example.com:8080/docs
+# 自动重定向时：Location: http://example.com:8080/docs/
+# 如果 port_in_redirect off， Location: http://example.com/docs/
+```
+```nginx
+# absolute_redirect on（默认）
+# 请求 /docs → 返回：Location: http://example.com/docs/
+# absolute_redirect off，请求 /docs → 返回：Location: /docs/
+```
+
+
+
