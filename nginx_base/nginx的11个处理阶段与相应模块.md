@@ -415,7 +415,7 @@ satisfy all | any;
 - any ：只要任意一个条件通过就放行
 
 ## 2.6 PRECONTENT阶段
-### 2.6.1 try_files 模块
+### 2.6.1 PRECONTENT：try_files 模块
 按顺序检测一组“候选文件/目录”是否存在；一旦命中，就内部重定向到相应 URI（或直接返回状态码）。常用于“静态优先、失败再走后端”的路由策略。
 ```nginx
 try_files file1 file2 ... final;
@@ -425,5 +425,30 @@ try_files file1 file2 ... final;
 ```nginx
 location / {
     try_files $uri $uri/ =404;
+}
+```
+### 2.6.2 PRECONTENT：mirror 模块
+在不影响主请求正常处理的前提下，异步“复制”一份请求发送到其他服务器（或 location）去执行
+#### 2.6.2.1 mirror
+指定要镜像的目标 URI（可多个）
+```nginx
+mirror uri | off;
+```
+#### 2.6.2.2 mirror_request_body
+控制是否将主请求的请求体（body）转发到镜像请求
+```nginx
+mirror_request_body on | off;
+```
+
+```nginx
+location /api/ {
+    mirror /mirror;                    # 将请求复制到 /mirror
+    mirror_request_body on;            # 同步发送请求体
+    proxy_pass http://main_backend;    # 主请求照常处理
+}
+
+location = /mirror {
+    internal;                          # 只允许内部请求
+    proxy_pass http://mirror_backend;  # 镜像目标服务
 }
 ```
