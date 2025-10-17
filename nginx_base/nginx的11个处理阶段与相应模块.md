@@ -610,4 +610,11 @@ access_log /var/log/nginx/static_access.log main if=$uri ~* "\.(jpg|png|css|js)$
 open_log_file_cache max=N [inactive=time] [min_uses=N] [valid=time];
 ```
 
+```nginx
+open_log_file_cache max=1000 inactive=20s valid=1m min_uses=2;
+```
 
+- max=100：最多缓存 1000 个打开的日志文件
+- inactive=20s：超过 20 秒未使用则关闭
+- valid=1m：每分钟检查文件状态
+- min_uses=2：在缓存之前至少被使用 2 次
