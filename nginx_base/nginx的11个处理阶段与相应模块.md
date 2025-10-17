@@ -567,3 +567,18 @@ autoindex_localtime on | off;
 ```nginx
 autoindex_format html | json | xml | csv;
 ```
+
+## 2.8 LOG阶段
+
+### 2.8.1 ngx_http_log_module
+
+#### 2.8.1.1 log_format
+```nginx
+log_format name string ...;
+```
+默认值：
+```nginx
+log_format combined '$remote_addr - $remote_user [$time_local] '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent"';
+```
