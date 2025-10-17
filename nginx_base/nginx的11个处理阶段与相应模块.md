@@ -573,6 +573,7 @@ autoindex_format html | json | xml | csv;
 ### 2.8.1 ngx_http_log_module
 
 #### 2.8.1.1 log_format
+定义日志格式模板，格式由多个变量组成。
 ```nginx
 log_format name string ...;
 ```
@@ -582,3 +583,31 @@ log_format combined '$remote_addr - $remote_user [$time_local] '
                     '"$request" $status $body_bytes_sent '
                     '"$http_referer" "$http_user_agent"';
 ```
+#### 2.8.1.2 access_log
+```nginx
+access_log path [format [buffer=size [flush=time] [if=condition]]];
+```
+- path：日志文件路径（相对或绝对路径）
+- format：日志格式名（由 log_format 定义）
+- buffer=size：启用缓冲区写日志，减少磁盘 I/O
+- flush=time：缓冲多久后强制刷新到文件
+- if=condition：条件记录（只在条件为真时记录）
+
+```nginx
+access_log off;
+```
+默认值：
+```nginx
+access_log logs/access.log combined;
+```
+```nginx
+access_log /var/log/nginx/error_access.log main if=$status >= 400;
+access_log /var/log/nginx/static_access.log main if=$uri ~* "\.(jpg|png|css|js)$";
+```
+#### 2.8.1.3 open_log_file_cache
+控制 Nginx 对日志文件描述符（fd）的缓存。避免高并发时频繁 open() / close() 导致系统调用开销。是对日志文件包含变量时的优化。
+```nginx
+open_log_file_cache max=N [inactive=time] [min_uses=N] [valid=time];
+```
+
+
