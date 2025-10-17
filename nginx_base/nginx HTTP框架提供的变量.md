@@ -47,9 +47,15 @@ HTTP请求中标识包体长度的Content-Length头部的值
 
 ### 1.1.10 $request_method
 请求方法（GET/POST/PUT/DELETE 等）
+示例：
+```nginx
+if ($request_method = POST) {
+    proxy_pass http://backend_post;
+}
+```
 
 ### 1.1.9 $request_length
-请求报文总长度（含头与体）
+请求报文总长度（包括请求行、请求头和请求体的总和，单位：字节）
 
 ### 1.1.9 $remote_user
 HTTP Basic Authentication 协议传入的用户名
@@ -87,22 +93,7 @@ access_log /var/log/nginx/access.log custom_log;
 
 # 2
 ```
-🔹 $request_method
-含义：请求使用的方法，如 GET、POST、HEAD、PUT、DELETE 等。
-用途：
-路由分流：根据方法选择不同的后端。
-安全控制：拦截不支持的方法。
-示例：
-if ($request_method = POST) {
-    proxy_pass http://backend_post;
-}
 
-🔹 $request_length
-含义：客户端发送的请求总长度（包括请求行、请求头和请求体的总和，单位：字节）。
-用途：用于请求体大小统计或限制。
-示例：
-log_format req_size 'Method=$request_method Length=$request_length';
-access_log /var/log/nginx/access.log req_size;
 
 🔹 $remote_user
 含义：经过 HTTP 认证的用户名（仅在配置了如 auth_basic 时有效）。
