@@ -19,26 +19,40 @@ $arg_user	jeff
 $arg_debug	1
 ```
 ### 1.1.1 $query_string
+户端原始请求行中的查询字符串部分（不含 ?），与$args相同
 
-### 1.1.1 $args
+### 1.1.2 $args
 查询字符串部分，即 URL 中 ? 后面的参数，不包括 ? 本身
-### 1.1.1 $is_args
+
+### 1.1.3 $is_args
 ? 或 空 , 若存在参数则为 ?，否则为空
-### 1.1.1 $content_length
-### 1.1.1 $content_type
 
-### 1.1.1 $document_uri
+### 1.1.4 $content_length
+HTTP请求中标识包体长度的Content-Length头部的值
 
-### 1.1.1 $uri
+### 1.1.5 $content_type
+标识请求包体内容类型的Content-type头部的值
 
+### 1.1.6 $document_uri
+与 $uri 相同
 
+### 1.1.7 $uri
+当前请求的 URI 路径部分，不包含查询字符串（?后面的参数）
 
+### 1.1.8 $request_uri
+客户端原始请求 URI（包含uri和参数）
 
+### 1.1.9 $scheme
+协议，http 或 https
 
+### 1.1.10 $request_method
+请求方法（GET/POST/PUT/DELETE 等）
 
+### 1.1.9 $request_length
+请求报文总长度（含头与体）
 
-
-
+### 1.1.9 $remote_user
+HTTP Basic Authentication 协议传入的用户名
 
 
 
@@ -70,49 +84,6 @@ $arg_debug	1
 log_format custom_log '$request';
 access_log /var/log/nginx/access.log custom_log;
 
-
-🔸 $args
-描述：查询字符串部分，即 URL 中 ? 后面的参数，不包括 ? 本身。
-示例 URL：/search?q=nginx&page=1
-$args 值为：q=nginx&page=1
-用途：重定向、条件判断等。
-示例：
-if ($args ~ "q=nginx") {
-    return 302 /nginx-tutorial.html;
-}
-
-🔸 $query_string（等同于 $args）
-描述：也是查询字符串，与 $args 相同，是 $request_uri 中 ? 后的部分。
-说明：几乎可以认为是 $args 的别名，两个变量是等价的。
-示例：
-echo "Query string is: $query_string";
-
-🔸 $content_length
-描述：请求体的长度（字节数），来源于 Content-Length 请求头。
-用途：用于判断 POST 请求是否包含有效请求体。
-示例：
-if ($content_length = 0) {
-    return 400 "Empty request body is not allowed.";
-}
-
-🔸 $content_type
-描述：请求体的内容类型，对应于 Content-Type 请求头。
-用途：用于判断上传的内容格式，如 application/json、multipart/form-data 等。
-示例：
-if ($content_type ~ "application/json") {
-    proxy_pass http://json_backend;
-}
-
-🔸 $is_args
-描述：用于拼接查询字符串时的辅助变量：
-如果 $args 存在（非空），则 $is_args 为 "?"；
-否则为 ""（空字符串）。
-用途：用于构造重定向链接，防止手动判断是否需要添加 ?。
-示例：
-return 302 /newpath$is_args$args;
-如果请求是 /oldpath?id=5，则跳转到 /newpath?id=5；
-如果请求是 /oldpath，则跳转到 /newpath
-```
 
 # 2
 ```
