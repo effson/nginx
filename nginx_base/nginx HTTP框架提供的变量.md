@@ -1,6 +1,23 @@
 # 1. Nginx 变量
 ## 1.1 HTTP请求相关变量
 ### 1.1.1 $arg_参数名
+```pgsql
+http://example.com/index.html?id=10&user=jeff&debug=1
+```
+Nginx 会自动解析 ? 之后的查询字符串：
+```ini
+id=10
+user=jeff
+debug=1
+```
+生成一组变量：
+```
+变量名	    值
+$args	    id=10&user=jeff&debug=1
+$arg_id	    10
+$arg_user	jeff
+$arg_debug	1
+```
 ### 1.1.1 $query_string
 
 ### 1.1.1 $args
