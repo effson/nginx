@@ -27,3 +27,9 @@ location / {
 <a href="https://new.example.com/page1">link</a>
 ```
 ### 2.1.2 sub_filter_once
+控制每个响应体中，是否只替换第一个匹配项。
+```nginx
+sub_filter_once on | off; # 默认值：on
+```
+
+### 2.1.3 sub_filter_last_modified
