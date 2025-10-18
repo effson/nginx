@@ -8,10 +8,10 @@ Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 
 
 
 # 2.模块加载
-- 模块名：**ngx_http_referer_module**
+- 模块名：<mark>**ngx_http_referer_module**</mark>
 - 类型：HTTP访问控制模块
 - 默认已内置，无需 --with- 参数
-- 所属阶段：**ACCESS**
+- 所属阶段：<mark>**ACCESS**</mark>
 
 
 # 3. 主要指令
