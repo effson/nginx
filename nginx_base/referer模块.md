@@ -94,13 +94,18 @@ Nginx 在收到请求时：
 ```nginx
 secure_link $arg_md5,$arg_expires;
 ```
+- **如果 MD5 匹配 ✅ → $secure_link=1（通过）**
+- **如果过期 ❌ → $secure_link=0**
+- **如果不匹配 ❌ → $secure_link=""**
 
 ### 2.3.2 secure_link_md5
 定义服务器端计算签名的表达式
 
 ```nginx
-secure_link_md5 "$uri$secure_link_expires secret";
+secure_link_md5 "$uri$secure_link_expires secret"; 
 ```
+<mark>**$secure_link_expires**是时间戳的值</mark>
+
 ### 2.3.3 ssecure_link_secret (旧版本)
 定义静态密钥
 
