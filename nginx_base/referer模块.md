@@ -1,6 +1,6 @@
 # 1 模块功能概述
-    Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 防止“盗链”（Hotlinking），即禁止外部网站直接引用服务器上的图片、视频、下载资源等内容**。<br>
-    外部网站通过url引用页面，用户在浏览器点击url时，http请求的头部会通过**referer头部**，将该网站当前页面的url带上，告诉服务器本次请求是由这个浏览器页面发起的。<br>
+Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 防止“盗链”（Hotlinking），即禁止外部网站直接引用服务器上的图片、视频、下载资源等内容**。<br>
+外部网站通过url引用页面，用户在浏览器点击url时，http请求的头部会通过**referer头部**，将该网站当前页面的url带上，告诉服务器本次请求是由这个浏览器页面发起的。<br>
 
 <mark>**核心功能：根据请求头中的 Referer 字段来判断请求来源，允许或拒绝来自特定站点的访问**。</mark>
 
