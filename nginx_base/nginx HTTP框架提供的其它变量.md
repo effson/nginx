@@ -22,23 +22,41 @@
 
 ## 1.6 $proxy_protocol_addr
 
-当使用 PROXY protocol 时，代理客户端真实 IP 地址,获取真实客户端 IP（在四层代理后）
+当使用 PROXY protocol 时，返回代理客户端真实 IP 地址,获取真实客户端 IP（在四层代理后）
+
+## 1.7 $proxy_protocol_port
+当使用 PROXY protocol 时，返回代理客户端端口
+
+## 1.8 $server_addr
+服务器本地 IP 地址（Nginx 监听端口的 IP）
+
+## 1.9 $server_port
+
+服务器监听端口号
+
+## 1.10 $server_protocol
+请求协议版本，如 
+- HTTP/1.1
+- HTTP/2.0
+
+## 1.11 $TCP_INFO
+
+<mark>$tcpinfo_*（或 $TCP_INFO）变量</mark>, tcp内核层参数
+
+### 1.11.1 $tcpinfo_rtt
+平滑往返时延（RTT），毫秒
+
+### 1.11.2 $tcpinfo_rttvar
+RTT 方差（RTT 的波动程度）
+
+### 1.11.3 $tcpinfo_rcv_space
+当前接收缓冲区可用空间，字节
+
+### 1.11.4 $tcpinfo_snd_cwnd
+
+当前发送拥塞窗口大小（以 MSS 为单位），包数
 
 
-
-
-```
-$remote_addr: 客户端的 IP 地址。 
-$remote_port: 客户端的端口号。
-$server_addr: 服务器的 IP 地址（通常是服务器监听的地址）。
-$server_port: 服务器的端口号。
-$proxy_protocol_addr:
-$proxy_protocol_port:
-$connection: 当前连接的唯一标识符。
-$connection_requests: 当前连接的请求数量。
-$TCP_INFO:
-$server_protocol:
-```
 
 # 2 Nginx处理请求过程中产生的变量
 ```
