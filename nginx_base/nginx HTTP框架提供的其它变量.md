@@ -59,6 +59,30 @@ RTT 方差（RTT 的波动程度）
 
 
 # 2 Nginx处理请求过程中产生的变量
+
+## 2.1 $request_time
+请求处理耗时，请求从 接收完成（读完请求头+体） 到现在的时间<br>
+常用于日志记录和性能分析：
+```nginx
+log_format timed '$remote_addr - $request_time "$request" $status';
+```
+
+## 2.2 $server_name
+当前请求匹配到的 server {} 块中定义的 server_name 值
+
+## 2.3 $https
+
+表示当前连接是否使用 SSL/TLS,若启用了 listen 443 ssl; 并建立加密连接，则 $https = "on"；否则为空字符串
+
+## 2.4 $request_completion
+
+响应是否完整成功地返回，发送给客户端：
+- "OK"：请求成功完成；
+- 空字符串：请求在发送过程中中断（客户端提前断开连接）。
+
+
+
+## 
 ```
 $request_time:
 $request_completion:
