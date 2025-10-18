@@ -89,22 +89,48 @@ log_format timed '$remote_addr - $request_time "$request" $status';
 当前请求响应数据的最大传输速率（bytes/s，字节每秒）
 
 
-
-
-## 
-```
-$request_time:
-$request_completion:
-$request_id:
-$server_name:
-$https:
-$request_filename:
-$document_root:
-$realpath_root:
-$limit_rate:
-```
-
 # 3 发送HTTP响应时相关的变量
+
+
+## 3.1 $body_bytes_sent
+发送给客户端的 响应体（body） 的字节数，不包含 HTTP 响应头
+
+## 3.2 $bytes_sent
+表示发送给客户端的 总字节数（包括响应头 + 响应体 + 任何附加信息）
+```nginx
+log_format bandwidth '$remote_addr $bytes_sent bytes total, $body_bytes_sent body';
+```
+输出示例：
+```css
+192.168.1.10 5243120 bytes total, 5242880 body
+```
+
+## 3.3 $status
+表示 Nginx 发送给客户端的 HTTP 响应状态码（整数值）
+```nginx
+log_format main '$remote_addr "$request" $status';
+```
+```css
+192.168.1.10 "GET /index.html HTTP/1.1" 200
+192.168.1.11 "GET /noexist.html HTTP/1.1" 404
+```
+
+## 3.4 $sent_trailer
+Nginx 在响应中发送的 HTTP Trailer 头部（HTTP/1.1 或 chunked 传输支持）。Trailer 是响应末尾（body 之后）发送的一组 HTTP 头字段
+
+## 3.5 $sent_http_<header_name>
+表示 Nginx 已经发送给客户端的响应头部 <header_name> 的值。
+
+### 3.5.1 $sent_http_content_type
+
+
+### 3.5.2 $sent_http_content_length
+
+### 3.5.3 
+
+
+
+
 ```
 $body_bytes_sent:
 $bytes_sent:
