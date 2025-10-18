@@ -121,26 +121,34 @@ Nginx 在响应中发送的 HTTP Trailer 头部（HTTP/1.1 或 chunked 传输支
 ## 3.5 $sent_http_<header_name>
 表示 Nginx 已经发送给客户端的响应头部 <header_name> 的值。
 
-#### 3.5.1 $sent_http_content_type
+#### $sent_http_content_type
 
 
-#### 3.5.2 $sent_http_content_length
+#### $sent_http_content_length
 
-#### 3.5.3 $sent_http_location
+#### $sent_http_location
 
-#### 3.5.4 $sent_http_last_modified
+#### $sent_http_last_modified
 
-#### 3.5.5 $sent_http_connection
+#### $sent_http_connection
 
-#### 3.5.6 $sent_http_transfer_encoding
+#### $sent_http_transfer_encoding
 
-#### 3.5.7 
-
+#### $sent_http_link
 
 ### 3.5.8 $sent_http_cache_control
 
-### 3.5.9
+### 3.5.9 $sent_keep_alive
+
+
+
+
+
+
 ```
+
+
+
 $body_bytes_sent:
 $bytes_sent:
 $status:
