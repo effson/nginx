@@ -106,7 +106,7 @@ secure_link_md5 "$uri$secure_link_expires secret";
 ```
 <mark>**$secure_link_expires**是时间戳的值</mark>
 
-### 2.3.3 ssecure_link_secret (旧版本)
+### 2.3.3 secure_link_secret (旧版本)
 定义静态密钥
 
 ```nginx
@@ -147,14 +147,14 @@ secure_link_secret mySecret;
           │   https://cdn.example.com/video/movie.mp4
           │       ?md5=abc123...&expires=1739872000
           ▼
-┌────────────────────────────────────────────┐
-│                 Nginx 接收请求              │
-│--------------------------------------------│
-│ location /video/ {                         │
-│     secure_link $arg_md5,$arg_expires;     │
-│     secure_link_md5 "$uri$arg_expires mySecretKey"; │
-│ }                                           │
-└────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 Nginx 接收请求                                           │
+│-------------------------------------------------------------------------│
+│ location /video/ {                                                      │
+│     secure_link $arg_md5,$arg_expires;                                  │
+│     secure_link_md5 "$uri$secure_link_expires$remote_addr mySecretKey"; │
+│ }                                                                       │
+└─────────────────────────────────────────────────────────────────────────┘
           │
           │ ④ Nginx 提取参数：
           │     $arg_md5      ← abc123...
