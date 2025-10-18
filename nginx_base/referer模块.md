@@ -1,4 +1,5 @@
-# 1 模块功能概述
+# 1.referer模块
+## 1.1 模块功能概述
 Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 防止“盗链”（Hotlinking），即禁止外部网站直接引用服务器上的图片、视频、下载资源等内容**。<br>
 外部网站通过url引用页面，用户在浏览器点击url时，http请求的头部会通过**referer头部**，将该网站当前页面的url带上，告诉服务器本次请求是由这个浏览器页面发起的。<br>
 
@@ -7,19 +8,19 @@ Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 
 
 
 
-# 2.模块加载
+## 1.2模块加载
 - 模块名：<mark>**ngx_http_referer_module**</mark>
 - 类型：HTTP访问控制模块
 - 默认已内置，无需 --with- 参数
 - 所属阶段：<mark>**ACCESS**</mark>
 
 
-# 3. 主要指令
+## 1.3 主要指令
 
-## 3.1 valid_referers
+### 1.3.1 valid_referers
 指定允许访问的 Referer 来源规则。告诉 Nginx 哪些来源的请求被认为是“合法”的。
 
-### 语法
+#### 语法
 
 ```nginx
 valid_referers none | blocked | server_names | string ...;
@@ -29,7 +30,7 @@ valid_referers none | blocked | server_names | string ...;
 - server_names：允许本服务器配置的所有 server_name 域名
 - string：明确列出允许的域名（可带通配符）
 
-### $invalid_referer 变量
+#### $invalid_referer 变量
 判断当前请求的 Referer 是否非法：
 - **1 → 非法 Referer**
 - **空字符串 → 合法 Referer**
@@ -45,7 +46,7 @@ location / {
     return 200 'valid\n';
 }
 ```
-### 示例
+#### 示例
 ```nginx
 valid_referers none blocked server_names *.mydomain.com mycdn.net;
 ```
@@ -59,9 +60,12 @@ valid_referers none blocked server_names *.mydomain.com mycdn.net;
 
 
 
-## 3.2 referer_hash_bucket_size & referer_hash_max_size
+### 1.3.2 referer_hash_bucket_size & referer_hash_max_size
 用于控制该模块内部用于匹配合法 Referer 域名的哈希表（hash table）的大小和内存分配行为
 ```nginx
 referer_hash_bucket_size size; # 单位：字节
 referer_hash_max_size size;
 ```
+
+
+# 2. secure_link 模块
