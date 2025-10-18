@@ -1,7 +1,17 @@
-# 1 TCP连接相关变量
+# 1. TCP连接相关变量
+
+## 1.1 $binary_remote_addr
+客户端地址的二进制形式
+- IPv4 4字节
+- IPv6 16字节
+
+## 1.2 $connection
+当前 TCP 连接的序号（ngx_connection_t->number）
+- 不断递增
+
+
 ```
-$remote_addr: 客户端的 IP 地址。
-$binary_remote_addr: 
+$remote_addr: 客户端的 IP 地址。 
 $remote_port: 客户端的端口号。
 $server_addr: 服务器的 IP 地址（通常是服务器监听的地址）。
 $server_port: 服务器的端口号。
