@@ -83,3 +83,27 @@ secure_link 模块通过对 URL 或参数中的签名字段进行校验（验证
 Nginx 在收到请求时：
 - 1️⃣ 从请求中提取特定参数（例如 $arg_md5, $arg_expires, $uri 等）
 - 2️⃣ 根据配置计算一个 本地哈希值（通过 MD5 或 HMAC-MD5）
+- 3️⃣ 将计算结果与请求参数中的签名字段比对
+- 4️⃣ 匹配成功 → 放行；不匹配 → 返回 403 Forbidden
+
+
+## 2.3 核心指令
+### 2.3.1 secure_link
+指定如何提取和验证链接
+
+```nginx
+secure_link $arg_md5,$arg_expires;
+```
+
+### 2.3.2 secure_link_md5
+定义服务器端计算签名的表达式
+
+```nginx
+secure_link_md5 "$uri$secure_link_expires secret";
+```
+### 2.3.3 ssecure_link_secret (旧版本)
+定义静态密钥
+
+```nginx
+secure_link_secret mySecret;
+```
