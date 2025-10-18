@@ -59,5 +59,9 @@ valid_referers none blocked server_names *.mydomain.com mycdn.net;
 
 
 
-## 3.2 
-
+## 3.2 referer_hash_bucket_size & referer_hash_max_size
+用于控制该模块内部用于匹配合法 Referer 域名的哈希表（hash table）的大小和内存分配行为
+```nginx
+referer_hash_bucket_size size; # 单位：字节
+referer_hash_max_size size;
+```
