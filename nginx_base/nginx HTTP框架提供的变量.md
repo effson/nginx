@@ -54,21 +54,29 @@ if ($request_method = POST) {
 }
 ```
 
-### 1.1.9 $request_length
+### 1.1.11 $request_length
 请求报文总长度（包括请求行、请求头和请求体的总和，单位：字节）
 
-### 1.1.9 $remote_user
+### 1.1.12 $remote_user
 HTTP Basic Authentication 协议传入的用户名
 
+### 1.1.13 $request_body_file
+当前请求体被 Nginx 临时存放的文件路径.也就是说，当 Nginx 把请求体写入临时文件后，这个变量保存了文件的完整路径，方便其他模块（或上游）读取
+- 如果包体非常小则不会存文件
+- client_body_in_file_only会强制所有包体存入文件，可决定是否删除
+
+### 1.1.14 $request_body
+
+$request_body 表示 当前请求的请求体数据（字符串形式），仅当请求体在内存中缓存时才会有值。
 
 
+### 1.1.15 $request
+HTTP 请求报文的第一行叫做 请求行（Request Line），该变量为客户端请求行（Request Line）完整文本
 
-
-
-
-
-
-
+```pgsql
+GET /index.html?user=jeff HTTP/1.1
+POST /api/login HTTP/2
+```
 
 
 
@@ -94,51 +102,6 @@ access_log /var/log/nginx/access.log custom_log;
 # 2
 ```
 
-
-🔹 $remote_user
-含义：经过 HTTP 认证的用户名（仅在配置了如 auth_basic 时有效）。
-默认值：如果没有认证信息，则为空。
-用途：记录或基于用户名实现访问控制。
-示例：
-log_format log_user '$remote_user accessed $uri';
-access_log /var/log/nginx/access.log log_user;
-
-auth_basic "提示文字";  #设置认证提示文本（显示在浏览器弹窗中）。
-auth_basic_user_file /path/to/.htpasswd; # 指定用户密码文件（htpasswd 文件）。
-
-
-🔹 $request_uri
-含义：请求的原始 URI，包含路径和查询字符串（即包括 ? 后面的部分）。
-示例：请求 /index.html?page=1
-$request_uri = /index.html?page=1
-用途：
-用于日志记录、重定向原始请求地址等。
-示例：
-return 302 /new$request_uri;
-
-
-🔹 $document_uri（或 $uri）
-含义：请求的 URI（不含查询字符串部分），也叫 $uri，是解析后的路径。
-说明：
-$uri 会经过内部重写后再映射资源；
-原始路径还保留在 $request_uri 中。
-用途：匹配 location，静态文件查找，重写。
-示例：
-location / {
-    root /var/www/html;
-    try_files $uri $uri/ =404;
-}
-
-🔹 $scheme
-含义：客户端请求使用的协议：http 或 https。
-用途：
-重定向到 HTTPS；
-构造完整的 URL。
-示例：
-if ($scheme = http) {
-    return 301 https://$host$request_uri;
-}
-```
 
 # 3
 ```
