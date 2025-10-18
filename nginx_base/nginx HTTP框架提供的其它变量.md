@@ -141,25 +141,12 @@ Nginx 在响应中发送的 HTTP Trailer 头部（HTTP/1.1 或 chunked 传输支
 ### 3.5.9 $sent_keep_alive
 
 
-
-
-
-
-```
-
-
-
-$body_bytes_sent:
-$bytes_sent:
-$status:
-$sent_trailer:
-```
-
 # 4 Nginx系统变量
-```
-$time_local:
-$pid:
-$pipe:
-$hostname:
-$msee:
-```
+
+#### $time_local
+#### $time_iso8601
+#### $nginx_version
+#### $pid
+#### $pipe
+#### $hostname
+#### $msee:
