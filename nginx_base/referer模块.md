@@ -191,5 +191,24 @@ secure_link_secret mySecret;
 │ 403 Forbidden:签名不匹配（非法）             │
 │ 410 Gone:链接已过期                         │
 └────────────────────────────────────────────┘
+```
+
+```nginx
+
+location /video/ {                                                      
+    secure_link $arg_md5,$arg_expires;
+    secure_link_md5 "$uri$secure_link_expires$remote_addr mySecretKey";
+
+    if ($secure_link = "") {
+        return 403;
+    }
+
+    if ($secure_link = "0") {
+        return 410;
+    }
+
+    return 200 "OK"; 
+} 
 
 ```
+
