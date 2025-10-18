@@ -1,5 +1,6 @@
-# 1. Nginx 变量
-## 1.1 HTTP请求相关变量
+# 1. Nginx变量：HTTP请求相关变量
+
+## (一)
 ### 1.1.1 $arg_参数名
 ```pgsql
 http://example.com/index.html?id=10&user=jeff&debug=1
@@ -33,6 +34,8 @@ HTTP请求中标识包体长度的Content-Length头部的值
 ### 1.1.5 $content_type
 标识请求包体内容类型的Content-type头部的值
 
+## (二)
+
 ### 1.1.6 $document_uri
 与 $uri 相同
 
@@ -60,6 +63,8 @@ if ($request_method = POST) {
 ### 1.1.12 $remote_user
 HTTP Basic Authentication 协议传入的用户名
 
+## (三)
+
 ### 1.1.13 $request_body_file
 当前请求体被 Nginx 临时存放的文件路径.也就是说，当 Nginx 把请求体写入临时文件后，这个变量保存了文件的完整路径，方便其他模块（或上游）读取
 - 如果包体非常小则不会存文件
@@ -77,7 +82,7 @@ HTTP 请求报文的第一行叫做 请求行（Request Line），该变量为�
 GET /index.html?user=jeff HTTP/1.1
 POST /api/login HTTP/2
 ```
-
+## (四)
 
 
 
