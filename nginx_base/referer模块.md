@@ -17,13 +17,19 @@ Nginx 的 referer 模块（全称：ngx_http_referer_module），**主要用于 
 # 3. 主要指令
 
 ## 3.1 valid_referers
-指定允许访问的 Referer 来源规则。
+指定允许访问的 Referer 来源规则。告诉 Nginx 哪些来源的请求被认为是“合法”的。
 
 ### 语法
 
 ```
-
+valid_referers none | blocked | server_names | string ...;
 ```
+- none：没有 Referer 头的请求视为合法（直接访问）
+- blocked：Referer 存在但被防火墙或代理隐藏（不是以 http/https 开头）
+- server_names：允许本服务器配置的所有 server_name 域名
+- string：明确列出允许的域名（可带通配符）
+
+
 
 
 
