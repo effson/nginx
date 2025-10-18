@@ -29,6 +29,22 @@ valid_referers none | blocked | server_names | string ...;
 - server_names：允许本服务器配置的所有 server_name 域名
 - string：明确列出允许的域名（可带通配符）
 
+### $invalid_referer 变量
+判断当前请求的 Referer 是否非法：
+- **1 → 非法 Referer**
+- **空字符串 → 合法 Referer**
+
+```nginx
+location / {
+    valid_referers none blocked server_names *.mydomain.com mycdn.net;
+
+    if ($invalid_referer) {
+        return 403;
+    }
+
+    return 200 'valid\n';
+}
+```
 ### 示例
 ```nginx
 valid_referers none blocked server_names *.mydomain.com mycdn.net;
@@ -39,6 +55,9 @@ valid_referers none blocked server_names *.mydomain.com mycdn.net;
 - Referer 是本域名（如 www.mydomain.com）：允许；
 - Referer 是 mycdn.net 或其子域：允许；
 - 其他来源：视为非法。
+
+
+
 
 ## 3.2 
 
