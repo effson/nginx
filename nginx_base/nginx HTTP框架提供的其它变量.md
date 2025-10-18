@@ -72,13 +72,22 @@ log_format timed '$remote_addr - $request_time "$request" $status';
 
 ## 2.3 $https
 
-表示当前连接是否使用 SSL/TLS,若启用了 listen 443 ssl; 并建立加密连接，则 $https = "on"；否则为空字符串
+表示当前**连接是否使用 SSL/TLS**,若启用了 listen 443 ssl; 并建立加密连接，**则 $https = "on"**；**否则为空字符串**
 
 ## 2.4 $request_completion
 
 响应是否完整成功地返回，发送给客户端：
-- "OK"：请求成功完成；
-- 空字符串：请求在发送过程中中断（客户端提前断开连接）。
+- **"OK"**：请求成功完成；
+- **空字符串**：请求在发送过程中中断（客户端提前断开连接）。
+
+## 2.5 $request_id
+
+请求唯一标识符，Nginx 为每个请求生成的唯一 ID（UUID 格式或随机字符串），用于日志追踪
+
+
+## 2.6 $limit_rate
+当前请求响应数据的最大传输速率（bytes/s，字节每秒）
+
 
 
 
