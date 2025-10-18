@@ -86,16 +86,33 @@ POST /api/login HTTP/2
 
 ### 1.1.16 $host
 #### 优先级顺序（从高到低）：
-1️⃣ HTTP 请求头中的 Host 字段（若存在）
+1️⃣ 从HTTP 请求行中获取 
+```nginx
+GET http://www.jeffweb.com/index.html HTTP/1.0
+```
+2️⃣ HTTP 请求头中的 Host 字段（若存在）
 
 ```
 GET / HTTP/1.1
 Host: www.jeffweb.com
 ```
-$host = www.jeffweb.com
+$host = www.jeffweb.com,替换请求行中的主机名 <br>
 
+3️⃣ 匹配该请求的 server_name<br>
+请求中没有 Host 头部，或者 Host 头部值为空，Nginx 将会使用配置中与该请求匹配的 server 块的 server_name（即配置的第一个服务器名称）
 
+## (五)
 
+### 1.1.17 $http_头部名字
+```nginx
+$http_host
+$http_user_agent
+$http_x_forwarded_for
+$http_referer
+$http_cookie
+$http_via
+```
+返回相应的头部的值
 
 
 
