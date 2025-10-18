@@ -9,6 +9,23 @@
 当前 TCP 连接的序号（ngx_connection_t->number）
 - 不断递增
 
+## 1.3 $connection_requests
+当前 TCP 连接上已处理的请求数（复用场景），对keepalive连接有意义，判断是否复用 Keep-Alive 连接
+
+## 1.4 $remote_addr
+
+客户端 IP 地址（来自 ngx_connection_t->sockaddr）
+- 记录访问者 IP、限速、黑名单匹配
+
+## 1.5 $remote_port
+客户端源端口
+
+## 1.6 $proxy_protocol_addr
+
+当使用 PROXY protocol 时，代理客户端真实 IP 地址,获取真实客户端 IP（在四层代理后）
+
+
+
 
 ```
 $remote_addr: 客户端的 IP 地址。 
