@@ -84,6 +84,16 @@ POST /api/login HTTP/2
 ```
 ## (四)
 
+### 1.1.16 $host
+#### 优先级顺序（从高到低）：
+1️⃣ HTTP 请求头中的 Host 字段（若存在）
+
+```
+GET / HTTP/1.1
+Host: www.jeffweb.com
+```
+$host = www.jeffweb.com
+
 
 
 
