@@ -128,6 +128,7 @@ secure_link_secret mySecret;
 │   uri        = "/video/movie.mp4"                  │
 │   expires    = 当前时间 + 3600秒                    │
 │   secret_key = "mySecretKey"                       │
+│   ip_addr    = "192.168.0.1"                       │
 │                                                    │
 │   拼接字符串 = uri + expires + ip_addr + secret_key │
 │   md5 = MD5(拼接字符串)                             │
