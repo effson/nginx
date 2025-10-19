@@ -150,3 +150,32 @@ server {
 
 ```
 - 测试使用：```curl -H 'X-Forwarded-For: 10.1.0.0, 127.0.0.1, 192.168.1.123' example.com/```
+
+
+# 3. geoip 模块（ngx_http_geoip_module）
+根据客户端 IP，从本地 GeoIP 数据库中查询：
+- 所属国家（country）
+- 省份/州（region）
+- 城市（city）
+- 纬度、经度、时区等信息
+
+## 3.1 语法与配置
+
+```nginx
+http {
+    geoip_country /etc/nginx/geoip/GeoIP.dat;        # 国家库
+    geoip_city    /etc/nginx/geoip/GeoLiteCity.dat;  # 城市库
+}
+```
+#### 可用变量
+```
+$geoip_country_code	两位国家码（CN、US 等）
+$geoip_country_name	国家名（China、United States）
+$geoip_region	省/州代码
+$geoip_city	城市名
+$geoip_latitude / $geoip_longitude	纬度 / 经度
+$geoip_area_code	电话区号
+$geoip_region_name	省/州名
+$geoip_postal_code	邮政编码
+$geoip_continent_code	洲代码
+```
