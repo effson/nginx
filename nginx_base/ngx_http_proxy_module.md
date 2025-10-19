@@ -84,11 +84,11 @@ add_header X-Cache-Status	     添加缓存状态响应头（如 HIT、MISS）
 ## proxy_cache示例配置
 
 ### 1. 定义缓存路径
-```
+```nginx
 proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=my_cache:10m max_size=1g inactive=60m use_temp_path=off;
 ```
 ### 2. 在 server 或 location 中启用缓存<br>
-```
+```nginx
 location /api/ {
      proxy_pass http://backend;
      <br>
@@ -178,7 +178,7 @@ http/https（$scheme）<br>
 
 功能：在响应头中添加 X-Cache-Status 字段，用于显示缓存状态。<br>
 # 示例配置<br>
-```
+```nginx
 location /api/ {
      proxy_pass http://127.0.0.1:8080/;
      proxy_set_header Host $host;
