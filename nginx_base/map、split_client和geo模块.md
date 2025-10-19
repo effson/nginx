@@ -76,3 +76,34 @@ http {
 - <mark>**A/B 测试 Split Testing**</mark>：将用户流量按比例分割成不同的组（如 A 组和 B 组），每组用户访问不同的内容、页面布局或后端服务，以评估不同版本的效果
 - <mark>**渐进式发布/金丝雀发布 Canary Deployment**</mark>：将一小部分（如 1% 或 5%）的真实用户流量路由到一个新的后端服务版本上，在小范围内验证新版本的稳定性和性能
 - <mark>**持续性分组**</mark>：这是其核心功能。它通过对一个输入字符串（如 $remote_addr 或自定义 Cookie）进行 哈希（MurmurHash2） 运算，确保同一个客户端（只要其输入字符串不变）每次都会被分配到同一个组中。这对于保证用户体验和测试结果的准确性至关重要
+
+## 2.2 语法
+
+```nginx
+split_clients $key $var {
+    10%    "canary";     # 前 10%
+    20%    "beta";       # 接下来 20%（累计到 30%）
+    *      "stable";     # 其余（必须有 * 兜底）
+}
+```
+
+- $key：最常用<mark>**$remote_addr**</mark> (客户端 IP 地址),
+- 百分比为累进区间；顺序重要；总和不必等于 100%，剩余由 * 接住
+
+## 2.3 示例
+```nginx
+split_clients $http_test1 $var {
+    10%    .ten;          # 前 10%
+    20%    .twenty;       # 接下来 20%（累计到 30%）
+    *      "";            # 其余（必须有 * 兜底）
+}
+
+server {
+        listen 10001;
+        server_name example.com;
+        default_type text/plain;
+        location / {
+            return 200 'test1$var\n';
+        }
+} 
+```
