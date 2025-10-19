@@ -106,4 +106,5 @@ server {
         }
 } 
 ```
-- 测试使用： curl -H 'test1: 35465467gdfgdfg' example.com/
+- 测试使用：
+```curl -H 'test1: 35465467gdfgdfg' example.com/```
