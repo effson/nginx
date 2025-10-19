@@ -7,13 +7,34 @@
 ## 1.2 $upstream_connect_time
 > 建立与上游连接所花的时间（秒），精确到毫秒
 
-## 1.1 $upstream_header_time
+## 1.3 $upstream_header_time
 > 从发出请求到收到上游响应头的时间（秒），精确到毫秒
 
-## 1.1 $upstream_response_time
+## 1.4 $upstream_response_time
 > 从请求上游到接收完响应的总时间（秒）
 
-## 1.1 $upstream_http_<header>
+## 1.5 $upstream_http_<header>
 > 上游返回的某个 HTTP 响应头
 
-## 1.2 
+## 1.6 $upstream_bytes_received
+> 从上游接收的总字节数（包含头部+体）
+
+## 1.7 $upstream_response_length
+> 上游返回的响应体字节数
+
+## 1.8 $upstream_status
+> 上游返回的 HTTP 状态码（可能有多个）
+
+## 1.9 $upstream_cookie_<cookie_name>
+> 上游返回的特定 cookie 值
+
+## 1.10 $upstream_trailer_*
+> 上游返回的 trailer 头（chunked 响应时使用）
+
+
+
+
+
+
+
+
