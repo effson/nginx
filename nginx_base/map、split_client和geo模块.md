@@ -69,7 +69,7 @@ http {
 }
 ```
 
-<mark>** **</mark>
+
 
 # 2. split_clients模块（ngx_http_split_clients_module）
 ## 2.1 作用
@@ -108,3 +108,45 @@ server {
 ```
 - 测试使用：
 ```curl -H 'test1: 35465467gdfgdfg' example.com/```
+
+<mark>** **</mark>
+# 3. geo 模块（ngx_http_geo_module）
+## 3.1 作用
+<mark>**按客户端 IP（CIDR 或区间）映射到变量值**</mark>，常用于白/黑名单、按网段开关、区域路由等
+## 3.2 语法
+```nginx
+geo $var {
+    default 0;                     # 兜底值
+    127.0.0.1         1;           # 单个地址
+    10.0.0.0/8        1;           # CIDR
+    2001:db8::/32     1;           # IPv6 CIDR
+    # 开区间匹配模式（可选）
+    # ranges;
+    # 192.168.1.1-192.168.1.100  1;
+
+    include conf/ip_whitelist.conf; # 可拆分外部文件
+}
+```
+## 3.3 示例
+```nginx
+geo $country {
+    default CN;                     # 兜底值
+    127.0.0.0/24         UK;           # 单个地址
+    127.0.0.1/32         RU;
+    10.1.0.0/16          US;           # CIDR
+    2001:db8::/32        AUS;           # IPv6 CIDR
+    # 开区间匹配模式（可选）
+    # ranges;
+    # 192.168.1.1-192.168.1.100  1;
+}
+
+server {
+        server_name example.com;
+        default_type text/plain;
+        location / {
+            return 200 '$country\n';
+        }
+} 
+
+```
+- 测试使用：```curl -H 'X-Forwarded-For: 10.1.0.0, 127.0.0.1, 192.168.1.123' example.com/```
