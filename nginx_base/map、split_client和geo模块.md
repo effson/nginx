@@ -99,7 +99,6 @@ split_clients $http_test1 $var {
 }
 
 server {
-        listen 10001;
         server_name example.com;
         default_type text/plain;
         location / {
@@ -107,3 +106,4 @@ server {
         }
 } 
 ```
+- 测试使用： curl -H 'test1: 35465467gdfgdfg' example.com/
