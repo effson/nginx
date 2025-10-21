@@ -70,3 +70,30 @@ typedef struct {
     void        **loc_conf;
 } ngx_http_conf_ctx_t;
 ```
+ngx_http_block() 先为 HTTP 子系统创建一个新的上下文，ngx_http_conf_ctx_t，有三个数组指针：
+- void **main_conf;（http 级）
+- void **srv_conf;（server 级——每个虚拟主机一个）
+- void **loc_conf;（location 级——每个 location 一个）
+
+## 3.2 创建配置实例
+**遍历所有 type == NGX_HTTP_MODULE 的模块，调用各模块在 ngx_http_module_t 里声明的 工厂函数 创建配置实例**：
+- create_main_conf(cf)
+- create_srv_conf(cf)
+- create_loc_conf(cf)
+
+```c
+typedef struct {
+    ngx_int_t   (*preconfiguration)(ngx_conf_t *cf);
+    ngx_int_t   (*postconfiguration)(ngx_conf_t *cf);
+
+    void       *(*create_main_conf)(ngx_conf_t *cf);
+    char       *(*init_main_conf)(ngx_conf_t *cf, void *conf);
+
+    void       *(*create_srv_conf)(ngx_conf_t *cf);
+    char       *(*merge_srv_conf)(ngx_conf_t *cf, void *prev, void *conf);
+
+    void       *(*create_loc_conf)(ngx_conf_t *cf);
+    char       *(*merge_loc_conf)(ngx_conf_t *cf, void *prev, void *conf);
+} ngx_http_module_t;
+```c
+
