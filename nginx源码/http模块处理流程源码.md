@@ -153,4 +153,4 @@ http{} 里的所有指令都被读完后，ngx_http_block() 进入“收尾阶�
             goto failed;
         }
     }
-```c
+```
