@@ -40,7 +40,7 @@ ngx_module_t  ngx_http_module = {
 };
 ```
 
-
+根据nginx的基础源码架构，首先执行NGX_CORE_MODULE(核心模块)类型的ctx->cmd
 
 
 
