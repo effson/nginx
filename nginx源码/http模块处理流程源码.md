@@ -49,11 +49,15 @@ ngx_module_t  ngx_http_module = {
 # 2. 执行流程
 ```css
 ngx_init_cycle()
-  └── ngx_conf_parse(&conf, &cycle->conf_file)
+  └──> ngx_conf_parse(&conf, &cycle->conf_file);
         ├── 读取配置文件内容（逐行、逐token解析）
         ├── 识别指令名称、参数
-        ├── 调用 ngx_conf_handler(cf, rc)
+        |
+        ├──> ngx_conf_handler(cf, rc);
               ├── 查找指令定义 ngx_command_t
               ├── 验证上下文和参数数量
-              ├── 调用该指令对应的 set 回调函数 
+              |
+              ├──> 调用该指令对应的 set 回调函数 
 ```
+
+# 3. ngx_http_block
