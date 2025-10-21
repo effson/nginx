@@ -114,3 +114,43 @@ ngx_conf_parse(cf, NULL);
       0,
       NULL },
 ```
+- create_srv_conf(cf)
+- create_loc_conf(cf)
+- **再次进入 ngx_conf_parse() 递归解析 server {} 内部**
+
+### 3.4.2 解析到location {}
+- 执行 **ngx_http_core_location()**（location 指令的 set 回调）
+```c
+{ ngx_string("location"),
+      NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_BLOCK|NGX_CONF_TAKE12,
+      ngx_http_core_location,
+      NGX_HTTP_SRV_CONF_OFFSET,
+      0,
+      NULL },
+```
+- create_loc_conf(cf)
+- 若为块 location {}，继续递归解析其内部 
+
+## 3.5 初始化与合并配置（init/merge）
+
+http{} 里的所有指令都被读完后，ngx_http_block() 进入“收尾阶段”，遍历所有 HTTP 模块调用它们的收尾钩子函数
+```c
+    for (m = 0; cf->cycle->modules[m]; m++) {
+        if (cf->cycle->modules[m]->type != NGX_HTTP_MODULE) {
+            continue;
+        }
+        module = cf->cycle->modules[m]->ctx;
+        mi = cf->cycle->modules[m]->ctx_index;
+        /* init http{} main_conf's */
+        if (module->init_main_conf) {
+            rv = module->init_main_conf(cf, ctx->main_conf[mi]);
+            if (rv != NGX_CONF_OK) {
+                goto failed;
+            }
+        }
+        rv = ngx_http_merge_servers(cf, cmcf, module, mi);
+        if (rv != NGX_CONF_OK) {
+            goto failed;
+        }
+    }
+```c
