@@ -104,3 +104,13 @@ typedef struct {
 ```c
 ngx_conf_parse(cf, NULL);
 ```
+### 3.4.1 解析到server {}
+- 执行 **ngx_http_core_server()**（server 指令的 set 回调）
+```c
+{ ngx_string("server"),
+      NGX_HTTP_MAIN_CONF|NGX_CONF_BLOCK|NGX_CONF_NOARGS,
+      ngx_http_core_server,
+      0,
+      0,
+      NULL },
+```
