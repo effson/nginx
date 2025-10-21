@@ -1,8 +1,11 @@
-```ccs
+```css
 
 main()
  |
  |--------------> ngx_init_cycle(ngx_cycle_t *cycle)配置解析和模块初始化
  |                           |
  |                           |--> pool = ngx_create_pool() // 初始化内存池
+
+
+
 ```
