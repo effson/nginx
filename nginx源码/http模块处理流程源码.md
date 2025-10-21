@@ -95,5 +95,12 @@ typedef struct {
     void       *(*create_loc_conf)(ngx_conf_t *cf);
     char       *(*merge_loc_conf)(ngx_conf_t *cf, void *prev, void *conf);
 } ngx_http_module_t;
-```c
+```
 
+## 3.3 调用各 HTTP 模块的 preconfiguration（可选）
+正式解析 http{} 内部指令之前，**遍历所有 HTTP 模块并调用：module->preconfiguration(cf)**
+
+## 3.4 递归解析整个 http{} 内容
+```c
+ngx_conf_parse(cf, NULL);
+```
