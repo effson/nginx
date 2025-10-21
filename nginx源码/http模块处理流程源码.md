@@ -47,7 +47,7 @@ ngx_module_t  ngx_http_module = {
 
 
 # 2. 执行流程
-```scss
+```css
 ngx_init_cycle()
   └── ngx_conf_parse(&conf, &cycle->conf_file)
         ├── 读取配置文件内容（逐行、逐token解析）
