@@ -61,3 +61,12 @@ ngx_init_cycle()
 ```
 
 # 3. ngx_http_block
+## 3.1 建立 HTTP 解析上下文（三套 conf 指针）
+
+```c
+typedef struct {
+    void        **main_conf;
+    void        **srv_conf;
+    void        **loc_conf;
+} ngx_http_conf_ctx_t;
+```
