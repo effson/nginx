@@ -225,7 +225,7 @@ typedef struct {
 } ngx_http_phase_t;
 ```
 ### ngx_http_init_phases
-<mark>**初始化HTTP各阶段handler函数的ngx_array_init**</mark>：
+<mark>**初始化HTTP各阶段handler函数的ngx_array_t**</mark>：
 ```c
 static ngx_int_t
 ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
@@ -250,3 +250,4 @@ ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
 }
 
 ```
+## 3.8 注册PHASE handler与过滤器
