@@ -154,3 +154,25 @@ http{} 里的所有指令都被读完后，ngx_http_block() 进入“收尾阶�
         }
     }
 ```
+## 3.6 为每个 server{} 完成 location 结构的最终化
+
+```c
+ngx_http_core_srv_conf_t   **cscfp;
+// ...
+
+/* create location trees */
+
+    for (s = 0; s < cmcf->servers.nelts; s++) {
+
+        clcf = cscfp[s]->ctx->loc_conf[ngx_http_core_module.ctx_index];
+
+        if (ngx_http_init_locations(cf, cscfp[s], clcf) != NGX_OK) {
+            return NGX_CONF_ERROR;
+        }
+
+        if (ngx_http_init_static_location_trees(cf, clcf) != NGX_OK) {
+            return NGX_CONF_ERROR;
+        }
+    }
+
+```
