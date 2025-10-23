@@ -179,6 +179,11 @@ ngx_http_core_srv_conf_t   **cscfp;
 
 ## 3.7 初始化“阶段（phase）容器”与请求头哈希
 ```c
+ngx_conf_t *cf
+ngx_http_core_main_conf_t   *cmcf;
+// ...
+
+
     if (ngx_http_init_phases(cf, cmcf) != NGX_OK) {
         return NGX_CONF_ERROR;
     }
@@ -186,4 +191,62 @@ ngx_http_core_srv_conf_t   **cscfp;
     if (ngx_http_init_headers_in_hash(cf, cmcf) != NGX_OK) {
         return NGX_CONF_ERROR;
     }
+```
+ngx_http_core_main_conf_t:
+```c
+typedef struct {
+    ngx_array_t                servers;         /* ngx_http_core_srv_conf_t */
+
+    ngx_http_phase_engine_t    phase_engine;
+
+    ngx_hash_t                 headers_in_hash;
+
+    ngx_hash_t                 variables_hash;
+
+    ngx_array_t                variables;         /* ngx_http_variable_t */
+    ngx_array_t                prefix_variables;  /* ngx_http_variable_t */
+    ngx_uint_t                 ncaptures;
+
+    ngx_uint_t                 server_names_hash_max_size;
+    ngx_uint_t                 server_names_hash_bucket_size;
+
+    ngx_uint_t                 variables_hash_max_size;
+    ngx_uint_t                 variables_hash_bucket_size;
+    ngx_hash_keys_arrays_t    *variables_keys;
+    ngx_array_t               *ports;
+
+    ngx_http_phase_t           phases[NGX_HTTP_LOG_PHASE + 1];
+} ngx_http_core_main_conf_t;
+```
+ngx_http_phase_t:
+```c
+typedef struct {
+    ngx_array_t                handlers;
+} ngx_http_phase_t;
+```
+### ngx_http_init_phases
+<mark>**初始化HTTP各阶段handler函数的ngx_array_init**</mark>：
+```c
+static ngx_int_t
+ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
+{
+    if (ngx_array_init(&cmcf->phases[NGX_HTTP_POST_READ_PHASE].handlers,
+                       cf->pool, 1, sizeof(ngx_http_handler_pt))
+        != NGX_OK)
+    {
+        return NGX_ERROR;
+    }
+
+    // ...
+
+    if (ngx_array_init(&cmcf->phases[NGX_HTTP_LOG_PHASE].handlers,
+                       cf->pool, 1, sizeof(ngx_http_handler_pt))
+        != NGX_OK)
+    {
+        return NGX_ERROR;
+    }
+
+    return NGX_OK;
+}
+
 ```
