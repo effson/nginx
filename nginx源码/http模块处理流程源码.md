@@ -176,3 +176,14 @@ ngx_http_core_srv_conf_t   **cscfp;
     }
 
 ```
+
+## 3.7 初始化“阶段（phase）容器”与请求头哈希
+```c
+    if (ngx_http_init_phases(cf, cmcf) != NGX_OK) {
+        return NGX_CONF_ERROR;
+    }
+
+    if (ngx_http_init_headers_in_hash(cf, cmcf) != NGX_OK) {
+        return NGX_CONF_ERROR;
+    }
+```
