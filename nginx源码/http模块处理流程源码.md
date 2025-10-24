@@ -250,7 +250,7 @@ ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
 }
 
 ```
-## 3.8 注册PHASE handler与过滤器
+## 3.8 注册PHASE handler与过滤器模块处理函数
 ### 逐模块执行 postconfiguration函数
 ```c
     for (m = 0; cf->cycle->modules[m]; m++) {
@@ -282,4 +282,21 @@ ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
     *h = ngx_http_xxxxx_handler;
 
     return NGX_OK;
+```
+### 过滤器模块处理函数建链
+```c
+static ngx_http_output_header_filter_pt  ngx_http_next_header_filter;
+static ngx_http_output_body_filter_pt    ngx_http_next_body_filter;
+
+static ngx_int_t
+ngx_http_gzip_filter_init(ngx_conf_t *cf)
+{
+    ngx_http_next_header_filter = ngx_http_top_header_filter;
+    ngx_http_top_header_filter = ngx_http_xxx_header_filter;
+
+    ngx_http_next_body_filter = ngx_http_top_body_filter;
+    ngx_http_top_body_filter = ngx_http_xxx_body_filter;  // 头插法
+
+    return NGX_OK;
+}
 ```
