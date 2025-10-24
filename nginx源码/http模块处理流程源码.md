@@ -252,6 +252,21 @@ ngx_http_init_phases(ngx_conf_t *cf, ngx_http_core_main_conf_t *cmcf)
 ```
 ## 3.8 注册PHASE handler与过滤器
 ### 逐模块执行 postconfiguration函数
+```c
+    for (m = 0; cf->cycle->modules[m]; m++) {
+        if (cf->cycle->modules[m]->type != NGX_HTTP_MODULE) {
+            continue;
+        }
+
+        module = cf->cycle->modules[m]->ctx;
+
+        if (module->postconfiguration) {
+            if (module->postconfiguration(cf) != NGX_OK) {
+                return NGX_CONF_ERROR;
+            }
+        }
+    }
+```
  postconfiguration函数基本相似：
 ```c
 
