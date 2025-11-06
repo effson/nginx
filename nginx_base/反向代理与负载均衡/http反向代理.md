@@ -44,7 +44,7 @@ location /api/ {
 客户端：/api/v1/user?id=1 ---> 发往上游：http://backend/api/v1/user?id=1
 ```
 
-## 2.2 proxy模块生成发往上游的请求行
+## 2.2 proxy模块生成发往上游的请求
 
 ### 2.2.1 proxy_method
 proxy_method 指令用于 更改 发送到后端（上游）服务器的请求方法（HTTP Method）。
@@ -64,6 +64,15 @@ location /api {
 ### 2.2.2 proxy_http_version
 
 ```nginx
-    proxy_http_version 1.0 | 1.1;
+proxy_http_version 1.0 | 1.1;
+```
+- 设置 Nginx 在代理请求时，发送给后端（上游）服务器的 HTTP 协议版本。
+- 默认值：该指令的默认值是 1.0。
+
+### 2.2.3 proxy_set_header
+
+```nginx
+proxy_set_header field value;
 ```
 
+- 设置或修改 Nginx 代理请求时，发送给 后端服务器 的请求头（Request Headers）
