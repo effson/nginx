@@ -124,3 +124,14 @@ Nginx 会先把客户端请求体全部接收完，缓存在内存或临时文�
 #### off
 - 更及时的响应
 - 降低nginx读写磁盘的消耗
+
+
+```nginx
+location /api/ {
+    proxy_pass http://backend;
+    proxy_request_buffering on;             # 默认即可
+    client_body_temp_path /var/tmp/nginx;
+    client_body_buffer_size 8k|16k;
+    client_max_body_size 1m;
+}
+```
