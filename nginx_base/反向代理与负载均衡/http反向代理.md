@@ -43,3 +43,28 @@ location /api/ {
 客户端：/api/abc ---> 发往上游：http://backend/api/abc
 客户端：/api/v1/user?id=1 ---> 发往上游：http://backend/api/v1/user?id=1
 ```
+
+## 2.2 proxy模块生成发往上游的请求行
+
+### 2.2.1 proxy_method
+proxy_method 指令用于 更改 发送到后端（上游）服务器的请求方法（HTTP Method）。
+```nginx
+proxy_method method;
+```
+
+```nginx
+location /api {
+    proxy_pass http://backend_server;
+    # 强制将所有代理到后端的请求方法都改为 GET
+    proxy_method GET;
+}
+```
+- 默认行为：如果不设置此指令，Nginx 会默认使用 客户端请求的原始方法 (例如 GET, POST, PUT, DELETE 等) 发送给后端
+
+### 2.2.2 proxy_http_version
+
+```nginx
+    proxy_http_version 1.0 | 1.1;
+}
+```
+
