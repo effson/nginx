@@ -96,9 +96,15 @@ proxy_pass_request_headers on | off;
 -  on → 正常转发：客户端请求头（如 User-Agent, Accept, Cookie, 等）都会发送给上游；
 - off → 不转发：上游请求中不会包含任何客户端请求头，除非你手动用 proxy_set_header 添加。
 
+### 2.2.5 proxy_set_body
+```nginx
+proxy_set_body <string>;
+```
+```nginx
+proxy_set_body "";   # 默认为空，不会主动替换
+```
 
-
-
+- 替换客户端请求体（body），发送自定义内容到上游服务器
 
 
 
