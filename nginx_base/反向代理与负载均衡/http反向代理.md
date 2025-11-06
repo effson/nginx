@@ -135,3 +135,22 @@ location /api/ {
     client_max_body_size 1m;
 }
 ```
+
+## 2.3 proxy模块与上游服务器建立连接
+
+### 2.3.1 proxy_connect_timeout
+```nginx
+proxy_connect_timeout time;
+```
+```nginx
+proxy_connect_timeout 60s;
+```
+### 2.3.1 proxy_next_upstream
+
+```nginx
+proxy_next_upstream time;
+```
+```nginx
+proxy_connect_timeout 60s;
+```
+
