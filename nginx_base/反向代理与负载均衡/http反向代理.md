@@ -75,4 +75,12 @@ proxy_http_version 1.0 | 1.1;
 proxy_set_header field value;
 ```
 
+```nginx
+# 将客户端请求的原始 Host 头传递给后端
+proxy_set_header Host $host;
+
+# 或者使用 $http_host, 效果类似，但 $host 在没有 Host 头时会使用 server_name
+# proxy_set_header Host $http_host;
+```
+
 - 设置或修改 Nginx 代理请求时，发送给 后端服务器 的请求头（Request Headers）
