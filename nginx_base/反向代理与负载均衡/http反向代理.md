@@ -84,3 +84,26 @@ proxy_set_header Host $host;
 ```
 
 - 设置或修改 Nginx 代理请求时，发送给 后端服务器 的请求头（Request Headers）
+
+
+### 2.2.4 proxy_pass_request_header
+
+```nginx
+proxy_pass_request_headers on | off;
+```
+
+- 控制 Nginx 是否将客户端请求头部转发给上游服务器（upstream）
+-  on → 正常转发：客户端请求头（如 User-Agent, Accept, Cookie, 等）都会发送给上游；
+- off → 不转发：上游请求中不会包含任何客户端请求头，除非你手动用 proxy_set_header 添加。
+
+
+
+
+
+
+
+
+
+
+
+
