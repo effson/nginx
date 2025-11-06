@@ -65,6 +65,5 @@ location /api {
 
 ```nginx
     proxy_http_version 1.0 | 1.1;
-}
 ```
 
