@@ -28,6 +28,6 @@ location /api/ {
 ```
 结果：
 ```
-/api/abc ---> http://backend/u1/abc
-/api/v1/user?id=1 ---> http://backend/u1/v1/user?id=1
+客户端：/api/abc ---> 发往上游：http://backend/u1/abc
+客户端：/api/v1/user?id=1 ---> 发往上游：http://backend/u1/v1/user?id=1
 ```
