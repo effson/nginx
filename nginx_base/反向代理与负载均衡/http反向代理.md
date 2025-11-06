@@ -31,3 +31,15 @@ location /api/ {
 客户端：/api/abc ---> 发往上游：http://backend/u1/abc
 客户端：/api/v1/user?id=1 ---> 发往上游：http://backend/u1/v1/user?id=1
 ```
+
+#### 不携带URI
+```nginx
+location /api/ {
+    proxy_pass http://backend;
+}
+```
+结果：
+```
+客户端：/api/abc ---> 发往上游：http://backend/api/abc
+客户端：/api/v1/user?id=1 ---> 发往上游：http://backend/api/v1/user?id=1
+```
